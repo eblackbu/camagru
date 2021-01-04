@@ -6,35 +6,62 @@
  */
 class Model
 {
+    protected static ?PDO $pdo = null;
+
     public function __construct(...$kwargs)
     {
         // TODO обернуть в блок try
         foreach ($this->_fields as $field_name)
             $this->__set($kwargs[$field_name], $field_name);
+        self::$pdo = DB::getInstance();
+    }
+
+    protected static function __prepare_conditions(array $conditions)
+    {
+        $arr = [];
+        if (!$conditions)
+            return '';
+        foreach ($conditions as $field => $value)
+            $arr[] = '`' . (string)$field . '` = :' . (string)$field;
+
+        return 'WHERE ' . implode(' AND ', $arr);
+    }
+
+    protected static function __bind_params_for_get(PDOStatement &$query, array $args)
+    {
+        $model_name = static::class;
+        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
+        foreach ($args as $field => $value) {
+            if (gettype($value) == 'int')
+                $query->bindParam(':' . $field, $value, PDO::PARAM_INT);
+            else
+                $query->bindParam(':' . $field, $value, PDO::PARAM_STR);
+        }
     }
 
     /**
      * Function for getting instance of some Model by id
-     * @param int $id
+     * @param mixed ...$kwargs
      * @return Model
      * @throws ORMException
      */
-    public static function getOne(int $id): Model
+    public static function getOne(...$kwargs): Model
     {
-        $model_name = static::class;
-        if ($model_name == 'Model')
+        if (static::class == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $pdo = DB::getInstance();
-        $query = $pdo->prepare("SELECT 1 FROM :model_name WHERE `id`=:id");
+        $prepared_string = 'SELECT * FROM :model_name ' . self::__prepare_conditions($kwargs);
+        $query = self::$pdo->prepare($prepared_string);
         if (!$query)
             throw new ORMException('Error in preparation of query', 227);
-        $query->bindValue(':model_name', $model_name, PDO::PARAM_STR);
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        self::__bind_params_for_get($query, $kwargs);
+
         $result = $query->execute();
         $query->closeCursor();
         if (!$result)
             throw new ORMException('Error in execution prepared query', 228);
         $current_model = get_called_class();
+
+        // TODO проверить количество найденных строк, кинуть эксепшн если не одна
         return new $current_model($query->fetch());
     }
 
@@ -44,19 +71,16 @@ class Model
      * @return array
      * @throws ORMException
      */
-    public static function getMany(array ...$kwargs): array
+    public static function getMany(...$kwargs): array
     {
-        $model_name = static::class;
-        if ($model_name == 'Model')
+        if (static::class == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $pdo = DB::getInstance();
-        $query = $pdo->prepare("SELECT * FROM :model_name");
-
-        # TODO make WHERE
-
+        $prepared_string = 'SELECT * FROM :model_name ' . self::__prepare_conditions($kwargs);
+        $query = self::$pdo->prepare($prepared_string);
         if (!$query)
             throw new ORMException('Error in preparation query', 227);
-        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
+        self::__bind_params_for_get($query, $kwargs);
+
         $result = $query->execute();
         $query->closeCursor();
         if (!$result)
@@ -67,9 +91,10 @@ class Model
         }, $query->fetchall());
     }
 
-    protected function __bind_params($query, $fields_array)
+    protected function __bind_params(PDOStatement &$query, array $fields_array)
     {
-        $query->bindParam(':model_name', static::class, PDO::PARAM_STR);
+        $model_name = static::class;
+        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
 
         foreach ($fields_array as $field)
             if (gettype($this->__get($field) == 'int'))
@@ -93,7 +118,7 @@ class Model
     protected function _update(): bool
     {
         $prepared_string = $this->__prepare_string_for_update();
-        $query = DB::getInstance()->prepare('UPDATE :model_name SET ' . $prepared_fields . 'WHERE `id` = :id');
+        $query = self::$pdo->prepare('UPDATE :model_name SET ' . $prepared_string . 'WHERE `id` = :id');
 
         $this->__bind_params($query, $this->_fields);
 
@@ -118,7 +143,7 @@ class Model
             return $field != null;
         }));
         $prepared_string = $this->__prepare_string_for_create($needed_fields);
-        $query = DB::getInstance()->prepare('INSERT INTO :model_name ' . $prepared_string);
+        $query = self::$pdo->prepare('INSERT INTO :model_name ' . $prepared_string);
 
         $this->__bind_params($query, $this->_fields);
 
@@ -146,7 +171,11 @@ class Model
      */
     public function delete(int $id): bool
     {
-        # TODO
+        $query = self::$pdo->prepare('DELETE FROM :model_name WHERE `id` = :id');
+        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $query->closeCursor();
         return True;
     }
 }

@@ -16,7 +16,7 @@ class DB
 
     public static function getInstance(): PDO
     {
-        require_once __DIR__ . '/../database.php';
+        require_once __DIR__ . '/database.php';
         if (self::$_instance === null) {
             try {
                 self::$_instance = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD, self::$connection_options);
