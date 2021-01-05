@@ -1,13 +1,16 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+
 session_start();
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $segments = explode('/', trim($uri, '/'));
 $views_path = 'views/main/';
 
-print_r($uri);
-print_r($segments);
+// print_r($uri);
+// print_r($segments);
 
 if (isset($_SESSION['user']))
+{
     switch ($segments[0])
     {
         case 'home':
@@ -26,7 +29,8 @@ if (isset($_SESSION['user']))
             require($views_path . '404.php');
             break;
     }
-else if (!$segments[1])
+}
+elseif (!$segments[1])
 {
     switch ($segments[0])
     {

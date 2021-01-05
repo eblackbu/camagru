@@ -1,0 +1,27 @@
+{
+  "name": "prekol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "gulp-cli": "^2.3.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.13",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eblackbu/camagru.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eblackbu/camagru/issues"
+  },
+  "homepage": "https://github.com/eblackbu/camagru#readme"
+}
