@@ -44,6 +44,7 @@ elseif (!$segments[1])
             require($views_path . 'new_password.php');
             break;
         case '':
+        case 'login':
             require($views_path . 'login.php');
             break;
         default:

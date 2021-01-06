@@ -1,11 +1,9 @@
-        </div>
+
     </div>
-    <div id="footer">
-        <ul id="footer-ul">
-            <li class="footer-li"><a href="#">VK</a></li>
-            <li class="footer-li"><a href="#">Email</a></li>
-            <li class="footer-li"><a href="#">Github</a></li>
-        </ul>
-    </div>
+    <footer class="footer">
+        <a href="#">VK</a>
+        <a href="#">Email</a>
+        <a href="#">Github</a>
+    </footer>
 </body>
 </html>
