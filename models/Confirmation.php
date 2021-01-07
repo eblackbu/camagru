@@ -1,5 +1,6 @@
 <?php
 
+require_once('orm/Model.php');
 
 class Confirmation extends Model
 {

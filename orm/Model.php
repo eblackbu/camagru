@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../setup/DB.php';
+require_once __DIR__ . '/../orm/ORMException.php';
+
 /**
  * Class Model
  * Mini-analog of ORM
@@ -8,15 +11,24 @@ class Model
 {
     protected static ?PDO $pdo = null;
 
-    public function __construct(...$kwargs)
+    public function __set($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    /**
+     * Model constructor.
+     * @param $args
+     * Передавать все поля модели в именованном массиве
+     */
+    public function __construct($args)
     {
         // TODO обернуть в блок try
         foreach ($this->_fields as $field_name)
-            $this->__set($kwargs[$field_name], $field_name);
-        self::$pdo = DB::getInstance();
+            $this->__set($field_name, $args[$field_name]);
     }
 
-    protected static function __prepare_conditions(array $conditions)
+    protected static function __prepare_conditions(array $conditions): string
     {
         $arr = [];
         if (!$conditions)
@@ -24,13 +36,11 @@ class Model
         foreach ($conditions as $field => $value)
             $arr[] = '`' . (string)$field . '` = :' . (string)$field;
 
-        return 'WHERE ' . implode(' AND ', $arr);
+        return ' WHERE ' . implode(' AND ', $arr);
     }
 
     protected static function __bind_params_for_get(PDOStatement &$query, array $args)
     {
-        $model_name = static::class;
-        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
         foreach ($args as $field => $value) {
             if (gettype($value) == 'int')
                 $query->bindParam(':' . $field, $value, PDO::PARAM_INT);
@@ -41,45 +51,51 @@ class Model
 
     /**
      * Function for getting instance of some Model by id
-     * @param mixed ...$kwargs
+     * @param array $args
      * @return Model
      * @throws ORMException
      */
-    public static function getOne(...$kwargs): Model
+    public static function getOne(array $args): Model
     {
         if (static::class == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM :model_name ' . self::__prepare_conditions($kwargs);
+        $prepared_string = 'SELECT * FROM `' . static::class . '`' . self::__prepare_conditions($args);
+
+        print_r($prepared_string . '</br>');
+
+        self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare($prepared_string);
         if (!$query)
             throw new ORMException('Error in preparation of query', 227);
-        self::__bind_params_for_get($query, $kwargs);
+        self::__bind_params_for_get($query, $args);
+
+        print_r($query->queryString . PHP_EOL);
 
         $result = $query->execute();
         $query->closeCursor();
-        if (!$result)
+        if (!$result || $query->rowCount() != 1)
             throw new ORMException('Error in execution prepared query', 228);
         $current_model = get_called_class();
-
-        // TODO проверить количество найденных строк, кинуть эксепшн если не одна
         return new $current_model($query->fetch());
     }
 
     /**
      * Function for array of instances of some Model. You can send filters in DjangoORM format.
-     * @param array ...$kwargs
+     * @param array $args
      * @return array
      * @throws ORMException
      */
-    public static function getMany(...$kwargs): array
+    public static function getMany(array $args): array
     {
         if (static::class == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM :model_name ' . self::__prepare_conditions($kwargs);
+        $prepared_string = 'SELECT * FROM `' . static::class . '`' . self::__prepare_conditions($args);
+
+        self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare($prepared_string);
         if (!$query)
             throw new ORMException('Error in preparation query', 227);
-        self::__bind_params_for_get($query, $kwargs);
+        self::__bind_params_for_get($query, $args);
 
         $result = $query->execute();
         $query->closeCursor();
@@ -93,9 +109,6 @@ class Model
 
     protected function __bind_params(PDOStatement &$query, array $fields_array)
     {
-        $model_name = static::class;
-        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
-
         foreach ($fields_array as $field)
             if (gettype($this->__get($field) == 'int'))
                 $query->bindParam(':' . $field, $this->__get($field), PDO::PARAM_INT);
@@ -118,7 +131,7 @@ class Model
     protected function _update(): bool
     {
         $prepared_string = $this->__prepare_string_for_update();
-        $query = self::$pdo->prepare('UPDATE :model_name SET ' . $prepared_string . 'WHERE `id` = :id');
+        $query = self::$pdo->prepare('UPDATE `' . static::class . '` SET ' . $prepared_string . 'WHERE `id` = :id');
 
         $this->__bind_params($query, $this->_fields);
 
@@ -142,8 +155,7 @@ class Model
         $needed_fields = implode(',',  array_filter($this->_fields, function ($field) {
             return $field != null;
         }));
-        $prepared_string = $this->__prepare_string_for_create($needed_fields);
-        $query = self::$pdo->prepare('INSERT INTO :model_name ' . $prepared_string);
+        $prepared_string = 'INSERT INTO `' . static::class . '` ' . $this->__prepare_string_for_create($needed_fields);
 
         $this->__bind_params($query, $this->_fields);
 
@@ -158,6 +170,7 @@ class Model
      */
     public function save(): bool
     {
+        self::$pdo = DB::getInstance();
         if (!$this->id)
             return $this->_create();
         else
@@ -171,8 +184,8 @@ class Model
      */
     public function delete(int $id): bool
     {
-        $query = self::$pdo->prepare('DELETE FROM :model_name WHERE `id` = :id');
-        $query->bindParam(':model_name', $model_name, PDO::PARAM_STR);
+        self::$pdo = DB::getInstance();
+        $query = self::$pdo->prepare('DELETE FROM `' . static::class . '` WHERE `id` = :id');
         $query->bindParam(':id', $id, PDO::PARAM_INT);
         $query->execute();
         $query->closeCursor();

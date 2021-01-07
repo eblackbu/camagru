@@ -6,10 +6,21 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $segments = explode('/', trim($uri, '/'));
 $views_path = 'views/main/';
 
-// print_r($uri);
-// print_r($segments);
-
-if (isset($_SESSION['user']))
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    switch ($_GET['action'])
+    {
+        case 'login':
+            require_once('handlers/login_handler.php');
+            print_r($_POST);
+            login($_POST['login'], $_POST['password']);
+            break;
+        default:
+            require($views_path . '404.php');
+            break;
+    }
+}
+else if (isset($_SESSION['user']))
 {
     switch ($segments[0])
     {
@@ -30,7 +41,7 @@ if (isset($_SESSION['user']))
             break;
     }
 }
-elseif (!$segments[1])
+else if (!$segments[1])
 {
     switch ($segments[0])
     {
@@ -44,7 +55,6 @@ elseif (!$segments[1])
             require($views_path . 'new_password.php');
             break;
         case '':
-        case 'login':
             require($views_path . 'login.php');
             break;
         default:

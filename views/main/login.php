@@ -6,14 +6,14 @@ require_once __DIR__ . '/../blocks/header.php';
 
 <div class="auth">
     <h1 class="auth__title">Login</h1>
-    <form action="" class="form">
+    <form action="/?action=login" method="post" class="form">
         <div class="auth__form-item">
-            <label for="login">Email:</label>
-            <input type="text" id="login">
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login">
         </div>
         <div class="auth__form-item">
             <label for="password">Password:</label>
-            <input type="password" id="password">
+            <input type="password" id="password" name="password">
         </div>
         <button  class="auth__form-btn">login</button>
     </form>
@@ -22,11 +22,12 @@ require_once __DIR__ . '/../blocks/header.php';
             <a href="/register">Registration</a>
         </div>
         <div class="auth__options-item">
-            <a href="">Forgot password?</a>
+            <a href='/change_password'>Forgot password?</a>
         </div>
     </div>
 
 </div>
 
-<?php 
+<?php
+
 require_once __DIR__ . '/../blocks/footer.php';

@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS `User` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `login` TEXT NOT NULL,
   `password` BLOB NOT NULL,
-  `username` TEXT NOT NULL,
   `email` TEXT NOT NULL,
   `is_admin` INTEGER NOT NULL DEFAULT 0) ;
 
