@@ -11,3 +11,26 @@
       color: #7FFFD4;
       text-shadow: 2px 2px 2px #F4A460;
       text-decoration: none; }
+  .header__notifications {
+    padding: 10px;
+    background-color: #F4A460;
+    color: #7FFFD4;
+    position: absolute;
+    width: 280px;
+    border-radius: 0 0 10px 0;
+    left: 0;
+    top: 70px;
+    transition: .3s linear; }
+    .header__notifications p {
+      margin: 0; }
+    .header__notifications:hover {
+      background-color: #f58727; }
+    .header__notifications.active {
+      animation: pressed 1s;
+      animation-iteration-count: 1; }
+
+@keyframes pressed {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }

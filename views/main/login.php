@@ -6,7 +6,7 @@ require_once __DIR__ . '/../blocks/header.php';
 
 <div class="auth">
     <h1 class="auth__title">Login</h1>
-    <form action="/?action=login" method="post" class="form">
+    <form action="/?action=login" method="post" class="auth__form">
         <div class="auth__form-item">
             <label for="login">Login:</label>
             <input type="text" id="login" name="login">
