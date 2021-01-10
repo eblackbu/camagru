@@ -1,6 +1,6 @@
 <?php
 
-require_once('orm/Model.php');
+require_once 'orm/Model.php';
 
 class Subscription extends Model
 {

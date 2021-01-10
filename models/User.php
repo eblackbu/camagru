@@ -1,6 +1,6 @@
 <?php
 
-require_once('orm/Model.php');
+require_once 'orm/Model.php';
 
 class User extends Model
 {
@@ -18,12 +18,12 @@ class User extends Model
         'is_admin'
     ];
 
-    public function __construct($args)
-    {
-        parent::__construct($args);
-        if (isset($args['password']))
-            $this->password = self::__hash_password($args['password']);
-    }
+//    public function __construct($args)
+//    {
+//        parent::__construct($args);
+//        if (isset($args['password']))
+//            $this->password = self::__hash_password($args['password']);
+//    }
 
     private static function __hash_password(string $password): string
     {
@@ -38,12 +38,18 @@ class User extends Model
 
     private static function __get_password_hash(string $salt, string $password): string
     {
-        return $salt . ( hash( 'whirlpool', $salt . $password ) );
+        return $salt . hash('whirlpool', $salt . $password);
     }
 
     public function checkPassword($password): bool
     {
         $salt = substr($this->password, 0, 8);
         return $this->password == self::__get_password_hash($salt, $password);
+    }
+
+    public static function checkNewLogin($login): bool
+    {
+
+        return False;
     }
 }

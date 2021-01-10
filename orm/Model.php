@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../setup/DB.php';
-require_once __DIR__ . '/../orm/ORMException.php';
+require_once 'setup/DB.php';
+require_once 'orm/ORMException.php';
 
 /**
  * Class Model
@@ -10,11 +10,6 @@ require_once __DIR__ . '/../orm/ORMException.php';
 class Model
 {
     protected static ?PDO $pdo = null;
-
-    public function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
 
     /**
      * Model constructor.
@@ -25,7 +20,7 @@ class Model
     {
         // TODO обернуть в блок try
         foreach ($this->_fields as $field_name)
-            $this->__set($field_name, $args[$field_name]);
+            $this->{$field_name} = $args[$field_name];
     }
 
     protected static function __prepare_conditions(array $conditions): string
@@ -46,6 +41,7 @@ class Model
                 $query->bindParam(':' . $field, $value, PDO::PARAM_INT);
             else
                 $query->bindParam(':' . $field, $value, PDO::PARAM_STR);
+
         }
     }
 
@@ -53,7 +49,7 @@ class Model
      * Function for getting instance of some Model by id
      * @param array $args
      * @return Model
-     * @throws ORMException
+     * @throws ORMException if there is no selected rows or count of selected rows > 1
      */
     public static function getOne(array $args): Model
     {
@@ -61,22 +57,21 @@ class Model
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
         $prepared_string = 'SELECT * FROM `' . static::class . '`' . self::__prepare_conditions($args);
 
-        print_r($prepared_string . '</br>');
-
         self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare($prepared_string);
         if (!$query)
             throw new ORMException('Error in preparation of query', 227);
         self::__bind_params_for_get($query, $args);
 
-        print_r($query->queryString . PHP_EOL);
-
         $result = $query->execute();
-        $query->closeCursor();
-        if (!$result || $query->rowCount() != 1)
+        if (!$result)
             throw new ORMException('Error in execution prepared query', 228);
+        $model_data = $query->fetchall();
+        $query->closeCursor();
+        if (count($model_data) != 1)
+            throw new ORMException('Error in getOne function - there are no selected rows or more than 1!', 229);
         $current_model = get_called_class();
-        return new $current_model($query->fetch());
+        return new $current_model($model_data[0]);
     }
 
     /**
@@ -110,10 +105,36 @@ class Model
     protected function __bind_params(PDOStatement &$query, array $fields_array)
     {
         foreach ($fields_array as $field)
-            if (gettype($this->__get($field) == 'int'))
-                $query->bindParam(':' . $field, $this->__get($field), PDO::PARAM_INT);
+            if (gettype($this->{$field}) == 'int')
+                $query->bindParam(':' . $field, $this->{$field}, PDO::PARAM_INT);
             else
-                $query->bindParam(':' . $field, $this->__get($field), PDO::PARAM_STR);
+                $query->bindParam(':' . $field, $this->{$field}, PDO::PARAM_STR);
+    }
+
+    protected function __prepare_string_for_create($needed_fields)
+    {
+        $columns = '(' . implode(', ', $needed_fields) . ')';
+        $values = '(' . implode(', ', array_map(function ($field) {
+                return ':' . $field;
+            }, $needed_fields)) . ')';
+
+        return $columns . ' VALUES ' . $values;
+    }
+
+    protected function _create(): bool
+    {
+        $not_null_fields = array_filter($this->_fields, function ($field) {
+            return ($this->{$field} !== null);
+        });
+
+        $prepared_string = 'INSERT INTO `' . static::class . '` ' . $this->__prepare_string_for_create($not_null_fields);
+        $query = self::$pdo->prepare($prepared_string);
+
+        $this->__bind_params($query, $not_null_fields);
+
+        $query->execute();
+        $query->closeCursor();
+        return True;
     }
 
     protected function __prepare_string_for_update(): string
@@ -140,30 +161,6 @@ class Model
         return True;
     }
 
-    protected function __prepare_string_for_create($needed_fields)
-    {
-        $columns = '(' . implode(', ', $needed_fields) . ')';
-        $values = '(' . implode(', ', array_map(function ($field) {
-                return ':' . $field;
-            }, $needed_fields)) . ')';
-
-        return $columns . ' VALUES ' . $values;
-    }
-
-    protected function _create(): bool
-    {
-        $needed_fields = implode(',',  array_filter($this->_fields, function ($field) {
-            return $field != null;
-        }));
-        $prepared_string = 'INSERT INTO `' . static::class . '` ' . $this->__prepare_string_for_create($needed_fields);
-
-        $this->__bind_params($query, $this->_fields);
-
-        $query->execute();
-        $query->closeCursor();
-        return True;
-    }
-
     /**
      * Function for saving an instance of some Model in database.
      * @return bool
@@ -179,14 +176,13 @@ class Model
 
     /**
      * Function for deleting an instance of some Model in database
-     * @param int $id
      * @return bool
      */
-    public function delete(int $id): bool
+    public function delete(): bool
     {
         self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare('DELETE FROM `' . static::class . '` WHERE `id` = :id');
-        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->execute();
         $query->closeCursor();
         return True;
