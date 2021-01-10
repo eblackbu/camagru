@@ -6,18 +6,18 @@ require_once __DIR__ . '/../blocks/header.php';
 
 <div class="auth">
     <h1 class="auth__title">Sign in</h1>
-    <form action="" class="form">
+    <form action="/?action=register" method="post" class="form">
         <div class="auth__form-item">
-            <label for="login">Email:</label>
-            <input type="text" id="login">
-        </div>
-        <div class="auth__form-item">
-            <label for="nickname">Nickname:</label>
-            <input type="text" id="nickname">
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login">
         </div>
         <div class="auth__form-item">
             <label for="password">Password:</label>
-            <input type="password" id="password">
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="auth__form-item">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
         </div>
         <button  class="auth__form-btn">sign in</button>
     </form>
