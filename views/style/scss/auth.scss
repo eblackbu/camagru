@@ -25,6 +25,11 @@ $color-minor: #F4A460;
                     border: 1px solid $color-minor;
                 }
             }
+
+            label {
+                display: block;
+                margin-bottom: 3px;
+            }
         }
 
         &-btn {
