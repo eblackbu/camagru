@@ -10,7 +10,7 @@ require_once __DIR__ . '/../blocks/header.php';
     </div>
     <div class="home__main">
         <a href="#"><div class="home__main-new">
-            Cделать новую публикацию
+            <img src="/views/image/photo2.svg" alt="">
         </div></a>
         <div class="home__main-posts">
             <div class="home__main-posts-item" swo="11"><img src="/views/image/1.jpg" alt=""></div>

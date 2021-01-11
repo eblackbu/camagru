@@ -3,8 +3,10 @@ $color-minor: #F4A460;
 
 
 .home {
+    color: #000;
     a {
         text-decoration: none;
+        color: #000;
     }
     position: relative;
     display: flex;
@@ -14,9 +16,10 @@ $color-minor: #F4A460;
         position: fixed;
         padding: 10px;
         flex-basis: 200px;
-        box-shadow: 0 0 10px rgba(127, 255, 212, .5);
+        // box-shadow: 0 0 10px rgba(127, 255, 212, .5);
         border-radius: 10px;
         height: 220px;
+        background-color: #fff;
     }
 
     &__main {
@@ -25,22 +28,25 @@ $color-minor: #F4A460;
         margin-left: 220px;
         margin-bottom: 100px;
         flex-basis: 80%;
-        box-shadow: 0 0 10px rgba(127, 255, 212, .5);
+        // box-shadow: 0 0 10px rgba(127, 255, 212, .5);
         border-radius: 10px;
+        background-color: #fff;
 
         &-new {
             background-color: $color-major;
             border-radius: 20px;
-            padding: 10px;
+            padding: 10px 10px 6px;
             text-align: center;
             color: #666;
             font-weight: 700;
             letter-spacing: 6px;
             transition: .3s linear;
-
             &:hover {
                 background-color: $color-minor;
                 cursor: pointer;
+            }
+            img {
+                width: 30px;
             }
         }
 
@@ -71,9 +77,9 @@ $color-minor: #F4A460;
                 left: 0;
                 
                 &-base {
+                    color: #000;
+                    background-color: #fff;
                     padding: 20px;
-                    background-color: rgba(102, 102, 102, 1);
-                    box-shadow: 0 0 10px rgb(244, 164, 96);
                     border-radius: 10px;
                     margin-bottom: 30px;
 
