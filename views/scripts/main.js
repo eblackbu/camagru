@@ -1,3 +1,4 @@
+// скрытие сообщения в самом начале
 $(document).ready(function(){
     if($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
@@ -9,11 +10,13 @@ function hide_notifications() {
     $('.header__notifications').removeClass('active');
 }
 
+// скрытие сообщения по щелчку
 $(document).on('click','.header__notifications', function(){
     $('.header__notifications').addClass('active');
     setTimeout(hide_notifications, 900);   
 });
 
+// скрытие и показ меню шапки
 $(document).on('click','.header__content-menu', function(){
     $('.header__content-sidebar').toggle();
     if($('.header__content-menu').hasClass('active')) {
@@ -23,6 +26,7 @@ $(document).on('click','.header__content-menu', function(){
     }
 });
 
+// отображение модалки по щелчку айтема
 $(document).on('click','.home__main-posts-item', function(){
     // alert($(this).attr('swo'));
     $(`<div class="home__main-posts-modal-base-content"></div>`).appendTo(".home__main-posts-modal-base");
@@ -32,6 +36,7 @@ $(document).on('click','.home__main-posts-item', function(){
     $('.home__main-posts-modal').show();
 });
 
+// скрытие модалки по щелчку закрытия
 $(document).on('click','.home__main-posts-modal-base-close', function(){
     $('.home__main-posts-modal').hide();
     $(".home__main-posts-modal-base-content").remove();
