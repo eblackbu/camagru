@@ -16,11 +16,10 @@ class Confirmation extends Model
         'email'
     ];
 
-    public function __construct($args)
+    public function _create(): bool
     {
-        parent::__construct($args);
-        if (isset($args['password']))
-            $this->password = self::__hash_password($args['password']);
+        $this->password = self::__hash_password($this->password);
+        return parent::_create();
     }
 
     private static function __hash_password(string $password): string

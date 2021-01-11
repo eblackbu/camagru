@@ -18,12 +18,11 @@ class User extends Model
         'is_admin'
     ];
 
-//    public function __construct($args)
-//    {
-//        parent::__construct($args);
-//        if (isset($args['password']))
-//            $this->password = self::__hash_password($args['password']);
-//    }
+    protected function _create(): bool # TODO убрать когда будет двухуровневая регистрация
+    {
+        $this->password = self::__hash_password($this->password);
+        return parent::_create();
+    }
 
     private static function __hash_password(string $password): string
     {
@@ -44,12 +43,8 @@ class User extends Model
     public function checkPassword($password): bool
     {
         $salt = substr($this->password, 0, 8);
+        session_start();
+        $_SESSION['notification'] = 'Пароль - ' . $this->password . ', Введенный пароль - ' . self::__get_password_hash($salt, $password);
         return $this->password == self::__get_password_hash($salt, $password);
-    }
-
-    public static function checkNewLogin($login): bool
-    {
-
-        return False;
     }
 }

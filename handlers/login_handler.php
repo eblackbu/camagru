@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once('helpers/redirect.php');
 require_once('models/User.php');
@@ -18,9 +19,11 @@ function login($_login, $_password)
     }
 
     if (!$user->checkPassword($_password))
-        $_SESSION['notification'] = 'Введенный пароль неверен';
-        redirect_to('/');
-    $_SESSION['user']['id'] = $user->id;
-    $_SESSION['user']['username'] = $user->login;
+        $_SESSION['notification'] .= 'Введенный пароль неверен';
+    else
+    {
+        $_SESSION['user']['id'] = $user->id;
+        $_SESSION['user']['username'] = $user->login;
+    }
     redirect_to('/');
 }
