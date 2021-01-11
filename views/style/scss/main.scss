@@ -28,7 +28,12 @@ button, input {
     margin: 0 auto;
 }
 
+.content {
+    padding-top: 70px;
+}
+
 @import './header.scss';
-@import './footer.scss';
-@import './content.scss';
+@import './footer.scss';    
+@import './sidebar.scss';
+@import './home.scss';
 @import './auth.scss';

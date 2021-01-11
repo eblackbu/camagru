@@ -1,5 +1,7 @@
 .footer {
   display: flex;
+  z-index: 1;
+  background-color: #666;
   justify-content: space-around;
   border-top: 1px solid #eee;
   padding: 15px 0;

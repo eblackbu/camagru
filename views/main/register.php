@@ -23,7 +23,7 @@ require_once __DIR__ . '/../blocks/header.php';
     </form>
     <div class="auth__options">
         <div class="auth__options-item">
-            <a href="/login">Already registered?</a>
+            <a href="/">Already registered?</a>
         </div>
     </div>
 
