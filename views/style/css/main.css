@@ -77,7 +77,7 @@ button, input {
       display: none;
       position: absolute;
       right: 0;
-      bottom: -220px;
+      bottom: -195px;
       background-color: #666;
       box-shadow: -2px 3px 10px rgba(127, 255, 212, 0.5);
       border-radius: 0 0 0 10px;
@@ -178,6 +178,7 @@ button, input {
     position: fixed;
     padding: 10px;
     flex-basis: 200px;
+    border: 2px solid #7FFFD4;
     border-radius: 10px;
     height: 195px;
     background-color: #fff; }
@@ -187,6 +188,7 @@ button, input {
     margin-left: 220px;
     margin-bottom: 100px;
     flex-basis: 80%;
+    border: 2px solid #7FFFD4;
     border-radius: 10px;
     background-color: #fff; }
     .home__main-new {
@@ -226,9 +228,22 @@ button, input {
           background-color: #fff;
           padding: 20px;
           border-radius: 10px;
-          margin-bottom: 30px; }
+          margin-bottom: 30px;
+          border: 2px solid #F4A460; }
+          .home__main-posts-modal-base-content-title {
+            display: flex; }
+            .home__main-posts-modal-base-content-title-avatar {
+              margin: 0 10px 10px; }
+              .home__main-posts-modal-base-content-title-avatar img {
+                width: 40px;
+                border-radius: 50%; }
           .home__main-posts-modal-base-content-image img {
             width: 100%; }
+          .home__main-posts-modal-base-content-options-description {
+            margin-bottom: 10px; }
+          .home__main-posts-modal-base-content-options-info {
+            display: flex;
+            justify-content: space-between; }
           .home__main-posts-modal-base-close {
             position: absolute;
             top: 0;
@@ -247,6 +262,27 @@ button, input {
     .home__main {
       flex-basis: 100%;
       margin-left: 0; } }
+
+@media (max-width: 700px) {
+  .content {
+    width: 96%;
+    padding-top: 30px; } }
+
+@media (max-width: 540px) {
+  .content {
+    padding-top: 10px; }
+  .home__main {
+    padding: 5px; }
+    .home__main-new {
+      padding: 4px 3px 2px; }
+      .home__main-new img {
+        width: 15px; }
+    .home__main-posts-modal-base-content-title-avatar img {
+      width: 30px; }
+    .home__main-posts-modal-base-content-title-nickname {
+      font-size: 20px; }
+    .home__main-posts-item {
+      margin-top: 5px; } }
 
 .change__main {
   color: #fff;
