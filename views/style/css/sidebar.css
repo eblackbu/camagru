@@ -16,7 +16,7 @@
     text-align: center; }
   .sidebar__statistics-subscriptions {
     margin-bottom: 5px; }
-  .sidebar__options-rename, .sidebar__options-repassword {
+  .sidebar__options-settings {
     margin-bottom: 5px; }
   .sidebar .group:not(:last-child) {
     margin-bottom: 10px;
