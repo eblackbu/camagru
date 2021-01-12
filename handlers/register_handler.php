@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 require_once('helpers/redirect.php');
 require_once('helpers/check_login.php');
 require_once('models/User.php');
