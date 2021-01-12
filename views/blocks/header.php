@@ -12,7 +12,7 @@
 <body>
     <header class="header">
         <div class="header__content container">
-            <h1 class="header__content-logo"><a href="">Camagru</a></h1>
+            <h1 class="header__content-logo"><a href="/">Camagru</a></h1>
             <div class="header__notifications">
                 <?php require_once('helpers/notification.php'); show_notification(); ?>
             </div>

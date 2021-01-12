@@ -16,7 +16,7 @@ $color-minor: #F4A460;
         position: fixed;
         padding: 10px;
         flex-basis: 200px;
-        // box-shadow: 0 0 10px rgba(127, 255, 212, .5);
+        border: 2px solid $color-major;
         border-radius: 10px;
         height: 195px;
         background-color: #fff;
@@ -28,7 +28,7 @@ $color-minor: #F4A460;
         margin-left: 220px;
         margin-bottom: 100px;
         flex-basis: 80%;
-        // box-shadow: 0 0 10px rgba(127, 255, 212, .5);
+        border: 2px solid $color-major;
         border-radius: 10px;
         background-color: #fff;
 
@@ -54,7 +54,6 @@ $color-minor: #F4A460;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
-            // justify-content: space-around;
 
             &-item {
                 margin-top: 20px;
@@ -82,12 +81,34 @@ $color-minor: #F4A460;
                     padding: 20px;
                     border-radius: 10px;
                     margin-bottom: 30px;
+                    border: 2px solid $color-minor;
 
                     &-content {
+                        &-title {
+                            display: flex;
+
+                            &-avatar {
+                                img {
+                                    width: 40px;
+                                    border-radius: 50%;
+                                }
+                                margin: 0 10px 10px;
+                            }
+                        }
                         
                         &-image {
                             img {
                                 width: 100%;
+                            }
+                        }
+
+                        &-options {
+                            &-description {
+                                margin-bottom: 10px;
+                            }
+                            &-info {
+                                display: flex;
+                                justify-content: space-between;
                             }
                         }
                     }
@@ -122,6 +143,44 @@ $color-minor: #F4A460;
         &__main {
             flex-basis: 100%;
             margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .content  {
+        width: 96%;
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 540px) {
+    .content  { 
+        padding-top: 10px;
+    }
+
+    .home__main {
+        padding: 5px;
+        &-new {
+            padding: 4px 3px 2px;
+            img {
+                width: 15px;
+            }
+        }
+        &-posts-modal-base-content-title {
+            &-avatar {
+                img {
+                    width: 30px;
+                }
+            }
+
+            &-nickname {
+                font-size: 20px;
+            }
+        }
+
+        &-posts-item {
+            margin-top: 5px;
         }
     }
 }

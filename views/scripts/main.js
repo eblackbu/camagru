@@ -28,16 +28,41 @@ $(document).on('click','.header__content-menu', function(){
 
 // отображение модалки по щелчку айтема
 $(document).on('click','.home__main-posts-item', function(){
-    // alert($(this).attr('swo'));
+    $('.home__main-posts').css('opacity', '.5');
+    $('.home__main-posts-modal').css('top', $(window).scrollTop());
     $(`<div class="home__main-posts-modal-base-content"></div>`).appendTo(".home__main-posts-modal-base");
-    $(`<div class="home__main-posts-modal-base-content-title">Title</div>`).appendTo(".home__main-posts-modal-base-content");
+    // ниже нужна аватарка и имя профиля из бд
+    $(`<div class="home__main-posts-modal-base-content-title">
+            <div class="home__main-posts-modal-base-content-title-avatar">
+                <img src="/views/image/drochila.jpg" alt="">
+            </div>
+            <h1 class="home__main-posts-modal-base-content-title-nickname">adskiy_drochila</h1>
+        </div>`).appendTo(".home__main-posts-modal-base-content");
+    // картинка конкретного поста, на который кликнули
     $(`<div class="home__main-posts-modal-base-content-image">${$(this).html()}</div>`).appendTo(".home__main-posts-modal-base-content");
-    $(`<div class="home__main-posts-modal-base-content-options">Options</div>`).appendTo(".home__main-posts-modal-base-content");
+    // инфа по описанию, количеству лайков и коментам
+    // тут еще буду изменения
+    $(`<div class="home__main-posts-modal-base-content-options">
+            <div class="home__main-posts-modal-base-content-options-description">
+                Самая пиздатая фотка в мире, инфа сотка!
+            </div>
+            <div class="home__main-posts-modal-base-content-options-info">
+                <div class="home__main-posts-modal-base-content-options-info-statistics">
+                    <span class="home__main-posts-modal-base-content-options-statistics-likes">Сердечки: 666</span>
+                    <span class="home__main-posts-modal-base-content-options-statistics-comments">Коменты: 42</span>
+                </div>
+                <div class="home__main-posts-modal-base-content-options-info-date">
+                    <span class="home__main-posts-modal-base-content-options-statistics-likes">11.09.2001</span>
+                </div>
+            </div>
+    </div>`).appendTo(".home__main-posts-modal-base-content");
     $('.home__main-posts-modal').show();
 });
 
 // скрытие модалки по щелчку закрытия
 $(document).on('click','.home__main-posts-modal-base-close', function(){
+    $('.home__main-posts').css('opacity', '1');
     $('.home__main-posts-modal').hide();
     $(".home__main-posts-modal-base-content").remove();
 });
+
