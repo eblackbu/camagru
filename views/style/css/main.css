@@ -152,7 +152,7 @@ button, input {
     text-align: center; }
   .sidebar__statistics-subscriptions {
     margin-bottom: 5px; }
-  .sidebar__options-rename, .sidebar__options-repassword {
+  .sidebar__options-settings {
     margin-bottom: 5px; }
   .sidebar .group:not(:last-child) {
     margin-bottom: 10px;
@@ -179,7 +179,7 @@ button, input {
     padding: 10px;
     flex-basis: 200px;
     border-radius: 10px;
-    height: 220px;
+    height: 195px;
     background-color: #fff; }
   .home__main {
     padding: 20px;
@@ -247,6 +247,22 @@ button, input {
     .home__main {
       flex-basis: 100%;
       margin-left: 0; } }
+
+.change__main {
+  color: #fff;
+  border: 2px solid #7FFFD4;
+  background-color: #666; }
+  .change__main-title {
+    color: #7FFFD4;
+    text-align: center;
+    margin-bottom: 20px; }
+
+.change__form {
+  padding: 10px;
+  border: 1px solid #F4A460;
+  border-radius: 5px; }
+  .change__form:first-child {
+    margin-bottom: 20px; }
 
 .auth {
   margin: calc(10% + 40px) auto 0;

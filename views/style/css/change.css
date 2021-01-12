@@ -1,0 +1,15 @@
+.change__main {
+  color: #fff;
+  border: 2px solid #7FFFD4;
+  background-color: #666; }
+  .change__main-title {
+    color: #7FFFD4;
+    text-align: center;
+    margin-bottom: 20px; }
+
+.change__form {
+  padding: 10px;
+  border: 1px solid #F4A460;
+  border-radius: 5px; }
+  .change__form:first-child {
+    margin-bottom: 20px; }
