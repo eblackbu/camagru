@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
-
 session_start();
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $segments = explode('/', trim($uri, '/'));
 $views_path = 'views/main/';
@@ -37,6 +37,10 @@ else if (isset($_SESSION['user']))
         case 'change_password':
             require($views_path . 'change_password.php');
             break;
+        case 'logout':
+            require_once($handlers_path . 'logout_handler.php');
+            logout();
+            break;
         case '':
             require($views_path . 'main.php');
             break;
@@ -56,7 +60,7 @@ else if (!$segments[1])
             require_once($handlers_path . 'submit_register.php');
             submit_register($_GET['login'], $_GET['hash']);
             break;
-        case 'change_password':
+        case 'change_password': // change_password_request ???
             require($views_path . 'change_password.php');
             break;
         case 'new_password':

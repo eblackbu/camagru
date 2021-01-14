@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 require_once 'models/User.php';
 
 function submit_register($login, $hash)

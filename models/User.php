@@ -1,6 +1,7 @@
 <?php
 
 require_once 'orm/Model.php';
+require_once 'models/Subscription.php';
 
 class User extends Model
 {
@@ -40,11 +41,33 @@ class User extends Model
         return $salt . hash('whirlpool', $salt . $password);
     }
 
+    public static function getSubscribersCount($id): int
+    {
+        try {
+            $res = count(Subscription::getMany(array('user_where' => $id)));
+        } catch (ORMException $e) {
+            session_start();
+            $_SESSION['notification'] .= 'Что то пошло не так при вычислении колчества выших подписчиков :с</br>';
+            return 0;
+        }
+        return $res;
+    }
+
+    public static function getSubscriptionsCount($id): int
+    {
+        try {
+            $res = count(Subscription::getMany(array('user_from' => $id)));
+        } catch (ORMException $e) {
+            session_start();
+            $_SESSION['notification'] .= 'Что то пошло не так при вычислении колчества выших подписок :с</br>';
+            return 0;
+        }
+        return $res;
+    }
+
     public function checkPassword($password): bool
     {
         $salt = substr($this->password, 0, 8);
-        session_start();
-        $_SESSION['notification'] = 'Пароль - ' . $this->password . ', Введенный пароль - ' . self::__get_password_hash($salt, $password);
         return $this->password == self::__get_password_hash($salt, $password);
     }
 }
