@@ -1,33 +1,31 @@
-.sidebar a {
-  color: #fff;
-  text-decoration: none; }
-  .sidebar a:hover {
-    text-decoration: underline; }
-
-.sidebar__profile-avatar {
-  text-align: center; }
-  .sidebar__profile-avatar img {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%; }
-
-.sidebar__profile-nickname {
-  text-align: center; }
-
-.sidebar__statistics-subscriptions {
-  margin-bottom: 5px; }
-
-.sidebar__options-rename, .sidebar__options-repassword {
-  margin-bottom: 5px; }
-
-.sidebar .group:not(:last-child) {
-  margin-bottom: 10px;
-  position: relative; }
-  .sidebar .group:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    height: 1px;
-    width: 70%;
-    background-color: #ccc;
-    bottom: -5px;
-    left: 15%; }
+.sidebar {
+  font-weight: 700; }
+  .sidebar a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none; }
+    .sidebar a:hover {
+      text-decoration: underline; }
+  .sidebar__profile-avatar {
+    text-align: center; }
+    .sidebar__profile-avatar img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%; }
+  .sidebar__profile-nickname {
+    text-align: center; }
+  .sidebar__statistics-subscriptions {
+    margin-bottom: 5px; }
+  .sidebar__options-settings {
+    margin-bottom: 5px; }
+  .sidebar .group:not(:last-child) {
+    margin-bottom: 10px;
+    position: relative; }
+    .sidebar .group:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 70%;
+      background-color: #ccc;
+      bottom: -5px;
+      left: 15%; }

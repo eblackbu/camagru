@@ -1,6 +1,8 @@
 .sidebar {
+    font-weight: 700;
     a {
         color: #fff;
+        font-weight: 700;
         text-decoration: none;
         &:hover {
             text-decoration: underline;
@@ -28,7 +30,7 @@
     }
 
     &__options {
-        &-rename, &-repassword {
+        &-settings {
             margin-bottom: 5px;
         }
     }

@@ -1,0 +1,29 @@
+$color-major: #7FFFD4;
+$color-minor: #F4A460;
+
+.change {
+    &__main {
+        color: #fff;
+        border: 2px solid $color-major;
+        background-color: #666;
+
+        &-title {
+            color: $color-major;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__form {
+        padding: 10px;
+        border: 1px solid $color-minor;
+        border-radius: 5px;
+        &:first-child {
+            margin-bottom: 20px;
+        }
+
+        &-item {
+            
+        }
+    }
+}
