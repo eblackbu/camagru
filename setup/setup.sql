@@ -58,8 +58,9 @@ CREATE INDEX `fk_user_from_idx` ON `Subscription` (`user_from`);
 DROP TABLE IF EXISTS `Image` ;
 
 CREATE TABLE IF NOT EXISTS `Image` (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `filepath` TEXT NOT NULL,
+  `id` TEXT PRIMARY KEY,
+  `label` TEXT NOT NULL,
+  `extension` TEXT NOT NULL,
   `created_by` INTEGER NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT `fk_created_by`

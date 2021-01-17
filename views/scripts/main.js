@@ -87,13 +87,13 @@ $(document).on('click','.home__main-posts-item', function(){
                 </div>
             </div>
             <div class="home__main-posts-comments">
-                <form action="" method="post">
+                <form action="/comment" method="post"> <!-- TODO П -->
                     <textarea class="modal-textarea" rows="3"></textarea>
                     <button class="auth__form-btn">отправить</button>
                 </form>
                 <div class="home__main-posts-comments-item">
                     <div class="home__main-posts-comments-item-title">
-                        <div class="home__main-posts-comments-item-title-nick"><a href="profile/id">Рузанов Слава</a></div>
+                        <div class="home__main-posts-comments-item-title-nick"><a href="#">Рузанов Слава</a></div>
                         <div class="home__main-posts-comments-item-title-data">14.11.2017</div>
                     </div>
                     <div class="home__main-posts-comments-item-text">
@@ -102,7 +102,7 @@ $(document).on('click','.home__main-posts-item', function(){
                 </div>
                 <div class="home__main-posts-comments-item">
                     <div class="home__main-posts-comments-item-title">
-                        <div class="home__main-posts-comments-item-title-nick"><a href="profile/id">Пупа Лупович</a></div>
+                        <div class="home__main-posts-comments-item-title-nick"><a href="#">Пупа Лупович</a></div>
                         <div class="home__main-posts-comments-item-title-data">14.11.2017</div>
                     </div>
                     <div class="home__main-posts-comments-item-text">

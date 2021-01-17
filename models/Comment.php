@@ -1,6 +1,6 @@
 <?php
 
-require_once 'orm/Model.php';
+require_once __DIR__ . '/../orm/Model.php';
 
 class Comment extends Model
 {

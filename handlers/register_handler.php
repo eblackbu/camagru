@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once('helpers/redirect.php');
-require_once('helpers/check_login.php');
-require_once('models/User.php');
-require_once('models/Confirmation.php');
+require_once __DIR__ . '/../helpers/redirect.php';
+require_once __DIR__ . '/../helpers/check_login.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Confirmation.php';
 
 function register($login, $password, $email)
 {

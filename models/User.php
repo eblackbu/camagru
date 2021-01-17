@@ -1,7 +1,7 @@
 <?php
 
-require_once 'orm/Model.php';
-require_once 'models/Subscription.php';
+require_once __DIR__ . '/../orm/Model.php';
+require_once __DIR__ . '/Subscription.php';
 
 class User extends Model
 {
@@ -10,6 +10,7 @@ class User extends Model
     public ?string $password = null;
     public ?string $email = null;
     public ?bool $is_admin = null;
+    // TODO avatar_path
 
     public array $_fields = [
         'id',
@@ -47,7 +48,7 @@ class User extends Model
             $res = count(Subscription::getMany(array('user_where' => $id)));
         } catch (ORMException $e) {
             session_start();
-            $_SESSION['notification'] .= 'Что то пошло не так при вычислении колчества выших подписчиков :с</br>';
+            $_SESSION['notification'] .= 'Что то пошло не так при вычислении количества ваших подписчиков :с</br>';
             return 0;
         }
         return $res;
@@ -59,7 +60,7 @@ class User extends Model
             $res = count(Subscription::getMany(array('user_from' => $id)));
         } catch (ORMException $e) {
             session_start();
-            $_SESSION['notification'] .= 'Что то пошло не так при вычислении колчества выших подписок :с</br>';
+            $_SESSION['notification'] .= 'Что то пошло не так при вычислении количества ваших подписок :с</br>';
             return 0;
         }
         return $res;

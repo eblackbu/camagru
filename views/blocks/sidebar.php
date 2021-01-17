@@ -11,12 +11,12 @@ require_once ('models/User.php');
             <img src="/views/image/drochila.jpg" alt="">
         </div>
         <div class="sidebar__profile-nickname">
-            adskiy_drochila
+            <?php echo $_SESSION['user']['login']; ?>
         </div>
     </div>
     <div class="sidebar__statistics group">
-        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php User::getSubscriptionsCount($_SESSION['user']['id']) ?></a></div>
-        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php User::getSubscribersCount($_SESSION['user']['id']) ?></a></div>
+        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
         <div class="sidebar__options-rename"><a href="">Смена ника</a></div>

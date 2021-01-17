@@ -2,5 +2,6 @@ node_modules
 subject.pdf
 camagru.sqlite3
 .idea/*
+images/
 setup/model_mysql/*
 debug.log

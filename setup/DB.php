@@ -7,7 +7,8 @@ class DB
 {
     private static ?PDO $_instance = null;
     private static array $connection_options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_EMULATE_PREPARES => true,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ];
 
@@ -22,7 +23,7 @@ class DB
                 self::$_instance = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD, self::$connection_options);
             }
             catch (PDOException $e) {
-                throw new PDOException($e->getMessage(), (int)$e->getCode());
+                echo $e->getMessage();
             }
         }
 

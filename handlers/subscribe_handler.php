@@ -1,6 +1,6 @@
 <?php
 
-require_once('models/Subscription.php');
+require_once __DIR__ . '/../models/Subscription.php';
 
 function subscribe($user_from, $user_where): bool
 {
