@@ -22,13 +22,13 @@ require_once __DIR__ . '/../../models/Image.php';
             }
             ?>
         </div>
-        <div class="home__main-posts-modal">
-            <div class="home__main-posts-modal-base">
-                <div class="home__main-posts-modal-base-close">
+        <div class="modal">
+            <div class="modal__base">
+                <div class="modal__base-close">
                     X
                 </div>
             </div>
-            <div class="home__main-posts-modal-filler"></div>
+            <div class="modal__filler"></div>
         </div>
         
     </div>
