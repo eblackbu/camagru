@@ -1,7 +1,7 @@
 <?php
 
-require_once 'setup/DB.php';
-require_once 'orm/ORMException.php';
+require_once __DIR__ . '/../setup/DB.php';
+require_once __DIR__ . '/ORMException.php';
 
 /**
  * Class Model
@@ -18,9 +18,8 @@ class Model
      */
     public function __construct($args)
     {
-        // TODO обернуть в блок try
-        foreach ($this->_fields as $field_name)
-            $this->{$field_name} = $args[$field_name];
+        foreach ($args as $field_name => $value)
+            $this->{$field_name} = $value;
     }
 
     protected static function __prepare_conditions(array $conditions): string
@@ -29,7 +28,10 @@ class Model
         if (!$conditions)
             return '';
         foreach ($conditions as $field => $value)
-            $arr[] = '`' . (string)$field . '` = :' . (string)$field;
+            if (gettype($value) == 'array')
+                $arr[] = '`' . (string)$field . '` IN (' . implode(",", $value) . ')'; // TODO костыль, проверить на иньекцию потом
+            else
+                $arr[] = '`' . (string)$field . '` = :' . (string)$field;
 
         return ' WHERE ' . implode(' AND ', $arr);
     }
@@ -39,9 +41,8 @@ class Model
         foreach ($args as $field => $value) {
             if (gettype($value) == 'int')
                 $query->bindParam(':' . $field, $value, PDO::PARAM_INT);
-            else
+            else if (gettype($value) != 'array')
                 $query->bindParam(':' . $field, $value, PDO::PARAM_STR);
-
         }
     }
 
@@ -93,13 +94,14 @@ class Model
         self::__bind_params_for_get($query, $args);
 
         $result = $query->execute();
+        $model_data = $query->fetchall();
         $query->closeCursor();
         if (!$result)
             throw new ORMException('Error in execution prepared query', 228);
         $current_model = get_called_class();
         return array_map(function ($row) use ($current_model) {
             return new $current_model($row);
-        }, $query->fetchall());
+        }, $model_data);
     }
 
     protected function __bind_params(PDOStatement &$query, array $fields_array)

@@ -1,0 +1,189 @@
+$color-major: #7FFFD4;
+$color-minor: #F4A460;
+
+
+.modal {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &__comments {
+        display: none;
+        margin-top: 10px;
+        
+        &-item {
+            margin: 10px 5px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #999;
+
+            &-title {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 3px;
+
+                &-nick {
+                    font-weight: 700;
+                }
+
+                &-data {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    &__description {
+        &-edit {
+            display: none;
+
+            form {
+                margin: 10px 0;
+            }
+        }
+    }
+
+    &__menu {
+        display: none;
+        position: absolute;
+        top: 16px;
+        right: 0;
+        z-index: 10;
+        background-color: #fff;
+        text-align: right;
+        font-size: 12px;
+        padding: 10px;
+        border: .5px solid $color-major;
+
+        &-delete {
+            margin-top: 5px;
+        }
+
+        &-delete, &-edit {
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    &__base {
+        color: #000;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        border: 2px solid $color-minor;
+
+        &-content {
+            &-title {
+                a {
+                    display: flex;
+                }
+
+                &-avatar {
+                    img {
+                        width: 40px;
+                        border-radius: 50%;
+                    }
+                    margin: 0 10px 10px;
+                }
+            }
+            
+            &-image {
+                img {
+                    width: 100%;
+                }
+            }
+
+            &-options {
+                &-statistics {
+                    &-comments {
+                        display: flex;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+                &-description {
+                    margin: 10px 0;
+                    display: flex;
+                    justify-content: space-between;
+                    position: relative;
+
+                    &-settings {
+                        display: flex;
+                        width: 70px;
+                        height: 16px;
+                        padding-top: 3px;
+                        justify-content: space-evenly;
+                        border-radius: 10px 10px 10px 10px;
+                        transition: .3s linear;
+
+                        &-circle1, &-circle2, &-circle3 {
+                            width: 10px;
+                            height: 10px;
+                            background-color: #000;
+                            border-radius: 50%;
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: $color-major;
+                        }
+                    }
+                }
+                &-info {
+                    display: flex;
+                    justify-content: space-between;
+
+                    &-statistics {
+                        display: flex;
+                        font-size: 14px;
+                    }
+
+                    &-date {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+        
+        &-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px 10px;
+            transition: .3s linear;
+
+            &:hover {
+                cursor: pointer;
+                color: $color-minor;
+            }
+        }
+    }
+
+    &__filler {
+        height: 50px;
+        width: 100%;
+    }
+
+    
+    &__textarea {
+        font-family: 'Comfortaa', cursive;
+        padding: 6px;
+        width: 100%;
+        border-radius: 5px;
+        resize: none;
+        display: block;
+        margin-bottom: 5px;
+        outline: none;
+        border: 2px solid $color-major;
+
+        &:focus {
+            border: 2px solid $color-minor;
+        }
+    }
+}

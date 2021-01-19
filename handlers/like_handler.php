@@ -1,6 +1,6 @@
 <?php
 
-require_once('models/Like.php');
+require_once __DIR__ . '/../models/Like.php';
 
 function like($user, $image): bool
 {

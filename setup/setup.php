@@ -1,8 +1,39 @@
 <?php
 
-require_once(__DIR__ . '/DB.php');
+require_once __DIR__ . '/DB.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Image.php';
 
+// создаем бд
 $setup_script = file_get_contents(__DIR__ . '/setup.sql');
+if (file_exists(__DIR__ . '/../camagru.sqlite3'))
+    unlink(__DIR__ . '/../camagru.sqlite3');
 DB::getInstance()->exec($setup_script);
 
-# TODO create user admin
+// создаем админа
+$user = new User(array(
+    'login' => 'admin',
+    'password' => 'qwerty123',
+    'email' => 'admin@admin.ru'
+));
+$user->save();
+
+//добавляем фотки
+$images_dir = __DIR__ . '/base_images';
+$user = User::getOne(array('login' => 'admin'));
+$images = array_diff(scandir($images_dir), array('..', '.'));
+
+if (file_exists(__DIR__ . '/../images'))
+    exec('rm -rf ' . __DIR__ . '/../images');
+mkdir(__DIR__ . '/../images', 0777, true);
+
+foreach ($images as $file)
+{
+    $obj = new Image(array(
+            'label' => 'Это подпись',
+            'created_by' => $user->id,
+            'extension' => pathinfo($images_dir . '/' . $file, PATHINFO_EXTENSION))
+    );
+    $obj->save();
+    file_put_contents(__DIR__ . '/..' . $obj->getPath(), file_get_contents($images_dir . '/' . $file));
+}

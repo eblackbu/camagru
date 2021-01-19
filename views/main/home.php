@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../blocks/header.php';
+require_once __DIR__ . '/../../models/Image.php';
 ?>
 
 <div class="home">
@@ -13,29 +14,21 @@ require_once __DIR__ . '/../blocks/header.php';
             <img src="/views/image/photo2.svg" alt="">
         </div></a>
         <div class="home__main-posts">
-            <div class="home__main-posts-item"><img src="/views/image/1.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/2.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/3.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/4.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/5.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/1.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/2.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/3.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/4.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/5.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/1.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/2.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/3.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/4.jpg" alt=""></div>
-            <div class="home__main-posts-item"><img src="/views/image/5.jpg" alt=""></div>
+            <?php
+            $images = Image::getMany(array('created_by' => $_SESSION['user']['id']));
+            foreach($images as $image)
+            {
+                ?><div class="home__main-posts-item"><img src="<?php echo $image->getPath() ?>" alt=""></div><?php
+            }
+            ?>
         </div>
-        <div class="home__main-posts-modal">
-            <div class="home__main-posts-modal-base">
-                <div class="home__main-posts-modal-base-close">
+        <div class="modal">
+            <div class="modal__base">
+                <div class="modal__base-close">
                     X
                 </div>
             </div>
-            <div class="home__main-posts-modal-filler"></div>
+            <div class="modal__filler"></div>
         </div>
         
     </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'models/User.php';
+require_once __DIR__ . '/../models/User.php';
 
 function submit_register($login, $hash)
 {

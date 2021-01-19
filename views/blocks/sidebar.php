@@ -1,18 +1,25 @@
+<?php
+
+require_once ('handlers/logout_handler.php');
+require_once ('models/User.php');
+
+?>
+
 <div class="sidebar">
     <div class="sidebar__profile group">
         <div class="sidebar__profile-avatar">
-            <a href="/home"><img src="/views/image/drochila.jpg" alt=""></a>
+            <img src="/views/image/drochila.jpg" alt="">
         </div>
         <div class="sidebar__profile-nickname">
-            <a href="/home">adskiy_drochila</a>
+            <?php echo $_SESSION['user']['login']; ?>
         </div>
     </div>
     <div class="sidebar__statistics group">
-        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: 1488</a></div>
-        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: 228</a></div>
+        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
         <div class="sidebar__options-settings"><a href="/change_password">Настройки</a></div>
-        <div class="sidebar__options-logout"><a href="">Выйти</a></div>
+        <div class="sidebar__options-logout"><a href="/logout">Выйти</a></div>
     </div>
 </div>

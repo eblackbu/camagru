@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once('helpers/redirect.php');
-require_once('models/User.php');
+require_once __DIR__ . '/../helpers/redirect.php';
+require_once __DIR__ . '/../models/User.php';
 
 function login($_login, $_password)
 {
@@ -23,7 +23,7 @@ function login($_login, $_password)
     else
     {
         $_SESSION['user']['id'] = $user->id;
-        $_SESSION['user']['username'] = $user->login;
+        $_SESSION['user']['login'] = $user->login;
     }
     redirect_to('/');
 }

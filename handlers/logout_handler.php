@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'helpers/redirect.php';
+require_once __DIR__ . '/../helpers/redirect.php';
 
 function logout()
 {
