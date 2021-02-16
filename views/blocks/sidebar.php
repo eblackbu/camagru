@@ -19,8 +19,7 @@ require_once ('models/User.php');
         <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
-        <div class="sidebar__options-rename"><a href="">Смена ника</a></div>
-        <div class="sidebar__options-repassword"><a href="/change_password">Смена пароля</a></div>
+        <div class="sidebar__options-repassword"><a href="/change_info">Настройки</a></div>
         <div class="sidebar__options-logout"><a href="/logout">Выйти</a></div>
     </div>
 </div>

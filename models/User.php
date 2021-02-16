@@ -71,4 +71,10 @@ class User extends Model
         $salt = substr($this->password, 0, 8);
         return $this->password == self::__get_password_hash($salt, $password);
     }
+
+    public function changePassword($new_password)
+    {
+        $this->password = self::__hash_password($new_password);
+        $this->save();
+    }
 }

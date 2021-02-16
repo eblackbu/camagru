@@ -154,7 +154,7 @@ class Model
     protected function _update(): bool
     {
         $prepared_string = $this->__prepare_string_for_update();
-        $query = self::$pdo->prepare('UPDATE `' . static::class . '` SET ' . $prepared_string . 'WHERE `id` = :id');
+        $query = self::$pdo->prepare('UPDATE `' . static::class . '` SET ' . $prepared_string . ' WHERE `id` = :id');
 
         $this->__bind_params($query, $this->_fields);
 
