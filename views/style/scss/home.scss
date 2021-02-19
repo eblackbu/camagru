@@ -83,7 +83,38 @@ $color-minor: #F4A460;
             }
 
         }
+        &-profile {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
 
+            .profile__main, .profile__minor {
+                flex-basis: 100%;
+            }
+
+            .profile__main {
+                display: flex;
+                justify-content: space-between;
+
+                &-info {
+                    display: flex;
+                    justify-content: flex-start;
+                }
+
+                .auth__form-btn {
+                    letter-spacing: normal;
+                }
+            }
+
+            .profile__minor {
+                display: flex;
+                justify-content: flex-end;
+
+                &-subscriptions, &-subscribers {
+                    padding: 5px;
+                }
+            }
+        }
     }
 
     @media (max-width: 960px) {
@@ -100,6 +131,10 @@ $color-minor: #F4A460;
 @media (max-width: 960px) {
     .home__main {
         z-index: 0;
+
+        .profile__minor, .auth__form-btn {
+            font-size: 12px;
+        }
     }
 }
 
@@ -113,6 +148,10 @@ $color-minor: #F4A460;
 @media (max-width: 540px) {
     .content  { 
         padding-top: 10px;
+    }
+
+    .profile__minor, .auth__form-btn {
+        font-size: 10px;
     }
 
     .home__main {
@@ -138,6 +177,10 @@ $color-minor: #F4A460;
         &-posts-item {
             margin-top: 5px;
         }
+    }
+
+    .profile__main .modal__base-content-title-nickname {
+        font-size: 17px;
     }
 }
 
