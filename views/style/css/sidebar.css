@@ -1,11 +1,12 @@
 .sidebar {
   font-weight: 700; }
-  .sidebar a {
+  .sidebar a, .sidebar span {
     color: #fff;
     font-weight: 700;
     text-decoration: none; }
-    .sidebar a:hover {
-      text-decoration: underline; }
+    .sidebar a:hover, .sidebar span:hover {
+      text-decoration: underline;
+      cursor: pointer; }
   .sidebar__profile-avatar {
     text-align: center; }
     .sidebar__profile-avatar img {
@@ -29,3 +30,19 @@
       background-color: #ccc;
       bottom: -5px;
       left: 15%; }
+
+.search {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 199px;
+  background-color: #fff; }
+  .search__close {
+    color: #7FFFD4;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    transition: color .2s linear; }
+    .search__close:hover {
+      color: #F4A460;
+      cursor: pointer; }

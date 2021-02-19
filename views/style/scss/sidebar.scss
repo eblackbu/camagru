@@ -1,11 +1,16 @@
+$color-major: #7FFFD4;
+$color-minor: #F4A460;
+
+
 .sidebar {
     font-weight: 700;
-    a {
+    a, span {
         color: #fff;
         font-weight: 700;
         text-decoration: none;
         &:hover {
             text-decoration: underline;
+            cursor: pointer;
         }
     }
 
@@ -47,6 +52,27 @@
             background-color: #ccc;
             bottom: -5px;
             left: 15%;
+        }
+    }
+}
+
+.search {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 199px;
+    background-color: #fff;
+
+    &__close {
+        color: $color-major;
+        position: absolute;
+        top: 0;
+        right: 5px;
+        transition: color .2s linear;
+
+        &:hover {
+            color: $color-minor;
+            cursor: pointer;
         }
     }
 }

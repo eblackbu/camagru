@@ -4,7 +4,8 @@ $color-minor: #F4A460;
 
 .home {
     color: #000;
-    a {
+    position: relative;
+    a, span {
         text-decoration: none;
         color: #000;
     }
@@ -13,16 +14,28 @@ $color-minor: #F4A460;
     padding-top: 50px;
 
     &__sidebar {
+        z-index: 2;
         position: fixed;
         padding: 10px;
         flex-basis: 200px;
         border: 2px solid $color-major;
         border-radius: 10px;
-        height: 195px;
+        height: 210px;
         background-color: #fff;
     }
 
+    .search {
+        width: 387%;
+        border-radius: 10px;
+        top: -2px;
+        padding: 15px 5px 5px;
+        border: 2px solid $color-major;
+        right: -442%;
+        z-index: 2;
+    }
+
     &__main {
+        z-index: 1;
         padding: 20px;
         position: relative;
         margin-left: 220px;
@@ -81,6 +94,12 @@ $color-minor: #F4A460;
             flex-basis: 100%;
             margin-left: 0;
         }
+    }
+}
+
+@media (max-width: 960px) {
+    .home__main {
+        z-index: 0;
     }
 }
 
