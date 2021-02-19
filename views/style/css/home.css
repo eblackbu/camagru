@@ -61,6 +61,25 @@
           object-fit: cover; }
         .home__main-posts-item:hover {
           cursor: pointer; }
+    .home__main-profile {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px; }
+      .home__main-profile .profile__main, .home__main-profile .profile__minor {
+        flex-basis: 100%; }
+      .home__main-profile .profile__main {
+        display: flex;
+        justify-content: space-between; }
+        .home__main-profile .profile__main-info {
+          display: flex;
+          justify-content: flex-start; }
+        .home__main-profile .profile__main .auth__form-btn {
+          letter-spacing: normal; }
+      .home__main-profile .profile__minor {
+        display: flex;
+        justify-content: flex-end; }
+        .home__main-profile .profile__minor-subscriptions, .home__main-profile .profile__minor-subscribers {
+          padding: 5px; }
   @media (max-width: 960px) {
     .home__sidebar {
       display: none; }
@@ -70,7 +89,9 @@
 
 @media (max-width: 960px) {
   .home__main {
-    z-index: 0; } }
+    z-index: 0; }
+    .home__main .profile__minor, .home__main .auth__form-btn {
+      font-size: 12px; } }
 
 @media (max-width: 700px) {
   .content {
@@ -80,6 +101,8 @@
 @media (max-width: 540px) {
   .content {
     padding-top: 10px; }
+  .profile__minor, .auth__form-btn {
+    font-size: 10px; }
   .home__main {
     padding: 5px; }
     .home__main-new {
@@ -91,7 +114,9 @@
     .home__main .modal__base-content-title-nickname {
       font-size: 20px; }
     .home__main-posts-item {
-      margin-top: 5px; } }
+      margin-top: 5px; }
+  .profile__main .modal__base-content-title-nickname {
+    font-size: 17px; } }
 
 .like {
   position: relative;

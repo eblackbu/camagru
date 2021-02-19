@@ -28,6 +28,8 @@ $(document).on('click','.header__content-menu', function(){
     if($('.header__content-menu').hasClass('active')) {
         $('.header__content-menu').removeClass('active');
         $('.main__main').css('opacity', '1');
+        $('.home__main').css('opacity', '1');
+        $('.search').hide();
         
     } else {
         $('.header__content-menu').addClass('active');
@@ -41,16 +43,19 @@ $(document).on('click','.modal__base-close', function(){
     $(".modal__base-content").remove();
 });
 
+// скрытие и показ настроек модалки по кнопке
 $(document).on('click','.modal__base-content-options-description-settings', function(){
     $('.modal__menu').toggle();
 });
 
+// скрытие и показ панели редактирования
 $(document).on('click','.modal__menu-edit', function(){
     $('.modal__description-edit').toggle();
     $('.description-edit').text($('.modal__base-content-options-description-text').text());
     $('.modal__menu').toggle();
 });
 
+// отображение лайка
 $(document).on('click','.like', function(){
     if ($('.like__left').css('background-color') == 'rgb(255, 255, 255)') {
         $('.like__left').css({'background-color': 'rgb(255, 0, 0)', 'border': 'none'});
@@ -63,11 +68,12 @@ $(document).on('click','.like', function(){
     }
 }); 
 
-
+// скрытие и показ коментариев
 $(document).on('click','.modal__base-content-options-statistics-comments', function(){
     $('.modal__comments').toggle();
 });
 
+// логика подключения вебки
 let constraints = { audio: false, video: { width: 300, height: 200 } };
 
 navigator.mediaDevices.getUserMedia(constraints)
@@ -80,6 +86,7 @@ video.onloadedmetadata = function(e) {
 })
 .catch(function(err) { console.log(err.name + ": " + err.message); });
 
+// запись скрина в канвас
 $(document).on('click','#snapshot', function() { 
     let video = document.querySelector('video'); 
     let canvas = document.getElementById('canvasMake'); 
@@ -87,7 +94,7 @@ $(document).on('click','#snapshot', function() {
     ctx.drawImage(video, 0, 0); 
 }); 
 
-
+// переключение режима добавления фото
 let stateFirstRadio = false;
 $(document).on('click', 'input[name="choice"]', function() { 
     if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
@@ -101,16 +108,21 @@ $(document).on('click', 'input[name="choice"]', function() {
     }
 }); 
 
+// показ поиска
 $(document).on('click', '#search', function() { 
     $('.search').show();
     $('.main__main').css('opacity', '.5');
+    $('.home__main').css('opacity', '.5');
 });
 
+// скрытие поиска
 $(document).on('click', '.search__close', function() { 
     $('.search').hide();
     $('.main__main').css('opacity', '1');
+    $('.home__main').css('opacity', '1');
 });    
 
+// отправка аяка по нажатию клавиши "найти"
 $(document).on('click', '#search_get', function() { 
     $.get(
         "example.php",
@@ -121,6 +133,7 @@ $(document).on('click', '#search_get', function() {
     );
 });   
 
+// функция, отрабатвающая в случае успешной отправки
 function onAjaxSuccess(data)
 {
     alert(data);

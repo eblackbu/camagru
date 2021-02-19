@@ -7,12 +7,14 @@ require_once ('models/User.php');
 
 <div class="sidebar">
     <div class="sidebar__profile group">
-        <div class="sidebar__profile-avatar">
-            <img src="/views/image/drochila.jpg" alt="">
-        </div>
-        <div class="sidebar__profile-nickname">
-            <?php echo $_SESSION['user']['login']; ?>
-        </div>
+        <a href="/home">
+            <div class="sidebar__profile-avatar">
+                <img src="/views/image/drochila.jpg" alt="">
+            </div>
+            <div class="sidebar__profile-nickname">
+                <?php echo $_SESSION['user']['login']; ?>
+            </div>
+        </a>
     </div>
     <div class="sidebar__statistics group">
         <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
@@ -29,8 +31,8 @@ require_once ('models/User.php');
     <div class="search__close">x</div>
     <div class="search__form">
         <form>
-            <input type="text" id="search_input" value="найти">
-            <input type="button" value="найти" id="search_get">
+            <input type="text" id="search_input">
+            <input type="button" id="search_get" value="найти">
         </form>
     </div>
     <div class="search__result"></div>
