@@ -1,20 +1,31 @@
 .home {
   color: #000;
   position: relative;
+  position: relative;
   display: flex;
   padding-top: 50px; }
-  .home a {
+  .home a, .home span {
     text-decoration: none;
     color: #000; }
   .home__sidebar {
+    z-index: 2;
     position: fixed;
     padding: 10px;
     flex-basis: 200px;
     border: 2px solid #7FFFD4;
     border-radius: 10px;
-    height: 195px;
+    height: 210px;
     background-color: #fff; }
+  .home .search {
+    width: 387%;
+    border-radius: 10px;
+    top: -2px;
+    padding: 15px 5px 5px;
+    border: 2px solid #7FFFD4;
+    right: -442%;
+    z-index: 2; }
   .home__main {
+    z-index: 1;
     padding: 20px;
     position: relative;
     margin-left: 220px;
@@ -56,6 +67,10 @@
     .home__main {
       flex-basis: 100%;
       margin-left: 0; } }
+
+@media (max-width: 960px) {
+  .home__main {
+    z-index: 0; } }
 
 @media (max-width: 700px) {
   .content {

@@ -1,7 +1,13 @@
-// скрытие сообщения в самом начале
+// скрытие сообщения в самом начале и фото режима
 $(document).ready(function(){
     if($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
+    }
+
+    if ($('input[name="choice"]:checked').val() == '1') {
+        $('.uploadPhoto').hide();
+    } else if ($('input[name="choice"]:checked').val() == '2') {
+        $('.makePhoto').hide();
     }
 });
 
@@ -21,6 +27,8 @@ $(document).on('click','.header__content-menu', function(){
     $('.header__content-sidebar').toggle();
     if($('.header__content-menu').hasClass('active')) {
         $('.header__content-menu').removeClass('active');
+        $('.main__main').css('opacity', '1');
+        
     } else {
         $('.header__content-menu').addClass('active');
     }
@@ -58,4 +66,101 @@ $(document).on('click','.like', function(){
 
 $(document).on('click','.modal__base-content-options-statistics-comments', function(){
     $('.modal__comments').toggle();
+});
+
+let constraints = { audio: false, video: { width: 300, height: 200 } };
+
+navigator.mediaDevices.getUserMedia(constraints)
+.then(function(mediaStream) {
+let video = document.querySelector('video');
+video.srcObject = mediaStream;
+video.onloadedmetadata = function(e) {
+    video.play();
+};
+})
+.catch(function(err) { console.log(err.name + ": " + err.message); });
+
+$(document).on('click','#snapshot', function() { 
+    let video = document.querySelector('video'); 
+    let canvas = document.getElementById('canvasMake'); 
+    let ctx = canvas.getContext('2d'); 
+    ctx.drawImage(video, 0, 0); 
+}); 
+
+
+let stateFirstRadio = false;
+$(document).on('click', 'input[name="choice"]', function() { 
+    if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
+        $('.uploadPhoto').toggle();
+        $('.makePhoto').toggle();
+        stateFirstRadio = false;
+    } else if ($('input[name="choice"][value="2"]').prop("checked") && !stateFirstRadio) {
+        $('.uploadPhoto').toggle();
+        $('.makePhoto').toggle();
+        stateFirstRadio = true;
+    }
+}); 
+
+$(document).on('click', '#search', function() { 
+    $('.search').show();
+    $('.main__main').css('opacity', '.5');
+});
+
+$(document).on('click', '.search__close', function() { 
+    $('.search').hide();
+    $('.main__main').css('opacity', '1');
+});    
+
+$(document).on('click', '#search_get', function() { 
+    $.get(
+        "example.php",
+        {
+            log: $("#search_input").val(),
+        },
+        onAjaxSuccess
+    );
+});   
+
+function onAjaxSuccess(data)
+{
+    alert(data);
+}
+
+
+
+
+
+
+
+
+
+// test bottom
+$(document).on('click', '#lol', function() { 
+    let file = $('input[type="file"]').prop('files');
+    console.log(file[0]['name']);
+    console.log(file);
+}); 
+
+// $(document).on('change', '#file', function(){
+//     let photo = $('input[type="file"]').prop('files')[0]['name']; 
+//     let canvas = document.getElementById('canvasUpload'); 
+//     let ctx = canvas.getContext('2d'); 
+//     ctx.drawImage(photo, 0, 0); 
+// });
+
+$(document).on('change', '#file', function(){
+    let photo = $('input[type="file"]').prop('files');
+
+    // FileReader support
+    if (FileReader && photo && photo.length) {
+        var fr = new FileReader(photo);
+        console.log(fr.result);
+        // fr.onload = function () {
+        //     let canvas = document.getElementById('canvasUpload'); 
+        //     let ctx = canvas.getContext('2d'); 
+        //     ctx.drawImage(fr.result, 0, 0);
+        // }
+        // fr.readAsDataURL(files[0]);
+    } else {
+    }
 });
