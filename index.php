@@ -2,13 +2,12 @@
 error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 
-# TODO 1) страница другого пользователя
-# TODO 2) handler для
-
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $segments = explode('/', trim($uri, '/'));
 $views_path = '/views/main/';
 $handlers_path = '/handlers/';
+
+require_once __DIR__ . '/helpers/redirect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -43,9 +42,6 @@ else if (isset($_SESSION['user']))
 {
     switch ($segments[0])
     {
-        case 'home':
-            require __DIR__ . $views_path . 'home.php';
-            break;
         case 'new_photo':
             require __DIR__ . $views_path . 'new_photo.php';
             break;
@@ -55,6 +51,13 @@ else if (isset($_SESSION['user']))
         case 'logout':
             require_once __DIR__ .  $handlers_path . 'logout_handler.php';
             logout();
+            break;
+        case 'users':
+            require __DIR__ . $views_path . 'user.php';
+            break;
+        case 'search':
+            require __DIR__ . $handlers_path . 'search_handler.php';
+            search($_GET['search_string']);
             break;
         case '':
             require __DIR__ . $views_path . 'main.php';
@@ -76,7 +79,7 @@ else if (!isset($segments[1]))
             submit_register($_GET['login'], $_GET['hash']);
             break;
         case 'change_password': // change_password_request ???
-            require __DIR__ . $views_path;
+            require __DIR__ . $views_path . 'change_info.php';
             break;
         case 'new_password':
             require __DIR__ . $views_path . 'new_password.php';

@@ -10,14 +10,15 @@ class User extends Model
     public ?string $password = null;
     public ?string $email = null;
     public ?bool $is_admin = null;
-    // TODO avatar_path
+    public ?int $avatar_path = null;
 
     public array $_fields = [
         'id',
         'login',
         'password',
         'email',
-        'is_admin'
+        'is_admin',
+        'avatar_path',
     ];
 
     protected function _create(): bool # TODO убрать когда будет двухуровневая регистрация
@@ -42,7 +43,7 @@ class User extends Model
         return $salt . hash('whirlpool', $salt . $password);
     }
 
-    public static function getSubscribersCount($id): int
+    public static function getSubscribersCount(int $id): int
     {
         try {
             $res = count(Subscription::getMany(array('user_where' => $id)));
@@ -54,8 +55,10 @@ class User extends Model
         return $res;
     }
 
-    public static function getSubscriptionsCount($id): int
+    public static function getSubscriptionsCount(int $id): int
     {
+        if (!$id)
+            return 0;
         try {
             $res = count(Subscription::getMany(array('user_from' => $id)));
         } catch (ORMException $e) {
@@ -66,15 +69,35 @@ class User extends Model
         return $res;
     }
 
-    public function checkPassword($password): bool
+    public function checkPassword(string $password): bool
     {
         $salt = substr($this->password, 0, 8);
         return $this->password == self::__get_password_hash($salt, $password);
     }
 
-    public function changePassword($new_password)
+    public function changePassword(string $new_password)
     {
         $this->password = self::__hash_password($new_password);
         $this->save();
+    }
+
+    public function setAvatar($image)
+    {
+        // TODO
+    }
+
+    public static function getUsersBySearch($search_string): array
+    {
+        $prepared_string = 'SELECT * FROM `User` WHERE `User`.`login` LIKE :search_string';
+        self::$pdo = DB::getInstance();
+        $query = self::$pdo->prepare($prepared_string);
+        $login = '%' . $search_string . '%';
+        $query->bindParam(':search_string', $login);
+        $result = $query->execute();
+        $data = $query->fetchaLl();
+        $query->closeCursor();
+        return array_map(function ($row) {
+            return new User($row);
+        }, $data);
     }
 }

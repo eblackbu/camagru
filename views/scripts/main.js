@@ -74,25 +74,25 @@ $(document).on('click','.modal__base-content-options-statistics-comments', funct
 });
 
 // логика подключения вебки
-let constraints = { audio: false, video: { width: 300, height: 200 } };
-
-navigator.mediaDevices.getUserMedia(constraints)
-.then(function(mediaStream) {
-let video = document.querySelector('video');
-video.srcObject = mediaStream;
-video.onloadedmetadata = function(e) {
-    video.play();
-};
-})
-.catch(function(err) { console.log(err.name + ": " + err.message); });
-
-// запись скрина в канвас
-$(document).on('click','#snapshot', function() { 
-    let video = document.querySelector('video'); 
-    let canvas = document.getElementById('canvasMake'); 
-    let ctx = canvas.getContext('2d'); 
-    ctx.drawImage(video, 0, 0); 
-}); 
+// let constraints = { audio: false, video: { width: 300, height: 200 } };
+//
+// navigator.mediaDevices.getUserMedia(constraints)
+// .then(function(mediaStream) {
+// let video = document.querySelector('video');
+// video.srcObject = mediaStream;
+// video.onloadedmetadata = function(e) {
+//     video.play();
+// };
+// })
+// .catch(function(err) { console.log(err.name + ": " + err.message); });
+//
+// // запись скрина в канвас
+// $(document).on('click','#snapshot', function() {
+//     let video = document.querySelector('video');
+//     let canvas = document.getElementById('canvasMake');
+//     let ctx = canvas.getContext('2d');
+//     ctx.drawImage(video, 0, 0);
+// });
 
 // переключение режима добавления фото
 let stateFirstRadio = false;
@@ -122,12 +122,12 @@ $(document).on('click', '.search__close', function() {
     $('.home__main').css('opacity', '1');
 });    
 
-// отправка аяка по нажатию клавиши "найти"
+// отправка аякса по нажатию клавиши "найти"
 $(document).on('click', '#search_get', function() { 
     $.get(
-        "example.php",
+        "/search",
         {
-            log: $("#search_input").val(),
+            search_string: $("#search_input").val(),
         },
         onAjaxSuccess
     );
@@ -136,7 +136,7 @@ $(document).on('click', '#search_get', function() {
 // функция, отрабатвающая в случае успешной отправки
 function onAjaxSuccess(data)
 {
-    alert(data);
+    alert(data.join(', '));
 }
 
 

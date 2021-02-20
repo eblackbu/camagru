@@ -2,12 +2,19 @@
 
 require_once __DIR__ . '/../models/Like.php';
 
-function like($user, $image): bool
+function like($user, $image)
 {
-    $like = new Like(array(
-        'created_by' => $user,
-        'image' => $image,
-    ));
-    $like->save();
-    return True;
+    header('Content-type: application/json');
+    try {
+        $like = Like::getOne(array('created_by' => $user, 'image' => $image));
+        $like->delete();
+    } catch (ORMException $e) {
+        $like = new Like(array(
+            'created_by' => $user,
+            'image' => $image,
+        ));
+        $like->save();
+    }
+
+    echo json_encode(array('success' => False));
 }

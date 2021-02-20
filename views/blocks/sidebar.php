@@ -7,7 +7,7 @@ require_once ('models/User.php');
 
 <div class="sidebar">
     <div class="sidebar__profile group">
-        <a href="/home">
+        <a href="/users/<?php echo $_SESSION['user']['login']?>">
             <div class="sidebar__profile-avatar">
                 <img src="/views/image/drochila.jpg" alt="">
             </div>

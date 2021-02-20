@@ -189,4 +189,16 @@ class Model
         $query->closeCursor();
         return True;
     }
+
+    /**
+     * Function for converting instance to array_map for json_encode
+     * @return array
+     */
+    public function toJson(): array
+    {
+        $data = array();
+        foreach ($this->_fields as $field)
+            $data[$field] = $this->{$field};
+        return $data;
+    }
 }
