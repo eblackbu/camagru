@@ -4,7 +4,8 @@ $color-minor: #F4A460;
 
 .home {
     color: #000;
-    a {
+    position: relative;
+    a, span {
         text-decoration: none;
         color: #000;
     }
@@ -13,16 +14,28 @@ $color-minor: #F4A460;
     padding-top: 50px;
 
     &__sidebar {
+        z-index: 2;
         position: fixed;
         padding: 10px;
         flex-basis: 200px;
         border: 2px solid $color-major;
         border-radius: 10px;
-        height: 195px;
+        height: 210px;
         background-color: #fff;
     }
 
+    .search {
+        width: 387%;
+        border-radius: 10px;
+        top: -2px;
+        padding: 15px 5px 5px;
+        border: 2px solid $color-major;
+        right: -442%;
+        z-index: 2;
+    }
+
     &__main {
+        z-index: 1;
         padding: 20px;
         position: relative;
         margin-left: 220px;
@@ -55,66 +68,6 @@ $color-minor: #F4A460;
             flex-wrap: wrap;
             justify-content: space-evenly;
 
-            &-comments {
-                display: none;
-                margin-top: 10px;
-                
-                &-item {
-                    margin: 10px 5px;
-                    padding: 10px;
-                    border-radius: 5px;
-                    box-shadow: 0 0 10px #999;
-
-                    &-title {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-bottom: 3px;
-
-                        &-nick {
-                            font-weight: 700;
-                        }
-
-                        &-data {
-                            font-size: 12px;
-                        }
-                    }
-                }
-            }
-
-            &-description {
-                &-edit {
-                    display: none;
-
-                    form {
-                        margin: 10px 0;
-                    }
-                }
-            }
-
-            &-menu {
-                display: none;
-                position: absolute;
-                top: 16px;
-                right: 0;
-                z-index: 10;
-                background-color: #fff;
-                text-align: right;
-                font-size: 12px;
-                padding: 10px;
-                border: .5px solid $color-major;
-
-                &-delete {
-                    margin-top: 5px;
-                }
-
-                &-delete, &-edit {
-                    &:hover {
-                        cursor: pointer;
-                        text-decoration: underline;
-                    }
-                }
-            }
-
             &-item {
                 margin-top: 20px;
                 width: 32%;
@@ -129,116 +82,39 @@ $color-minor: #F4A460;
                 }
             }
 
-            &-modal {
-                display: none;
-                position: absolute;
-                top: 0;
-                left: 0;
-                
-                &-base {
-                    color: #000;
-                    background-color: #fff;
-                    padding: 20px;
-                    border-radius: 10px;
-                    margin-bottom: 30px;
-                    border: 2px solid $color-minor;
+        }
+        &-profile {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
 
-                    &-content {
-                        &-title {
-                            a {
-                                display: flex;
-                            }
+            .profile__main, .profile__minor {
+                flex-basis: 100%;
+            }
 
-                            &-avatar {
-                                img {
-                                    width: 40px;
-                                    border-radius: 50%;
-                                }
-                                margin: 0 10px 10px;
-                            }
-                        }
-                        
-                        &-image {
-                            img {
-                                width: 100%;
-                            }
-                        }
+            .profile__main {
+                display: flex;
+                justify-content: space-between;
 
-                        &-options {
-                            &-statistics {
-                                &-comments {
-                                    display: flex;
-
-                                    &:hover {
-                                        cursor: pointer;
-                                    }
-                                }
-                            }
-                            &-description {
-                                margin: 10px 0;
-                                display: flex;
-                                justify-content: space-between;
-                                position: relative;
-
-                                &-settings {
-                                    display: flex;
-                                    width: 70px;
-                                    height: 16px;
-                                    padding-top: 3px;
-                                    justify-content: space-evenly;
-                                    border-radius: 10px 10px 10px 10px;
-                                    transition: .3s linear;
-
-                                    &-circle1, &-circle2, &-circle3 {
-                                        width: 10px;
-                                        height: 10px;
-                                        background-color: #000;
-                                        border-radius: 50%;
-                                    }
-
-                                    &:hover {
-                                        cursor: pointer;
-                                        background-color: $color-major;
-                                    }
-                                }
-                            }
-                            &-info {
-                                display: flex;
-                                justify-content: space-between;
-
-                                &-statistics {
-                                    display: flex;
-                                    font-size: 14px;
-                                }
-
-                                &-date {
-                                    font-size: 14px;
-                                }
-                            }
-                        }
-                    }
-                    
-                    &-close {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        padding: 5px 10px;
-                        transition: .3s linear;
-
-                        &:hover {
-                            cursor: pointer;
-                            color: $color-minor;
-                        }
-                    }
+                &-info {
+                    display: flex;
+                    justify-content: flex-start;
                 }
 
-                &-filler {
-                    height: 50px;
-                    width: 100%;
+                .auth__form-btn {
+                    letter-spacing: normal;
+                }
+            }
+
+            .profile__minor {
+                display: flex;
+                justify-content: flex-end;
+
+                &-subscriptions, &-subscribers {
+                    padding: 5px;
                 }
             }
         }
-
     }
 
     @media (max-width: 960px) {
@@ -248,6 +124,16 @@ $color-minor: #F4A460;
         &__main {
             flex-basis: 100%;
             margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    .home__main {
+        z-index: 0;
+
+        .profile__minor, .auth__form-btn {
+            font-size: 12px;
         }
     }
 }
@@ -264,6 +150,10 @@ $color-minor: #F4A460;
         padding-top: 10px;
     }
 
+    .profile__minor, .auth__form-btn {
+        font-size: 10px;
+    }
+
     .home__main {
         padding: 5px;
         &-new {
@@ -272,7 +162,7 @@ $color-minor: #F4A460;
                 width: 15px;
             }
         }
-        &-posts-modal-base-content-title {
+        .modal__base-content-title {
             &-avatar {
                 img {
                     width: 30px;
@@ -287,6 +177,10 @@ $color-minor: #F4A460;
         &-posts-item {
             margin-top: 5px;
         }
+    }
+
+    .profile__main .modal__base-content-title-nickname {
+        font-size: 17px;
     }
 }
 
@@ -354,21 +248,5 @@ $color-minor: #F4A460;
 
     &-count {
         padding-left: 5px;
-    }
-}
-
-.modal-textarea {
-    font-family: 'Comfortaa', cursive;
-    padding: 6px;
-    width: 100%;
-    border-radius: 5px;
-    resize: none;
-    display: block;
-    margin-bottom: 5px;
-    outline: none;
-    border: 2px solid $color-major;
-
-    &:focus {
-        border: 2px solid $color-minor;
     }
 }

@@ -1,7 +1,13 @@
-// скрытие сообщения в самом начале
+// скрытие сообщения в самом начале и фото режима
 $(document).ready(function(){
     if($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
+    }
+
+    if ($('input[name="choice"]:checked').val() == '1') {
+        $('.uploadPhoto').hide();
+    } else if ($('input[name="choice"]:checked').val() == '2') {
+        $('.makePhoto').hide();
     }
 });
 
@@ -21,116 +27,35 @@ $(document).on('click','.header__content-menu', function(){
     $('.header__content-sidebar').toggle();
     if($('.header__content-menu').hasClass('active')) {
         $('.header__content-menu').removeClass('active');
+        $('.main__main').css('opacity', '1');
+        $('.home__main').css('opacity', '1');
+        $('.search').hide();
+        
     } else {
         $('.header__content-menu').addClass('active');
     }
 });
 
-// отображение модалки по щелчку айтема
-$(document).on('click','.home__main-posts-item', function(){
-    $('.home__main-posts').css('opacity', '.5');
-    $('.home__main-posts-modal').css('top', $(window).scrollTop());
-    $(`<div class="home__main-posts-modal-base-content"></div>`).appendTo(".home__main-posts-modal-base");
-    // ниже нужна аватарка и имя профиля из бд
-    $(`<div class="home__main-posts-modal-base-content-title">
-        <a href="profile/id">
-            <div class="home__main-posts-modal-base-content-title-avatar">
-                <img src="/views/image/drochila.jpg" alt="">
-            </div>
-            <h1 class="home__main-posts-modal-base-content-title-nickname">adskiy_drochila</h1>
-        </a>
-        </div>`).appendTo(".home__main-posts-modal-base-content");
-    // картинка конкретного поста, на который кликнули
-    $(`<div class="home__main-posts-modal-base-content-image">${$(this).html()}</div>`).appendTo(".home__main-posts-modal-base-content");
-    // инфа по описанию, количеству лайков и коментам
-    // тут еще буду изменения
-    $(`<div class="home__main-posts-modal-base-content-options">
-            <div class="home__main-posts-modal-base-content-options-description">
-                <div class="home__main-posts-modal-base-content-options-description-text">Самая пиздатая фотка в мире, инфа сотка!</div>
-                <div class="home__main-posts-modal-base-content-options-description-settings">
-                    <div class="home__main-posts-modal-base-content-options-description-settings-circle1"></div>
-                    <div class="home__main-posts-modal-base-content-options-description-settings-circle2"></div>
-                    <div class="home__main-posts-modal-base-content-options-description-settings-circle3"></div>
-                </div>
-                <div class="home__main-posts-menu">
-                    <div class="home__main-posts-menu-edit">Изменить</div>
-                    <div class="home__main-posts-menu-delete">Удалить</div>
-                </div>
-            </div>
-            <div class="home__main-posts-description-edit">
-                <form action="" method="post">
-                    <textarea class="modal-textarea description-edit" rows="3"></textarea>
-                    <button class="auth__form-btn">сохранить</button>
-                </form>
-            </div>
-            <div class="home__main-posts-modal-base-content-options-info">
-                <div class="home__main-posts-modal-base-content-options-info-statistics">
-                    <div class="home__main-posts-modal-base-content-options-statistics-likes">
-                        <div class="like">
-                            <div class="like__left"></div>
-                            <div class="like__right"></div>
-                            <div class="like__filler"></div>
-                        </div>
-                        <div class="like-count">
-                            666
-                        </div>
-                    </div>
-                    <div class="home__main-posts-modal-base-content-options-statistics-comments">
-                        <div class="comment"></div>
-                        <div class="comment-count"> 
-                            1337
-                        </div>
-                    </div>
-                </div>
-                <div class="home__main-posts-modal-base-content-options-info-date">
-                    <span class="home__main-posts-modal-base-content-options-statistics-likes">11.09.2001</span>
-                </div>
-            </div>
-            <div class="home__main-posts-comments">
-                <form action="/comment" method="post"> <!-- TODO П -->
-                    <textarea class="modal-textarea" rows="3"></textarea>
-                    <button class="auth__form-btn">отправить</button>
-                </form>
-                <div class="home__main-posts-comments-item">
-                    <div class="home__main-posts-comments-item-title">
-                        <div class="home__main-posts-comments-item-title-nick"><a href="#">Рузанов Слава</a></div>
-                        <div class="home__main-posts-comments-item-title-data">14.11.2017</div>
-                    </div>
-                    <div class="home__main-posts-comments-item-text">
-                        Верните мой 2007 год и стену вконтакте!!! пидарасы
-                    </div>
-                </div>
-                <div class="home__main-posts-comments-item">
-                    <div class="home__main-posts-comments-item-title">
-                        <div class="home__main-posts-comments-item-title-nick"><a href="#">Пупа Лупович</a></div>
-                        <div class="home__main-posts-comments-item-title-data">14.11.2017</div>
-                    </div>
-                    <div class="home__main-posts-comments-item-text">
-                        Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.
-                    </div>
-                </div>
-            </div>
-    </div>`).appendTo(".home__main-posts-modal-base-content");
-    $('.home__main-posts-modal').show();
-});
-
 // скрытие модалки по щелчку закрытия
-$(document).on('click','.home__main-posts-modal-base-close', function(){
+$(document).on('click','.modal__base-close', function(){
     $('.home__main-posts').css('opacity', '1');
-    $('.home__main-posts-modal').hide();
-    $(".home__main-posts-modal-base-content").remove();
+    $('.modal').hide();
+    $(".modal__base-content").remove();
 });
 
-$(document).on('click','.home__main-posts-modal-base-content-options-description-settings', function(){
-    $('.home__main-posts-menu').toggle();
+// скрытие и показ настроек модалки по кнопке
+$(document).on('click','.modal__base-content-options-description-settings', function(){
+    $('.modal__menu').toggle();
 });
 
-$(document).on('click','.home__main-posts-menu-edit', function(){
-    $('.home__main-posts-description-edit').toggle();
-    $('.description-edit').text($('.home__main-posts-modal-base-content-options-description-text').text());
-    $('.home__main-posts-menu').toggle();
+// скрытие и показ панели редактирования
+$(document).on('click','.modal__menu-edit', function(){
+    $('.modal__description-edit').toggle();
+    $('.description-edit').text($('.modal__base-content-options-description-text').text());
+    $('.modal__menu').toggle();
 });
 
+// отображение лайка
 $(document).on('click','.like', function(){
     if ($('.like__left').css('background-color') == 'rgb(255, 255, 255)') {
         $('.like__left').css({'background-color': 'rgb(255, 0, 0)', 'border': 'none'});
@@ -143,7 +68,112 @@ $(document).on('click','.like', function(){
     }
 }); 
 
+// скрытие и показ коментариев
+$(document).on('click','.modal__base-content-options-statistics-comments', function(){
+    $('.modal__comments').toggle();
+});
 
-$(document).on('click','.home__main-posts-modal-base-content-options-statistics-comments', function(){
-    $('.home__main-posts-comments').toggle();
+// логика подключения вебки
+let constraints = { audio: false, video: { width: 300, height: 200 } };
+
+navigator.mediaDevices.getUserMedia(constraints)
+.then(function(mediaStream) {
+let video = document.querySelector('video');
+video.srcObject = mediaStream;
+video.onloadedmetadata = function(e) {
+    video.play();
+};
+})
+.catch(function(err) { console.log(err.name + ": " + err.message); });
+
+// запись скрина в канвас
+$(document).on('click','#snapshot', function() { 
+    let video = document.querySelector('video'); 
+    let canvas = document.getElementById('canvasMake'); 
+    let ctx = canvas.getContext('2d'); 
+    ctx.drawImage(video, 0, 0); 
+}); 
+
+// переключение режима добавления фото
+let stateFirstRadio = false;
+$(document).on('click', 'input[name="choice"]', function() { 
+    if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
+        $('.uploadPhoto').toggle();
+        $('.makePhoto').toggle();
+        stateFirstRadio = false;
+    } else if ($('input[name="choice"][value="2"]').prop("checked") && !stateFirstRadio) {
+        $('.uploadPhoto').toggle();
+        $('.makePhoto').toggle();
+        stateFirstRadio = true;
+    }
+}); 
+
+// показ поиска
+$(document).on('click', '#search', function() { 
+    $('.search').show();
+    $('.main__main').css('opacity', '.5');
+    $('.home__main').css('opacity', '.5');
+});
+
+// скрытие поиска
+$(document).on('click', '.search__close', function() { 
+    $('.search').hide();
+    $('.main__main').css('opacity', '1');
+    $('.home__main').css('opacity', '1');
+});    
+
+// отправка аяка по нажатию клавиши "найти"
+$(document).on('click', '#search_get', function() { 
+    $.get(
+        "example.php",
+        {
+            log: $("#search_input").val(),
+        },
+        onAjaxSuccess
+    );
+});   
+
+// функция, отрабатвающая в случае успешной отправки
+function onAjaxSuccess(data)
+{
+    alert(data);
+}
+
+
+
+
+
+
+
+
+
+// test bottom
+$(document).on('click', '#lol', function() { 
+    let file = $('input[type="file"]').prop('files');
+    console.log(file[0]['name']);
+    console.log(file);
+}); 
+
+// $(document).on('change', '#file', function(){
+//     let photo = $('input[type="file"]').prop('files')[0]['name']; 
+//     let canvas = document.getElementById('canvasUpload'); 
+//     let ctx = canvas.getContext('2d'); 
+//     ctx.drawImage(photo, 0, 0); 
+// });
+
+$(document).on('change', '#file', function(){
+    let photo = $('input[type="file"]').prop('files');
+
+    // FileReader support
+    if (FileReader && photo && photo.length) {
+        var fr = new FileReader(photo);
+        console.log(fr.result);
+        // fr.onload = function () {
+        //     let canvas = document.getElementById('canvasUpload'); 
+        //     let ctx = canvas.getContext('2d'); 
+        //     ctx.drawImage(fr.result, 0, 0);
+        // }
+        // fr.readAsDataURL(files[0]);
+    } else {
+    }
 });
