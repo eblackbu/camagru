@@ -75,4 +75,22 @@ $color-minor: #F4A460;
             cursor: pointer;
         }
     }
+
+    &__result {
+        padding: 10px;
+
+        &-item {
+            &-nickname {
+                a {
+                    color: $color-major;
+                    text-decoration: none;
+                    
+                    &:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
 }

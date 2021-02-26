@@ -19,11 +19,10 @@
             </div>
             <div class="header__content-sidebar">
                 <?php
-                    require __DIR__ . '/../blocks/sidebar.php';
+                    require __DIR__ . '/../blocks/sidebar.php'; 
                 ?>
             </div>
             <div class="header__content-menu">
-                
             </div>
         </div>
     </header>
