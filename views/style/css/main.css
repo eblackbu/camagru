@@ -191,6 +191,14 @@ button, input {
     .search__close:hover {
       color: #F4A460;
       cursor: pointer; }
+  .search__result {
+    padding: 10px; }
+    .search__result-item-nickname a {
+      color: #7FFFD4;
+      text-decoration: none; }
+      .search__result-item-nickname a:hover {
+        cursor: pointer;
+        text-decoration: underline; }
 
 .home {
   color: #000;

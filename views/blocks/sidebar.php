@@ -31,9 +31,8 @@ require_once ('models/User.php');
     <div class="search__close">x</div>
     <div class="search__form">
         <form>
-            <input type="text" id="search_input">
-            <input type="button" id="search_get" value="найти">
+            <input type="text" class="search_input">
+            <input type="button" class="search_get" value="найти">
         </form>
     </div>
-    <div class="search__result"></div>
 </div>

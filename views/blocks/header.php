@@ -17,8 +17,12 @@
             <div class="header__notifications">
                 <?php require_once('helpers/notification.php'); show_notification(); ?>
             </div>
+            <div class="header__content-sidebar">
+                <?php
+                    require __DIR__ . '/../blocks/sidebar.php'; 
+                ?>
+            </div>
             <div class="header__content-menu">
-                
             </div>
         </div>
     </header>

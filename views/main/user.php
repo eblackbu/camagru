@@ -36,10 +36,10 @@ $avatar = $user->avatar_path ?? null;
                 <div class="profile__main">
                     <div class="profile__main-info">
                         <div class="modal__base-content-title-avatar profile__main-info-avatar">
-                            <a href="#"><img src="<?php echo $avatar ?? ''?>" alt=""></a>
+                            <a href="/users/<?=$user->login?>"><img src="<?php echo $avatar ?? '/views/image/none.png'?>" alt=""></a>
                         </div>
                         <div class="profile__main-info-nickname">
-                            <a href="#"><h1 class="modal__base-content-title-nickname"><?php echo $user->login ?></h1></a>
+                            <a href="/users/<?=$user->login?>"><h1 class="modal__base-content-title-nickname"><?php echo $user->login ?></h1></a>
                         </div>
                     </div>
                     <?php if ($user->id != $_SESSION['user']['id']): ?>
