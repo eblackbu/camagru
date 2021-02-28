@@ -17,11 +17,13 @@
             <div class="header__notifications">
                 <?php require_once('helpers/notification.php'); show_notification(); ?>
             </div>
+            <?php if (isset($_SESSION['user'])): ?>
             <div class="header__content-sidebar">
                 <?php
                     require __DIR__ . '/../blocks/sidebar.php'; 
                 ?>
             </div>
+            <?php endif; ?>
             <div class="header__content-menu">
             </div>
         </div>

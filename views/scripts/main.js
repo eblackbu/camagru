@@ -18,10 +18,10 @@ $(document).ready(function () {
         console.log(prepToServer());
         $.ajax({
             type: "POST",
-            url: "example.php",
-            data: { img: prepToServer() }
+            url: "/?action=add_image",
+            data: { loaded_image: prepToServer() }
         }).done(function (msg) {
-            alert('done!');
+            alert(JSON.stringify(msg, null, 2));
         });
     });
 });
@@ -217,6 +217,6 @@ function addImage() {
     var formData = new FormData(document.forms.image_form);
     // отослать
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "example.php", false);
+    xhr.open("POST", "/?action=add_image", false);
     xhr.send(formData);
 }
