@@ -1,28 +1,43 @@
-// скрытие сообщения в самом начале и фото режима
 $(document).ready(function () {
+    // скрытие сообщения в самом начале и фото режима
     if ($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
     }
 
+    //
     if ($('input[name="choice"]:checked').val() == '1') {
         $('.uploadPhoto').hide();
     } else if ($('input[name="choice"]:checked').val() == '2') {
         $('.makePhoto').hide();
     }
 
+    // скрытые канвасов
+    $('#canvasMake').hide();
+    $('#canvasUpload').hide();
+
     // отображения загруженного файла
     $("#file").on('change', handleFiles);
 
     // загрузка фото на сервер
     $("#uploadFile").click(function () {
-        console.log(prepToServer());
-        $.ajax({
-            type: "POST",
-            url: "example.php",
-            data: { img: prepToServer() }
-        }).done(function (msg) {
-            alert('done!');
-        });
+        if (window.FormData === undefined) {
+            alert('В вашем браузере FormData не поддерживается')
+        } else {
+            let canvas = prepToServer();
+            canvas.toBlob(function(blob) {
+                let formData = new FormData();
+                formData.append('my-file', blob, '.jpg');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'example.php',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    dataType : 'json'
+                });
+            });
+        }
     });
 });
 
@@ -89,7 +104,7 @@ $(document).on('click', '.modal__base-content-options-statistics-comments', func
 });
 
 // логика подключения вебки
-let constraints = { audio: false, video: { width: 300, height: 200 } };
+let constraints = { audio: false, video: {} };
 let url = window.location.pathname;
 if (url == "/new_photo") {
     navigator.mediaDevices.getUserMedia(constraints)
@@ -107,8 +122,11 @@ if (url == "/new_photo") {
 $(document).on('click', '#snapshot', function () {
     let video = document.querySelector('video');
     let canvas = document.getElementById('canvasMake');
+    canvas.width = video.clientWidth;
+    canvas.height = video.clientHeight;
     let ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    $('#canvasMake').show();
 });
 
 // переключение режима добавления фото
@@ -174,12 +192,16 @@ function chooseInput() {
 
 // функция для предпросмотра загруженного файла
 function handleFiles(e) {
-    var ctx = document.getElementById('canvasUpload').getContext('2d');
-    var img = new Image;
+    let canvas = document.getElementById('canvasUpload');
+    let img = new Image;
     img.src = URL.createObjectURL(e.target.files[0]);
     img.onload = function () {
-        ctx.drawImage(img, 0, 0, 300, 200);
+        canvas.width = this.width;
+        canvas.height = this.height;
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
+    $('#canvasUpload').show();
 }
 
 // выбор нужного канваса
@@ -190,33 +212,6 @@ function prepToServer() {
     } else {
         canvas = document.getElementById('canvasUpload');
     }
-    return canvas.toDataURL();
+    return canvas;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///
-function addImage() {
-    // создать объект для формы
-    var formData = new FormData(document.forms.image_form);
-    // отослать
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "example.php", false);
-    xhr.send(formData);
-}
