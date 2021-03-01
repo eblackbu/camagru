@@ -17,8 +17,8 @@ require_once ('models/User.php');
         </a>
     </div>
     <div class="sidebar__statistics group">
-        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
-        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php// echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php// echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
         <div class="sidebar__options-search"><span id="search">Поиск</span></div>

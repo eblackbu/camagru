@@ -10,19 +10,33 @@ $(document).ready(function () {
         $('.makePhoto').hide();
     }
 
+    // скрытые канвасов
+    $('#canvasMake').hide();
+    $('#canvasUpload').hide();
+
     // отображения загруженного файла
     $("#file").on('change', handleFiles);
 
     // загрузка фото на сервер
     $("#uploadFile").click(function () {
-        console.log(prepToServer());
-        $.ajax({
-            type: "POST",
-            url: "example.php",
-            data: { img: prepToServer() }
-        }).done(function (msg) {
-            alert('done!');
-        });
+        if (window.FormData === undefined) {
+            alert('В вашем браузере FormData не поддерживается')
+        } else {
+            let canvas = prepToServer();
+            canvas.toBlob(function(blob) {
+                let formData = new FormData();
+                formData.append('my-file', blob, '.jpg');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'example.php',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    dataType : 'json'
+                });
+            });
+        }
     });
 });
 
@@ -109,6 +123,7 @@ $(document).on('click', '#snapshot', function () {
     let canvas = document.getElementById('canvasMake');
     let ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0);
+    $('#canvasMake').show();
 });
 
 // переключение режима добавления фото
@@ -180,17 +195,18 @@ function handleFiles(e) {
     img.onload = function () {
         ctx.drawImage(img, 0, 0, 300, 200);
     }
+    $('#canvasUpload').show();
 }
 
 // выбор нужного канваса
 function prepToServer() {
     let canvas;
     if ($('input[name="choice"][value="1"]').prop("checked")) {
-        canvas = document.getElementById('canvasMake');
+        canvas = $('#canvasMake');
     } else {
-        canvas = document.getElementById('canvasUpload');
+        canvas = $('#canvasUpload');
     }
-    return canvas.toDataURL();
+    return canvas;
 }
 
 
