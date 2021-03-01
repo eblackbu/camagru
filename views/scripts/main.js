@@ -1,9 +1,10 @@
-// скрытие сообщения в самом начале и фото режима
 $(document).ready(function () {
+    // скрытие сообщения в самом начале и фото режима
     if ($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
     }
 
+    //
     if ($('input[name="choice"]:checked').val() == '1') {
         $('.uploadPhoto').hide();
     } else if ($('input[name="choice"]:checked').val() == '2') {
@@ -103,7 +104,7 @@ $(document).on('click', '.modal__base-content-options-statistics-comments', func
 });
 
 // логика подключения вебки
-let constraints = { audio: false, video: { width: 300, height: 200 } };
+let constraints = { audio: false, video: {} };
 let url = window.location.pathname;
 if (url == "/new_photo") {
     navigator.mediaDevices.getUserMedia(constraints)
@@ -121,8 +122,10 @@ if (url == "/new_photo") {
 $(document).on('click', '#snapshot', function () {
     let video = document.querySelector('video');
     let canvas = document.getElementById('canvasMake');
+    canvas.width = video.clientWidth;
+    canvas.height = video.clientHeight;
     let ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     $('#canvasMake').show();
 });
 
@@ -189,11 +192,14 @@ function chooseInput() {
 
 // функция для предпросмотра загруженного файла
 function handleFiles(e) {
-    var ctx = document.getElementById('canvasUpload').getContext('2d');
-    var img = new Image;
+    let canvas = document.getElementById('canvasUpload');
+    let img = new Image;
     img.src = URL.createObjectURL(e.target.files[0]);
     img.onload = function () {
-        ctx.drawImage(img, 0, 0, 300, 200);
+        canvas.width = this.width;
+        canvas.height = this.height;
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
     $('#canvasUpload').show();
 }
@@ -202,37 +208,10 @@ function handleFiles(e) {
 function prepToServer() {
     let canvas;
     if ($('input[name="choice"][value="1"]').prop("checked")) {
-        canvas = $('#canvasMake');
+        canvas = document.getElementById('canvasMake');
     } else {
-        canvas = $('#canvasUpload');
+        canvas = document.getElementById('canvasUpload');
     }
     return canvas;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///
-function addImage() {
-    // создать объект для формы
-    var formData = new FormData(document.forms.image_form);
-    // отослать
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "example.php", false);
-    xhr.send(formData);
-}
