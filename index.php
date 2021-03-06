@@ -14,7 +14,7 @@ if (isset($_SESSION['user'])) {
         switch ($_GET['action']) {
             case 'add_image':
                 require_once __DIR__ . $handlers_path . 'add_image_handler.php';
-                add_image($_SESSION['user']['id'], $_FILES['loaded_image'], $_POST['label']);
+                add_image($_SESSION['user']['id'], $_FILES['upload_image'], $_POST['label']);
                 break;
             case 'change_login':
                 require_once __DIR__ . $handlers_path . 'change_login_handler.php';

@@ -26,8 +26,7 @@ $(document).ready(function () {
             let canvas = prepToServer();
             canvas.toBlob(function(blob) {
                 let formData = new FormData();
-                formData.append('my-file', blob, '.jpg');
-
+                formData.append('upload_image', blob);
                 $.ajax({
                     type: "POST",
                     url: '/?action=add_image',

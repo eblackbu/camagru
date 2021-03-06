@@ -18,6 +18,21 @@ class Image extends Model
         'created_at'
     ];
 
+    public function __construct($args)
+    {
+        if (!($this->id))
+        {
+            $this->id = uniqid('i', true);
+            while (count(Image::getMany(array('id' => $this->id))) != 0)
+                $this->id = uniqid('i', true);
+
+            if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
+                mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
+            }
+        }
+        parent::__construct($args);
+    }
+
     public static function getLikesCount($id): int
     {
         return count(Like::getMany(array('image' => $id)));
@@ -28,20 +43,8 @@ class Image extends Model
         return Comment::getMany(array('image' => $id));
     }
 
-    protected function _create(): bool
-    {
-        $this->id = uniqid('i', true);
-        while (count(Image::getMany(array('id' => $this->id))) != 0)
-            $this->id = uniqid('i', true);
-
-        if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
-            mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
-        }
-        return parent::_create();
-    }
-
     public function getPath(): string
     {
-        return '/images/' . $this->created_by . '/' . $this->id . '.' . $this->extension;
+        return __DIR__ . '/../images/' . $this->created_by . '/' . $this->id . '.' . $this->extension;
     }
 }
