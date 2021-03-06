@@ -10,11 +10,11 @@ require_once __DIR__ . '/../blocks/header.php';
             <div class="makePhoto">
                 <video autoplay></video>
                 <input type='button' id='snapshot' value="snapshot">
-                <canvas id='canvasMake' width='300' height='200'></canvas> 
+                <canvas id='canvasMake'></canvas> 
             </div>
             <div class="uploadPhoto">
                 <input type="file" name="file" id="file" accept="image/png,image/jpeg" >
-                <canvas id='canvasUpload' width='300' height='200'></canvas> 
+                <canvas id='canvasUpload'></canvas>
             </div>
             <input type="button" value="Загрузить" id="uploadFile">
         </form>
