@@ -30,7 +30,7 @@ $(document).ready(function () {
 
                 $.ajax({
                     type: "POST",
-                    url: 'example.php',
+                    url: '/?action=add_image',
                     contentType: false,
                     processData: false,
                     data: formData,
