@@ -6,6 +6,7 @@ require_once __DIR__ . '/../helpers/check_login.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Confirmation.php';
 
+# TODO mail
 function register($login, $password, $email)
 {
     if (!$login || !$password || !$email) {

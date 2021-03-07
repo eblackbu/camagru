@@ -7,7 +7,7 @@ function show_notification()
     if (isset($_SESSION['notification']))
     {
         ?>
-        <p><?php echo $_SESSION['notification'] ?></p>
+        <p><?= $_SESSION['notification'] ?></p>
         <?php
         $_SESSION['notification'] = null;
     }

@@ -24,6 +24,7 @@ function login($_login, $_password)
     {
         $_SESSION['user']['id'] = $user->id;
         $_SESSION['user']['login'] = $user->login;
+        $_SESSION['user']['is_admin'] = $user->is_admin;
     }
     redirect_to('/');
 }

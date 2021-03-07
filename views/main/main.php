@@ -19,7 +19,7 @@ require_once __DIR__ . '/../../models/Image.php';
         }, $subscriptions))) : [];
         foreach($images as $image)
         {
-            ?><div class="home__main-posts-item"><img src="<?php echo $image->getPath() ?>" alt=""></div><?php
+            ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" alt=""></div><?php
         }
         ?>
     </div>

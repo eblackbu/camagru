@@ -1,15 +1,25 @@
 // отображение модалки по щелчку айтема
+<?php
+session_start();
+
+require_once __DIR__ . '/../../models/User.php';
+require_once __DIR__ . '/../../models/Image.php';
+require_once __DIR__ . '/../../models/Comment.php';
+
+$page_user = unserialize(base64_decode($_SESSION['page_user']));
+
+?>
+
 $(document).on('click','.home__main-posts-item', function(){
     $('.home__main-posts').css('opacity', '.5');
     $('.modal').css('top', $(window).scrollTop());
     $(`<div class="modal__base-content"></div>`).appendTo(".modal__base");
-    // ниже нужна аватарка и имя профиля из бд
     $(`<div class="modal__base-content-title">
-        <a href="profile/id">
+        <a href="<?= '/users/' . $page_user->login ?>">
             <div class="modal__base-content-title-avatar">
-                <img src="/views/image/drochila.jpg" alt="">
+                <img src="<?= $_SESSION['page_avatar_path'] ?? '/views/image/none.png'?>" alt="">
             </div>
-            <h1 class="modal__base-content-title-nickname">adskiy_drochila</h1>
+            <h1 class="modal__base-content-title-nickname"><?= $page_user->login ?></h1>
         </a>
         </div>`).appendTo(".modal__base-content");
     // картинка конкретного поста, на который кликнули
@@ -18,16 +28,18 @@ $(document).on('click','.home__main-posts-item', function(){
     // тут еще буду изменения
     $(`<div class="modal__base-content-options">
             <div class="modal__base-content-options-description">
-                <div class="modal__base-content-options-description-text">Самая пиздатая фотка в мире, инфа сотка!</div>
+                <div class="modal__base-content-options-description-text">label!!</div>
                 <div class="modal__base-content-options-description-settings">
                     <div class="modal__base-content-options-description-settings-circle1"></div>
                     <div class="modal__base-content-options-description-settings-circle2"></div>
                     <div class="modal__base-content-options-description-settings-circle3"></div>
                 </div>
+                <?php if ($page_user->id == $_SESSION['user']['id']): ?>
                 <div class="modal__menu">
                     <div class="modal__menu-edit">Изменить</div>
                     <div class="modal__menu-delete">Удалить</div>
                 </div>
+                <?php endif; // TODO ajax DELETE /images/{id} ?>
             </div>
             <div class="modal__description-edit">
                 <form action="" method="post">
@@ -43,14 +55,13 @@ $(document).on('click','.home__main-posts-item', function(){
                             <div class="like__right"></div>
                             <div class="like__filler"></div>
                         </div>
-                        <div class="like-count">
-                            666
+                        <div class="like-count"> <?php // TODO ajax GET /likes/?image_id={id} ?>
                         </div>
                     </div>
                     <div class="modal__base-content-options-statistics-comments">
                         <div class="comment"></div>
                         <div class="comment-count"> 
-                            1337
+                            1337 <?php // TODO ajax GET /comments/?image_id={id} ?>
                         </div>
                     </div>
                 </div>
@@ -62,7 +73,7 @@ $(document).on('click','.home__main-posts-item', function(){
                 <form action="/comment" method="post"> <!-- TODO П -->
                     <textarea class="modal__textarea" rows="3"></textarea>
                     <button class="auth__form-btn">отправить</button>
-                </form>
+                </form><?php // TODO ajax POST /comments/, data = {'text': {text}, 'image_id': {image_id}} ?>
                 <div class="modal__comments-item">
                     <div class="modal__comments-item-title">
                         <div class="modal__comments-item-title-nick"><a href="#">Рузанов Слава</a></div>
@@ -70,7 +81,7 @@ $(document).on('click','.home__main-posts-item', function(){
                     </div>
                     <div class="modal__comments-item-text">
                         Верните мой 2007 год и стену вконтакте!!! пидарасы
-                    </div>
+                    </div><?php // TODO ajax DELETE /comments/{id} ?>
                 </div>
                 <div class="modal__comments-item">
                     <div class="modal__comments-item-title">

@@ -36,7 +36,7 @@ foreach ($images as $file)
             'extension' => pathinfo($images_dir . '/' . $file, PATHINFO_EXTENSION))
     );
     $obj->save();
-    file_put_contents(__DIR__ . '/..' . $obj->getPath(), file_get_contents($images_dir . '/' . $file));
+    file_put_contents($obj->getFullPath(), file_get_contents($images_dir . '/' . $file));
 }
 
 $another_user = new User(array(

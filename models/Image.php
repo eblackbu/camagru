@@ -6,6 +6,7 @@ class Image extends Model
 {
     public ?string $id = null;
     public ?string $label = null;
+    public ?string $filename = null;
     public ?string $extension = null;
     public ?int $created_by = null;
     public ?string $created_at = null;
@@ -13,6 +14,7 @@ class Image extends Model
     public array $_fields = [
         'id',
         'label',
+        'filename',
         'extension',
         'created_by',
         'created_at'
@@ -20,17 +22,25 @@ class Image extends Model
 
     public function __construct($args)
     {
-        if (!($this->id))
+        parent::__construct($args);
+        if (!($this->filename))
         {
-            $this->id = uniqid('i', true);
-            while (count(Image::getMany(array('id' => $this->id))) != 0)
-                $this->id = uniqid('i', true);
+            $this->filename = uniqid('i', true);
+            while (count(Image::getMany(array('filename' => $this->filename))) != 0)
+                $this->filename = uniqid('i', true);
 
             if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
                 mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
             }
         }
-        parent::__construct($args);
+    }
+
+    public function delete(): bool
+    {
+        if (file_exists($this->getFullPath())) {
+            unlink($this->getFullPath());
+        }
+        return parent::delete();
     }
 
     public static function getLikesCount($id): int
@@ -43,8 +53,13 @@ class Image extends Model
         return Comment::getMany(array('image' => $id));
     }
 
+    public function getFullPath(): string
+    {
+        return __DIR__ . '/../images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
+    }
+
     public function getPath(): string
     {
-        return __DIR__ . '/../images/' . $this->created_by . '/' . $this->id . '.' . $this->extension;
+        return '/images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
 }

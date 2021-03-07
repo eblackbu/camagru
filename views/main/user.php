@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once __DIR__ . '/../blocks/header.php';
 require_once __DIR__ . '/../../models/Image.php';
 require_once __DIR__ . '/../../models/User.php';
@@ -15,14 +17,19 @@ if (!isset($segments[1]))
 
 
 try {
-    $user = User::getOne(array('login' => $segments[1]));
+    $page_user = User::getOne(array('id' => $segments[1]));
+    $_SESSION['page_user'] = base64_encode(serialize($page_user));
 } catch (ORMException $e) {
     require_once __DIR__ . '/404.php';
     exit();
 }
 
-$avatar = $user->avatar_path ?? null;
-
+try {
+    $_SESSION['page_avatar_path'] = Image::getOne(array('id' => $page_user->avatar_path))->getPath();
+}
+catch (ORMException $e) {
+    $_SESSION['page_avatar_path'] = null;
+}
 ?>
 
 <div class="home">
@@ -36,13 +43,13 @@ $avatar = $user->avatar_path ?? null;
                 <div class="profile__main">
                     <div class="profile__main-info">
                         <div class="modal__base-content-title-avatar profile__main-info-avatar">
-                            <a href="/users/<?=$user->login?>"><img src="<?php echo $avatar ?? '/views/image/none.png'?>" alt=""></a>
+                            <a href="/users/<?= $page_user->id ?>"><img src="<?= $_SESSION['page_avatar_path'] ?? '/views/image/none.png'?>" alt=""></a>
                         </div>
                         <div class="profile__main-info-nickname">
-                            <a href="/users/<?=$user->login?>"><h1 class="modal__base-content-title-nickname"><?php echo $user->login ?></h1></a>
+                            <a href="/users/<?=$page_user->id ?>"><h1 class="modal__base-content-title-nickname"><?= $page_user->login ?></h1></a>
                         </div>
                     </div>
-                    <?php if ($user->id != $_SESSION['user']['id']): ?>
+                    <?php if ($page_user->id != $_SESSION['user']['id']): ?>
                     <div class="profile__main-subscribebutton">
                         <input type="button" value="подписаться" class="auth__form-btn">
                     </div>
@@ -50,21 +57,21 @@ $avatar = $user->avatar_path ?? null;
                 </div>
 
                 <div class="profile__minor">
-                    <div class="profile__minor-subscriptions"><span>Подписки</span> <?php echo User::getSubscriptionsCount($user->id); ?></div>
-                    <div class="profile__minor-subscribers"><span>Подписчики</span> <?php echo User::getSubscribersCount($user->id); ?></div>
+                    <div class="profile__minor-subscriptions"><span>Подписки</span> <?= User::getSubscriptionsCount($page_user->id); ?></div>
+                    <div class="profile__minor-subscribers"><span>Подписчики</span> <?= User::getSubscribersCount($page_user->id); ?></div>
                 </div>
             </div>
-            <?php if ($user->id == $_SESSION['user']['id']): ?>
+            <?php if ($page_user->id == $_SESSION['user']['id']): ?>
             <a href="/new_photo"><div class="home__main-new">
                 <img src="/views/image/photo2.svg" alt="">
             </div></a>
             <?php endif; ?>
             <div class="home__main-posts">
                 <?php
-                $images = Image::getMany(array('created_by' => $user->id));
+                $images = Image::getMany(array('created_by' => $page_user->id));
                 foreach($images as $image)
                 {
-                    ?><div class="home__main-posts-item"><img src="<?php echo $image->getPath() ?>" alt=""></div><?php
+                    ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" alt=""></div><?php
                 }
                 ?>
             </div>

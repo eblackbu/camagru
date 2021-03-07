@@ -9,6 +9,6 @@ function search($search_string)
         echo json_encode(array());
     $users = User::getUsersBySearch($search_string);
     echo json_encode(array_map(function ($user) {
-        return $user->toJson();
+        return $user->to_json();
     }, $users));
 }
