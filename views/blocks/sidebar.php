@@ -1,24 +1,24 @@
 <?php
 
-require_once ('handlers/logout_handler.php');
+require_once('handlers/logout.php');
 require_once ('models/User.php');
 
 ?>
 
 <div class="sidebar">
     <div class="sidebar__profile group">
-        <a href="/users/<?php echo $_SESSION['user']['login']?>">
+        <a href="/users/<?= $_SESSION['user']['id']?>">
             <div class="sidebar__profile-avatar">
                 <img src="/views/image/drochila.jpg" alt="">
             </div>
             <div class="sidebar__profile-nickname">
-                <?php echo $_SESSION['user']['login']; ?>
+                <?= $_SESSION['user']['login']; ?>
             </div>
         </a>
     </div>
     <div class="sidebar__statistics group">
-        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?php// echo User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
-        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?php// echo User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscriptions"><a href="">Подписки: <?= User::getSubscriptionsCount($_SESSION['user']['id']); ?></a></div>
+        <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?= User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
         <div class="sidebar__options-search"><span id="search">Поиск</span></div>

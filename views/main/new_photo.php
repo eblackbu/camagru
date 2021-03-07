@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../blocks/header.php';
 ?>
     <div class="addPhoto">
-        <form class="image-form" id="image-form" name="image_form" action="" method="POST" enctype="multipart/form-data">
+        <form class="image-form" id="image-form" name="image_form" action="/?action=add_photo" method="POST" enctype="multipart/form-data">
             <label for="make">Сделать фото</label>
             <input type="radio" name="choice" id="make" checked value="1">
             <label for="upload">Загрузить фото</label>

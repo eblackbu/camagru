@@ -26,11 +26,10 @@ $(document).ready(function () {
             let canvas = prepToServer();
             canvas.toBlob(function(blob) {
                 let formData = new FormData();
-                formData.append('my-file', blob, '.jpg');
-
+                formData.append('upload_image', blob);
                 $.ajax({
                     type: "POST",
-                    url: 'example.php',
+                    url: '/?action=add_image',
                     contentType: false,
                     processData: false,
                     data: formData,
@@ -174,7 +173,7 @@ function onAjaxSuccess(data) {
     $(`<div class="search__result"></div>`).appendTo(".search");
     for (let i = 0; i < data.length; i++) {
         $(`<div class="search__result-item">
-            <div class="search__result-item-nickname"><a href="/users/${data[i]['login']}">${data[i]['login']}</a></div>
+            <div class="search__result-item-nickname"><a href="/users/${data[i]['id']}">${data[i]['login']}</a></div>
         </div>`).appendTo(".search__result");
     }
 }

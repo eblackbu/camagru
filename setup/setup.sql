@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS `User` (
   `login` TEXT NOT NULL,
   `password` BLOB NOT NULL,
   `email` TEXT NOT NULL,
+  `avatar` TEXT,
+  `is_sending_mail` INTEGER NOT NULL DEFAULT 1,
   `is_admin` INTEGER NOT NULL DEFAULT 0) ;
 
 CREATE UNIQUE INDEX `login_UNIQUE` ON `User` (`login`);
@@ -58,8 +60,9 @@ CREATE INDEX `fk_user_from_idx` ON `Subscription` (`user_from`);
 DROP TABLE IF EXISTS `Image` ;
 
 CREATE TABLE IF NOT EXISTS `Image` (
-  `id` TEXT PRIMARY KEY,
-  `label` TEXT NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `label` TEXT,
+  `filename` TEXT NOT NULL,
   `extension` TEXT NOT NULL,
   `created_by` INTEGER NOT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

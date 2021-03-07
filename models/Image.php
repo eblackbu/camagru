@@ -6,6 +6,7 @@ class Image extends Model
 {
     public ?string $id = null;
     public ?string $label = null;
+    public ?string $filename = null;
     public ?string $extension = null;
     public ?int $created_by = null;
     public ?string $created_at = null;
@@ -13,10 +14,34 @@ class Image extends Model
     public array $_fields = [
         'id',
         'label',
+        'filename',
         'extension',
         'created_by',
         'created_at'
     ];
+
+    public function __construct($args)
+    {
+        parent::__construct($args);
+        if (!($this->filename))
+        {
+            $this->filename = uniqid('i', true);
+            while (count(Image::getMany(array('filename' => $this->filename))) != 0)
+                $this->filename = uniqid('i', true);
+
+            if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
+                mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
+            }
+        }
+    }
+
+    public function delete(): bool
+    {
+        if (file_exists($this->getFullPath())) {
+            unlink($this->getFullPath());
+        }
+        return parent::delete();
+    }
 
     public static function getLikesCount($id): int
     {
@@ -28,20 +53,13 @@ class Image extends Model
         return Comment::getMany(array('image' => $id));
     }
 
-    protected function _create(): bool
+    public function getFullPath(): string
     {
-        $this->id = uniqid('i', true);
-        while (count(Image::getMany(array('id' => $this->id))) != 0)
-            $this->id = uniqid('i', true);
-
-        if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
-            mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
-        }
-        return parent::_create();
+        return __DIR__ . '/../images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
 
     public function getPath(): string
     {
-        return '/images/' . $this->created_by . '/' . $this->id . '.' . $this->extension;
+        return '/images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
 }

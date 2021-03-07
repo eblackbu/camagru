@@ -22,6 +22,20 @@ class Model
             $this->{$field_name} = $value;
     }
 
+    public function __serialize(): array
+    {
+        $data = [];
+        foreach ($this->_fields as $field_name)
+            $data[$field_name] = $this->{$field_name};
+        return $data;
+    }
+
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $field_name => $value)
+            $this->{$field_name} = $value;
+    }
+
     protected static function __prepare_conditions(array $conditions): string
     {
         $arr = [];
@@ -194,7 +208,7 @@ class Model
      * Function for converting instance to array_map for json_encode
      * @return array
      */
-    public function toJson(): array
+    public function to_json(): array
     {
         $data = array();
         foreach ($this->_fields as $field)
