@@ -227,7 +227,6 @@ button, input {
     right: -442%;
     z-index: 2; }
   .home__main {
-    z-index: 1;
     padding: 20px;
     position: relative;
     margin-left: 220px;
@@ -252,8 +251,7 @@ button, input {
         width: 30px; }
     .home__main-posts {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly; }
+      flex-wrap: wrap; }
       .home__main-posts-item {
         margin-top: 20px;
         width: 32%; }
@@ -263,6 +261,9 @@ button, input {
           object-fit: cover; }
         .home__main-posts-item:hover {
           cursor: pointer; }
+      .home__main-posts-item:nth-child(3n+2) {
+        margin-left: 2%;
+        margin-right: 2%; }
     .home__main-profile {
       display: flex;
       flex-wrap: wrap;
@@ -386,6 +387,9 @@ button, input {
   border-radius: 5px; }
   .change__form:first-child {
     margin-bottom: 20px; }
+
+label[for^="old_password"] {
+  padding-top: 15px; }
 
 .auth {
   margin: calc(10% + 40px) auto 0;
@@ -554,8 +558,31 @@ button, input {
       border: 2px solid #F4A460; }
 
 .image-form {
-  padding: 50px; }
+  padding: 50px 10px 70px; }
+
+#make {
+  margin-right: 82px; }
+
+input[type="file"] {
+  margin-top: 10px; }
+
+.active {
+  color: #7FFFD4; }
 
 canvas, video {
-  width: 100%;
-  height: 100%; }
+  width: 60%;
+  height: 60%; }
+
+.preview {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0; }
+
+@media (max-width: 870px) {
+  canvas, video {
+    width: 100%;
+    height: 100%; } }
+
+@media (max-width: 450px) {
+  span.br {
+    display: block; } }

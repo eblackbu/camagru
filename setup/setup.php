@@ -25,7 +25,7 @@ $admin_user = User::getOne(array('login' => 'admin'));
 $images = array_diff(scandir($images_dir), array('..', '.'));
 
 if (file_exists(__DIR__ . '/../images'))
-    exec('rm -rf ' . __DIR__ . '/../images');
+    unlink(__DIR__ . '/../images');
 mkdir(__DIR__ . '/../images', 0777, true);
 
 foreach ($images as $file)

@@ -14,6 +14,7 @@ $(document).ready(function () {
     // скрытые канвасов
     $('#canvasMake').hide();
     $('#canvasUpload').hide();
+    $('#uploadFile').hide();
 
     // отображения загруженного файла
     $("#file").on('change', handleFiles);
@@ -68,6 +69,8 @@ $(document).on('click', '.header__content-menu', function () {
 // скрытие модалки по щелчку закрытия
 $(document).on('click', '.modal__base-close', function () {
     $('.home__main-posts').css('opacity', '1');
+    $('.home__main-profile').css('opacity', '1');
+    $('.home__main-new').css('opacity', '1');
     $('.modal').hide();
     $(".modal__base-content").remove();
 });
@@ -126,6 +129,7 @@ $(document).on('click', '#snapshot', function () {
     let ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     $('#canvasMake').show();
+    $('#uploadFile').show();
 });
 
 // переключение режима добавления фото
@@ -134,10 +138,15 @@ $(document).on('click', 'input[name="choice"]', function () {
     if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
         $('.uploadPhoto').toggle();
         $('.makePhoto').toggle();
+        $('label[for^="upload"]').removeClass('active');
+        $('label[for^="make"]').addClass('active');
         stateFirstRadio = false;
     } else if ($('input[name="choice"][value="2"]').prop("checked") && !stateFirstRadio) {
         $('.uploadPhoto').toggle();
         $('.makePhoto').toggle();
+        
+        $('label[for^="upload"]').addClass('active');
+        $('label[for^="make"]').removeClass('active');
         stateFirstRadio = true;
     }
 });
@@ -155,28 +164,6 @@ $(document).on('click', '.search__close', function () {
     $('.main__main').css('opacity', '1');
     $('.home__main').css('opacity', '1');
 });
-
-// отправка аякса по нажатию клавиши "найти"
-$(document).on('click', '.search_get', function () {
-    $.get(
-        "/search",
-        {
-            search_string: chooseInput(),
-        },
-        onAjaxSuccess
-    );
-});
-
-// функция, отрабатвающая в случае успешной отправки
-function onAjaxSuccess(data) {
-    $(".search__result").remove();
-    $(`<div class="search__result"></div>`).appendTo(".search");
-    for (let i = 0; i < data.length; i++) {
-        $(`<div class="search__result-item">
-            <div class="search__result-item-nickname"><a href="/users/${data[i]['id']}">${data[i]['login']}</a></div>
-        </div>`).appendTo(".search__result");
-    }
-}
 
 // функция, выбирающая значение для поиска (костыль)
 function chooseInput() {
@@ -201,6 +188,7 @@ function handleFiles(e) {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
     $('#canvasUpload').show();
+    $('#uploadFile').show();
 }
 
 // выбор нужного канваса
@@ -213,4 +201,24 @@ function prepToServer() {
     }
     return canvas;
 }
+
+// ====================AJAXES=========================
+// отправка аякса по нажатию клавиши "найти"
+$(document).on('click', '.search_get', function () {
+    $.get(
+        "/search",
+        {
+            search_string: chooseInput(),
+        },
+        function (data) {
+            $(".search__result").remove();
+            $(`<div class="search__result"></div>`).appendTo(".search");
+            for (let i = 0; i < data.length; i++) {
+                $(`<div class="search__result-item">
+                    <div class="search__result-item-nickname"><a href="/users/${data[i]['id']}">${data[i]['login']}</a></div>
+                </div>`).appendTo(".search__result");
+            }
+        }
+    );
+});
 

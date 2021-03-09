@@ -25,7 +25,6 @@
     right: -442%;
     z-index: 2; }
   .home__main {
-    z-index: 1;
     padding: 20px;
     position: relative;
     margin-left: 220px;
@@ -50,8 +49,7 @@
         width: 30px; }
     .home__main-posts {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly; }
+      flex-wrap: wrap; }
       .home__main-posts-item {
         margin-top: 20px;
         width: 32%; }
@@ -61,6 +59,9 @@
           object-fit: cover; }
         .home__main-posts-item:hover {
           cursor: pointer; }
+      .home__main-posts-item:nth-child(3n+2) {
+        margin-left: 2%;
+        margin-right: 2%; }
     .home__main-profile {
       display: flex;
       flex-wrap: wrap;

@@ -11,7 +11,10 @@ $page_user = unserialize(base64_decode($_SESSION['page_user']));
 ?>
 
 $(document).on('click','.home__main-posts-item', function(){
-    $('.home__main-posts').css('opacity', '.5');
+    $('.home__main-posts').css('opacity', '.2');
+    $('.home__main-profile').css('opacity', '.2');
+    $('.home__main-new').css('opacity', '.2');
+
     $('.modal').css('top', $(window).scrollTop());
     $(`<div class="modal__base-content"></div>`).appendTo(".modal__base");
     $(`<div class="modal__base-content-title">
@@ -23,6 +26,7 @@ $(document).on('click','.home__main-posts-item', function(){
         </a>
         </div>`).appendTo(".modal__base-content");
     // картинка конкретного поста, на который кликнули
+    <!-- console.log($(this).attr('id')); -->
     $(`<div class="modal__base-content-image">${$(this).html()}</div>`).appendTo(".modal__base-content");
     // инфа по описанию, количеству лайков и коментам
     // тут еще буду изменения
