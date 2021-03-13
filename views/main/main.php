@@ -12,16 +12,27 @@ require_once __DIR__ . '/../../models/Image.php';
         ?>
     </div>
     <div class="home__main main__main">
-        <?php
-        $subscriptions = Subscription::getMany(array('user_from' => $_SESSION['user']['id']));
-        $images = $subscriptions ? Image::getMany(array('created_by' => array_map(function ($x) {
-            return $x->user_where;
-        }, $subscriptions))) : [];
-        foreach($images as $image)
-        {
-            ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" alt=""></div><?php
-        }
-        ?>
+        <div class="home__main-posts">
+            <?php
+            $subscriptions = Subscription::getMany(array('user_from' => $_SESSION['user']['id']));
+            $images = $subscriptions ? Image::getMany(array('created_by' => array_map(function ($x) {
+                return $x->user_where;
+            }, $subscriptions))) : [];
+            foreach($images as $image)
+            {
+                ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" alt=""></div><?php
+            }
+            ?>
+        </div>
+
+        <div class="modal">
+            <div class="modal__base">
+                <div class="modal__base-close">
+                    X
+                </div>
+            </div>
+            <div class="modal__filler"></div>
+        </div>
     </div>
 </div>
 

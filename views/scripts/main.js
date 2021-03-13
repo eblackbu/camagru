@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     // скрытие сообщения в самом начале и фото режима
     if ($('.header__notifications').children().length == 0) {
         $('.header__notifications').hide();
@@ -20,7 +20,7 @@ $(document).ready(function () {
     $("#file").on('change', handleFiles);
 
     // загрузка фото на сервер
-    $("#uploadFile").click(function () {
+    $("#uploadFile").click(() => {
         if (window.FormData === undefined) {
             alert('В вашем браузере FormData не поддерживается')
         } else {
@@ -47,13 +47,13 @@ function hide_notifications() {
 }
 
 // скрытие сообщения по щелчку
-$(document).on('click', '.header__notifications', function () {
+$(document).on('click', '.header__notifications', () => {
     $('.header__notifications').addClass('active');
     setTimeout(hide_notifications, 900);
 });
 
 // скрытие и показ меню шапки
-$(document).on('click', '.header__content-menu', function () {
+$(document).on('click', '.header__content-menu', () => {
     $('.header__content-sidebar').toggle();
     if ($('.header__content-menu').hasClass('active')) {
         $('.header__content-menu').removeClass('active');
@@ -67,7 +67,7 @@ $(document).on('click', '.header__content-menu', function () {
 });
 
 // скрытие модалки по щелчку закрытия
-$(document).on('click', '.modal__base-close', function () {
+$(document).on('click', '.modal__base-close', () => {
     $('.home__main-posts').css('opacity', '1');
     $('.home__main-profile').css('opacity', '1');
     $('.home__main-new').css('opacity', '1');
@@ -76,39 +76,45 @@ $(document).on('click', '.modal__base-close', function () {
 });
 
 // скрытие и показ настроек модалки по кнопке
-$(document).on('click', '.modal__base-content-options-description-settings', function () {
+$(document).on('click', '.modal__base-content-options-description-settings', () => {
     $('.modal__menu').toggle();
 });
 
 // скрытие и показ панели редактирования
-$(document).on('click', '.modal__menu-edit', function () {
+$(document).on('click', '.modal__menu-edit', () => {
     $('.modal__description-edit').toggle();
     $('.description-edit').text($('.modal__base-content-options-description-text').text());
     $('.modal__menu').toggle();
 });
 
 // отображение лайка
-$(document).on('click', '.like', function () {
-    if ($('.like__left').css('background-color') == 'rgb(255, 255, 255)') {
-        $('.like__left').css({ 'background-color': 'rgb(255, 0, 0)', 'border': 'none' });
-        $('.like__right').css({ 'background-color': 'rgb(255, 0, 0)', 'border': 'none' });
-        $('.like__filler').hide();
+$(document).on('click', '.like', () => {
+    const like = $('.like');
+    if (like.hasClass('active')) {
+        like.removeClass('active');
     } else {
-        $('.like__left').css({ 'background-color': 'rgb(255, 255, 255)', 'border': '0.5px solid black' });
-        $('.like__right').css({ 'background-color': 'rgb(255, 255, 255)', 'border': '0.5px solid black' });
-        $('.like__filler').show();
+        like.addClass('active');
     }
+
+    // let id = $('.modal__base-content-image').children()[0].id;
+    // id = id.substr(5);
+    // $.ajax({
+    //     url: `/images/${id}`,
+    //     type: 'DELETE',
+    //     success: () => alert('set!'),
+    //     error: () => alert('error!'),
+    // });
 });
 
 // скрытие и показ коментариев
-$(document).on('click', '.modal__base-content-options-statistics-comments', function () {
+$(document).on('click', '.modal__base-content-options-statistics-comments', () => {
     $('.modal__comments').toggle();
 });
 
 // логика подключения вебки
-let constraints = { audio: false, video: {} };
 let url = window.location.pathname;
 if (url == "/new_photo") {
+    let constraints = { audio: false, video: {} };
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (mediaStream) {
             let video = document.querySelector('video');
@@ -121,7 +127,7 @@ if (url == "/new_photo") {
 }
 
 // запись скрина в канвас
-$(document).on('click', '#snapshot', function () {
+$(document).on('click', '#snapshot', () => {
     let video = document.querySelector('video');
     let canvas = document.getElementById('canvasMake');
     canvas.width = video.clientWidth;
@@ -134,7 +140,7 @@ $(document).on('click', '#snapshot', function () {
 
 // переключение режима добавления фото
 let stateFirstRadio = false;
-$(document).on('click', 'input[name="choice"]', function () {
+$(document).on('click', 'input[name="choice"]', () => {
     if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
         $('.uploadPhoto').toggle();
         $('.makePhoto').toggle();
@@ -152,14 +158,14 @@ $(document).on('click', 'input[name="choice"]', function () {
 });
 
 // показ поиска
-$(document).on('click', '#search', function () {
+$(document).on('click', '#search', () => {
     $('.search').show();
     $('.main__main').css('opacity', '.5');
     $('.home__main').css('opacity', '.5');
 });
 
 // скрытие поиска
-$(document).on('click', '.search__close', function () {
+$(document).on('click', '.search__close', () => {
     $('.search').hide();
     $('.main__main').css('opacity', '1');
     $('.home__main').css('opacity', '1');
@@ -168,7 +174,7 @@ $(document).on('click', '.search__close', function () {
 // функция, выбирающая значение для поиска (костыль)
 function chooseInput() {
     let result = '';
-    $(".search_input").map(function (indx, element) {
+    $(".search_input").map((indx, element) => {
         if (!!$(element).val()) {
             result = $(element).val();
         }
@@ -181,7 +187,7 @@ function handleFiles(e) {
     let canvas = document.getElementById('canvasUpload');
     let img = new Image;
     img.src = URL.createObjectURL(e.target.files[0]);
-    img.onload = function () {
+    img.onload = () => {
         canvas.width = this.width;
         canvas.height = this.height;
         let ctx = canvas.getContext('2d');
@@ -204,13 +210,14 @@ function prepToServer() {
 
 // ====================AJAXES=========================
 // отправка аякса по нажатию клавиши "найти"
-$(document).on('click', '.search_get', function () {
-    $.get(
-        "/search",
-        {
+$(document).on('click', '.search_get', () => {
+    $.ajax({
+        url: "/search",
+        type: 'GET',
+        data: {
             search_string: chooseInput(),
         },
-        function (data) {
+        success: (data) => {
             $(".search__result").remove();
             $(`<div class="search__result"></div>`).appendTo(".search");
             for (let i = 0; i < data.length; i++) {
@@ -219,6 +226,35 @@ $(document).on('click', '.search_get', function () {
                 </div>`).appendTo(".search__result");
             }
         }
-    );
+    });
 });
 
+
+// удаление фото
+$(document).on('click', '.modal__menu-delete', () => {
+    let id = $('.modal__base-content-image').children()[0].id;
+    id = id.substr(5);
+    $.ajax({
+        url: `/images/${id}`,
+        type: 'DELETE',
+        success: () => alert('удалено!'),
+        error: () => alert('bad!'),
+    });
+});
+
+// получение количества лайков
+
+
+
+
+// function ajax(url, type, success, data, contentType = false, processData = false, dataType = null) {
+//     $.ajax({
+//         url,
+//         type,
+//         contentType,
+//         processData,
+//         data,
+//         dataType,
+//         success,
+//     });       
+// }

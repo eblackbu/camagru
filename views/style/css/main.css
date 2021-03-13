@@ -226,6 +226,8 @@ button, input {
     border: 2px solid #7FFFD4;
     right: -442%;
     z-index: 2; }
+  .home__main.main__main .home__main-posts-item:nth-child(-n+3) {
+    margin-top: 0; }
   .home__main {
     padding: 20px;
     position: relative;
@@ -350,6 +352,17 @@ button, input {
   .like-count {
     padding: 0 10px 0 25px; }
 
+.like.active .like__left {
+  background-color: red;
+  border: none; }
+
+.like.active .like__right {
+  background-color: red;
+  border: none; }
+
+.like.active .like__filler {
+  display: none; }
+
 .comment {
   z-index: 1;
   position: relative;
@@ -462,7 +475,17 @@ label[for^="old_password"] {
         .modal__comments-item-title-nick {
           font-weight: 700; }
         .modal__comments-item-title-data {
+          display: flex; }
+        .modal__comments-item-title-data.data {
           font-size: 12px; }
+        .modal__comments-item-title-data.close {
+          margin-left: 10px;
+          color: #F4A460;
+          font-size: 12px;
+          transition: color .2s linear; }
+        .modal__comments-item-title-data.close:hover {
+          cursor: pointer;
+          color: red; }
   .modal__description-edit {
     display: none; }
     .modal__description-edit form {

@@ -28,7 +28,23 @@ $color-minor: #F4A460;
                 }
 
                 &-data {
+                    display: flex;
+                }
+
+                &-data.data {
                     font-size: 12px;
+                }
+
+                &-data.close {
+                    margin-left: 10px;
+                    color: $color-minor;    
+                    font-size: 12px;
+                    transition: color .2s linear;
+                }
+
+                &-data.close:hover {
+                    cursor: pointer;
+                    color: red;
                 }
             }
         }

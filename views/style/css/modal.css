@@ -18,7 +18,17 @@
         .modal__comments-item-title-nick {
           font-weight: 700; }
         .modal__comments-item-title-data {
+          display: flex; }
+        .modal__comments-item-title-data.data {
           font-size: 12px; }
+        .modal__comments-item-title-data.close {
+          margin-left: 10px;
+          color: #F4A460;
+          font-size: 12px;
+          transition: color .2s linear; }
+        .modal__comments-item-title-data.close:hover {
+          cursor: pointer;
+          color: red; }
   .modal__description-edit {
     display: none; }
     .modal__description-edit form {

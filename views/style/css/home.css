@@ -24,6 +24,8 @@
     border: 2px solid #7FFFD4;
     right: -442%;
     z-index: 2; }
+  .home__main.main__main .home__main-posts-item:nth-child(-n+3) {
+    margin-top: 0; }
   .home__main {
     padding: 20px;
     position: relative;
@@ -147,6 +149,17 @@
     transform: rotate(45deg) translate(2px, -0.8px); }
   .like-count {
     padding: 0 10px 0 25px; }
+
+.like.active .like__left {
+  background-color: red;
+  border: none; }
+
+.like.active .like__right {
+  background-color: red;
+  border: none; }
+
+.like.active .like__filler {
+  display: none; }
 
 .comment {
   z-index: 1;
