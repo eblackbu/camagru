@@ -8,6 +8,10 @@ $color-minor: #F4A460;
     top: 0;
     left: 0;
 
+    a, h1 {
+        color: #000;
+    }
+
     &__comments {
         display: none;
         margin-top: 10px;

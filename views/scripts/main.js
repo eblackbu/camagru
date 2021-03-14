@@ -4,20 +4,13 @@ $(document).ready(() => {
         $('.header__notifications').hide();
     }
 
-    //
-    if ($('input[name="choice"]:checked').val() == '1') {
-        $('.uploadPhoto').hide();
-    } else if ($('input[name="choice"]:checked').val() == '2') {
-        $('.makePhoto').hide();
-    }
-
     // скрытые канвасов
     $('#canvasMake').hide();
     $('#canvasUpload').hide();
     $('#uploadFile').hide();
 
     // отображения загруженного файла
-    $("#file").on('change', handleFiles);
+    $("#input__file").on('change', handleFiles);
 
     // загрузка фото на сервер
     $("#uploadFile").click(() => {
@@ -139,21 +132,21 @@ $(document).on('click', '#snapshot', () => {
 });
 
 // переключение режима добавления фото
-let stateFirstRadio = false;
-$(document).on('click', 'input[name="choice"]', () => {
-    if ($('input[name="choice"][value="1"]').prop("checked") && stateFirstRadio) {
-        $('.uploadPhoto').toggle();
-        $('.makePhoto').toggle();
-        $('label[for^="upload"]').removeClass('active');
-        $('label[for^="make"]').addClass('active');
-        stateFirstRadio = false;
-    } else if ($('input[name="choice"][value="2"]').prop("checked") && !stateFirstRadio) {
-        $('.uploadPhoto').toggle();
-        $('.makePhoto').toggle();
-        
-        $('label[for^="upload"]').addClass('active');
-        $('label[for^="make"]').removeClass('active');
-        stateFirstRadio = true;
+$(document).on('click', '.make', () => {
+    if (!$('.make').hasClass('active')) {
+        $('.make').addClass('active');
+        $('.upload').removeClass('active');
+        $('.uploadPhoto').hide();
+        $('.makePhoto').show();
+    }
+});
+
+$(document).on('click', '.upload', () => {
+    if (!$('.upload').hasClass('active')) {
+        $('.upload').addClass('active');
+        $('.make').removeClass('active');
+        $('.makePhoto').hide();
+        $('.uploadPhoto').show();
     }
 });
 
@@ -187,7 +180,7 @@ function handleFiles(e) {
     let canvas = document.getElementById('canvasUpload');
     let img = new Image;
     img.src = URL.createObjectURL(e.target.files[0]);
-    img.onload = () => {
+    img.onload = function () {
         canvas.width = this.width;
         canvas.height = this.height;
         let ctx = canvas.getContext('2d');
@@ -200,7 +193,7 @@ function handleFiles(e) {
 // выбор нужного канваса
 function prepToServer() {
     let canvas;
-    if ($('input[name="choice"][value="1"]').prop("checked")) {
+    if ($('.make').hasClass('active')) {
         canvas = document.getElementById('canvasMake');
     } else {
         canvas = document.getElementById('canvasUpload');

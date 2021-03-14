@@ -1,12 +1,12 @@
 .home {
-  color: #000;
+  color: #fff;
   position: relative;
   position: relative;
   display: flex;
   padding-top: 50px; }
   .home a, .home span {
     text-decoration: none;
-    color: #000; }
+    color: #fff; }
   .home__sidebar {
     z-index: 2;
     position: fixed;
@@ -15,7 +15,7 @@
     border: 2px solid #7FFFD4;
     border-radius: 10px;
     height: 210px;
-    background-color: #fff; }
+    background-color: #999; }
   .home .search {
     width: 387%;
     border-radius: 10px;
@@ -34,7 +34,7 @@
     flex-basis: 80%;
     border: 2px solid #7FFFD4;
     border-radius: 10px;
-    background-color: #fff; }
+    background-color: #999; }
     .home__main-new {
       background-color: #7FFFD4;
       border-radius: 20px;

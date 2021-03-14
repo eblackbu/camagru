@@ -3,6 +3,8 @@
   position: absolute;
   top: 0;
   left: 0; }
+  .modal a, .modal h1 {
+    color: #000; }
   .modal__comments {
     display: none;
     margin-top: 10px; }

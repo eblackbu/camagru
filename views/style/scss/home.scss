@@ -3,11 +3,11 @@ $color-minor: #F4A460;
 
 
 .home {
-    color: #000;
+    color: #fff;
     position: relative;
     a, span {
         text-decoration: none;
-        color: #000;
+        color: #fff;
     }
     position: relative;
     display: flex;
@@ -21,7 +21,7 @@ $color-minor: #F4A460;
         border: 2px solid $color-major;
         border-radius: 10px;
         height: 210px;
-        background-color: #fff;
+        background-color: #999;
     }
 
     .search {
@@ -47,7 +47,7 @@ $color-minor: #F4A460;
         flex-basis: 80%;
         border: 2px solid $color-major;
         border-radius: 10px;
-        background-color: #fff;
+        background-color: #999;
 
         &-new {
             background-color: $color-major;
