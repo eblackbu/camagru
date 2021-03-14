@@ -27,3 +27,7 @@ $color-minor: #F4A460;
         }
     }
 }
+
+label[for^="old_password"] {
+    padding-top: 15px;
+}

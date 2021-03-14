@@ -11,7 +11,10 @@ $page_user = unserialize(base64_decode($_SESSION['page_user']));
 ?>
 
 $(document).on('click','.home__main-posts-item', function(){
-    $('.home__main-posts').css('opacity', '.5');
+    $('.home__main-posts').css('opacity', '.2');
+    $('.home__main-profile').css('opacity', '.2');
+    $('.home__main-new').css('opacity', '.2');
+
     $('.modal').css('top', $(window).scrollTop());
     $(`<div class="modal__base-content"></div>`).appendTo(".modal__base");
     $(`<div class="modal__base-content-title">
@@ -23,6 +26,7 @@ $(document).on('click','.home__main-posts-item', function(){
         </a>
         </div>`).appendTo(".modal__base-content");
     // картинка конкретного поста, на который кликнули
+    <!-- console.log($(this).attr('id')); -->
     $(`<div class="modal__base-content-image">${$(this).html()}</div>`).appendTo(".modal__base-content");
     // инфа по описанию, количеству лайков и коментам
     // тут еще буду изменения
@@ -55,7 +59,7 @@ $(document).on('click','.home__main-posts-item', function(){
                             <div class="like__right"></div>
                             <div class="like__filler"></div>
                         </div>
-                        <div class="like-count"> <?php // TODO ajax GET /likes/?image_id={id} ?>
+                        <div class="like-count"> 0<?php // TODO ajax GET /likes/?image_id={id} ?>
                         </div>
                     </div>
                     <div class="modal__base-content-options-statistics-comments">
@@ -77,7 +81,10 @@ $(document).on('click','.home__main-posts-item', function(){
                 <div class="modal__comments-item">
                     <div class="modal__comments-item-title">
                         <div class="modal__comments-item-title-nick"><a href="#">Рузанов Слава</a></div>
-                        <div class="modal__comments-item-title-data">14.11.2017</div>
+                        <div class="modal__comments-item-title-data">
+                            <div class="modal__comments-item-title-data data">14.11.2017</div>
+                            <div class="modal__comments-item-title-data close">X</div>
+                        </div>
                     </div>
                     <div class="modal__comments-item-text">
                         Верните мой 2007 год и стену вконтакте!!! пидарасы
@@ -86,7 +93,10 @@ $(document).on('click','.home__main-posts-item', function(){
                 <div class="modal__comments-item">
                     <div class="modal__comments-item-title">
                         <div class="modal__comments-item-title-nick"><a href="#">Пупа Лупович</a></div>
-                        <div class="modal__comments-item-title-data">14.11.2017</div>
+                        <div class="modal__comments-item-title-data">
+                            <div class="modal__comments-item-title-data data">14.11.2017</div>
+                            <div class="modal__comments-item-title-data close">X</div>
+                        </div>
                     </div>
                     <div class="modal__comments-item-text">
                         Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.
@@ -95,4 +105,17 @@ $(document).on('click','.home__main-posts-item', function(){
             </div>
     </div>`).appendTo(".modal__base-content");
     $('.modal').show();
+
+    // показ лайков
+    let id = $('.modal__base-content-image').children()[0].id;
+    id = id.substr(5);
+    /*$.ajax({
+        url: '',
+        type: 'GET',
+        data: {
+            image_id: id,
+        },
+        success: (data) => $('.like-count').text(data),
+        error: () => alert('bad!'),
+    });*/
 });

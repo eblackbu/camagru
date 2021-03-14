@@ -62,4 +62,9 @@ class Image extends Model
     {
         return '/images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
 }
