@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../blocks/header.php';
+require_once __DIR__ . '/../template_blocks/header.php';
 ?>
 
 <div class="change home">
     <div class="home__sidebar change__sidebar">
         <?php
-            require __DIR__ . '/../blocks/sidebar.php';
+            require __DIR__ . '/../template_blocks/sidebar.php';
         ?>
     </div>
     <div class="home__main change__main">
@@ -38,4 +38,4 @@ require_once __DIR__ . '/../blocks/header.php';
 </div>
 
 <?php
-require_once __DIR__ . '/../blocks/footer.php';
+require_once __DIR__ . '/../template_blocks/footer.php';
