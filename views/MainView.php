@@ -10,13 +10,10 @@ spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class UserView extends View
+class MainView extends View
 {
     public function get($kwargs)
     {
-        if (!isset($kwargs['login']))
-            require_once $this->_bad_template;
-        else
-            require_once 'templates/user.php';
+        require_once 'templates/main.php';
     }
 }

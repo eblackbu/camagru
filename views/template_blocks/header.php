@@ -20,7 +20,7 @@
             <?php if (isset($_SESSION['user'])): ?>
             <div class="header__content-sidebar">
                 <?php
-                    require __DIR__ . '/../blocks/sidebar.php'; 
+                    require __DIR__ . '/../template_blocks/sidebar.php';
                 ?>
             </div>
             <?php endif; ?>

@@ -29,7 +29,7 @@ $(document).ready(function () {
                 formData.append('upload_image', blob);
                 $.ajax({
                     type: "POST",
-                    url: '/?action=add_image',
+                    url: '/new_image',
                     contentType: false,
                     processData: false,
                     data: formData,
@@ -105,7 +105,7 @@ $(document).on('click', '.modal__base-content-options-statistics-comments', func
 // логика подключения вебки
 let constraints = { audio: false, video: {} };
 let url = window.location.pathname;
-if (url == "/new_photo") {
+if (url == "/new_image") {
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (mediaStream) {
             let video = document.querySelector('video');
@@ -173,7 +173,7 @@ function onAjaxSuccess(data) {
     $(`<div class="search__result"></div>`).appendTo(".search");
     for (let i = 0; i < data.length; i++) {
         $(`<div class="search__result-item">
-            <div class="search__result-item-nickname"><a href="/users/${data[i]['id']}">${data[i]['login']}</a></div>
+            <div class="search__result-item-nickname"><a href="/${data[i]['login']}">${data[i]['login']}</a></div>
         </div>`).appendTo(".search__result");
     }
 }

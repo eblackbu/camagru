@@ -1,12 +1,12 @@
 <?php
 // Страница для входа в аккаунт
 // echo 'login page';
-require_once __DIR__ . '/../blocks/header.php';
+require_once __DIR__ . '/../template_blocks/header.php';
 ?>
 
 <div class="auth">
     <h1 class="auth__title">Login</h1>
-    <form action="/?action=login" method="post" class="auth__form">
+    <form action="/" method="post" class="auth__form">
         <div class="auth__form-item">
             <label for="login">Login:</label>
             <input type="text" id="login" name="login">
@@ -30,4 +30,4 @@ require_once __DIR__ . '/../blocks/header.php';
 
 <?php
 
-require_once __DIR__ . '/../blocks/footer.php';
+require_once __DIR__ . '/../template_blocks/footer.php';

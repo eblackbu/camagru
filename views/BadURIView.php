@@ -10,13 +10,11 @@ spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class UserView extends View
+class BadURIView extends View
 {
     public function get($kwargs)
     {
-        if (!isset($kwargs['login']))
-            require_once $this->_bad_template;
-        else
-            require_once 'templates/user.php';
+        http_response_code(404);
+        require_once 'templates/404.php';
     }
 }

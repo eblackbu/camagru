@@ -13,7 +13,7 @@ require_once __DIR__ . '/../template_blocks/header.php';
             Настройки
         </h1>
         <div class="change__main-rename">
-            <form action="/?action=change_login" method="post" class="form">
+            <form action="/settings" method="post" class="form">
                 <div class="auth__form-item change__form-item">
                     <label for="new_login" >Новый никнейм:</label>
                     <input type="text" id="new_login" name="new_login">
@@ -22,7 +22,7 @@ require_once __DIR__ . '/../template_blocks/header.php';
             </form>
         </div>
         <div class="change__main-repass">
-            <form action="/?action=change_password" method="post" class="form">
+            <form action="/settings" method="post" class="form">
                 <div class="auth__form-item change__form-item">
                     <label for="old_password">Старый пароль:</label>
                     <input type="password" id="old_password" name="old_password">

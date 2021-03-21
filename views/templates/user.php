@@ -1,23 +1,18 @@
 <?php
+
+use base\ORMException;
+use models\Image;
+use models\User;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
+
 session_start();
-
-require_once __DIR__ . '/../blocks/header.php';
-require_once __DIR__ . '/../../models/Image.php';
-require_once __DIR__ . '/../../models/User.php';
-
-
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$segments = explode('/', trim($uri, '/'));
-
-if (!isset($segments[1]))
-{
-    require_once __DIR__ . '/404.php';
-    exit();
-}
 
 
 try {
-    $page_user = User::getOne(array('id' => $segments[1]));
+    $page_user = User::getOne(array('login' => $kwargs['login']));
     $_SESSION['page_user'] = base64_encode(serialize($page_user));
 } catch (ORMException $e) {
     require_once __DIR__ . '/404.php';
@@ -30,12 +25,14 @@ try {
 catch (ORMException $e) {
     $_SESSION['page_avatar_path'] = null;
 }
+
+require_once __DIR__ . '/../template_blocks/header.php';
 ?>
 
 <div class="home">
     <div class="home__sidebar">
         <?php
-            require __DIR__ . '/../blocks/sidebar.php';
+            require __DIR__ . '/../template_blocks/sidebar.php';
         ?>
     </div>
     <div class="home__main">
@@ -43,10 +40,10 @@ catch (ORMException $e) {
                 <div class="profile__main">
                     <div class="profile__main-info">
                         <div class="modal__base-content-title-avatar profile__main-info-avatar">
-                            <a href="/users/<?= $page_user->id ?>"><img src="<?= $_SESSION['page_avatar_path'] ?? '/views/image/none.png'?>" alt=""></a>
+                            <a href="/<?= $page_user->login ?>"><img src="<?= $_SESSION['page_avatar_path'] ?? '/views/image/none.png'?>" alt=""></a>
                         </div>
                         <div class="profile__main-info-nickname">
-                            <a href="/users/<?=$page_user->id ?>"><h1 class="modal__base-content-title-nickname"><?= $page_user->login ?></h1></a>
+                            <a href="/<?=$page_user->login ?>"><h1 class="modal__base-content-title-nickname"><?= $page_user->login ?></h1></a>
                         </div>
                     </div>
                     <?php if ($page_user->id != $_SESSION['user']['id']): ?>
@@ -62,7 +59,7 @@ catch (ORMException $e) {
                 </div>
             </div>
             <?php if ($page_user->id == $_SESSION['user']['id']): ?>
-            <a href="/new_photo"><div class="home__main-new">
+            <a href="/new_image"><div class="home__main-new">
                 <img src="/views/image/photo2.svg" alt="">
             </div></a>
             <?php endif; ?>
@@ -89,4 +86,4 @@ catch (ORMException $e) {
 </div>
 
 <?php
-require_once __DIR__ . '/../blocks/footer.php';
+require_once __DIR__ . '/../template_blocks/footer.php';

@@ -1,14 +1,19 @@
 <?php
-require_once __DIR__ . '/../blocks/header.php';
-require_once __DIR__ . '/../../models/Subscription.php';
-require_once __DIR__ . '/../../models/Image.php';
 
+use models\Image;
+use models\Subscription;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
+
+require_once __DIR__ . '/../template_blocks/header.php';
 ?>
 
 <div class="home main">
     <div class="home__sidebar main__sidebar">
         <?php
-            require __DIR__ . '/../blocks/sidebar.php';
+            require __DIR__ . '/../template_blocks/sidebar.php';
         ?>
     </div>
     <div class="home__main main__main">
@@ -26,4 +31,4 @@ require_once __DIR__ . '/../../models/Image.php';
 </div>
 
 <?php
-require_once __DIR__ . '/../blocks/footer.php';
+require_once __DIR__ . '/../template_blocks/footer.php';

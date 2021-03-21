@@ -1,15 +1,18 @@
 <?php
 
-require_once('handlers/logout.php');
-require_once ('models/User.php');
+use models\User;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
 
 ?>
 
 <div class="sidebar">
     <div class="sidebar__profile group">
-        <a href="/users/<?= $_SESSION['user']['id']?>">
+        <a href="/<?= $_SESSION['user']['login']?>">
             <div class="sidebar__profile-avatar">
-                <img src="/views/image/drochila.jpg" alt="">
+                <img src="/views/image/none.png" alt="">
             </div>
             <div class="sidebar__profile-nickname">
                 <?= $_SESSION['user']['login']; ?>
@@ -22,7 +25,7 @@ require_once ('models/User.php');
     </div>
     <div class="sidebar__options group">
         <div class="sidebar__options-search"><span id="search">Поиск</span></div>
-        <div class="sidebar__options-repassword"><a href="/change_info">Настройки</a></div>
+        <div class="sidebar__options-repassword"><a href="/settings">Настройки</a></div>
         <div class="sidebar__options-logout"><a href="/logout">Выйти</a></div>
     </div>
 </div>

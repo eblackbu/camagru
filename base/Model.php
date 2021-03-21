@@ -1,5 +1,13 @@
 <?php
 
+
+namespace base;
+
+
+use DB;
+use PDO;
+use PDOStatement;
+
 require_once __DIR__ . '/../setup/DB.php';
 require_once __DIR__ . '/ORMException.php';
 
@@ -68,9 +76,9 @@ class Model
      */
     public static function getOne(array $args): Model
     {
-        if (static::class == 'Model')
+        if (self::get_class_name() == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM `' . static::class . '`' . self::__prepare_conditions($args);
+        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args);
 
         self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare($prepared_string);
@@ -97,9 +105,9 @@ class Model
      */
     public static function getMany(array $args): array
     {
-        if (static::class == 'Model')
+        if (self::get_class_name() == 'Model')
             throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM `' . static::class . '`' . self::__prepare_conditions($args);
+        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args);
 
         self::$pdo = DB::getInstance();
         $query = self::$pdo->prepare($prepared_string);
@@ -143,7 +151,7 @@ class Model
             return ($this->{$field} !== null);
         });
 
-        $prepared_string = 'INSERT INTO `' . static::class . '` ' . $this->__prepare_string_for_create($not_null_fields);
+        $prepared_string = 'INSERT INTO `' . self::get_class_name() . '` ' . $this->__prepare_string_for_create($not_null_fields);
         $query = self::$pdo->prepare($prepared_string);
 
         $this->__bind_params($query, $not_null_fields);
@@ -168,7 +176,7 @@ class Model
     protected function _update(): bool
     {
         $prepared_string = $this->__prepare_string_for_update();
-        $query = self::$pdo->prepare('UPDATE `' . static::class . '` SET ' . $prepared_string . ' WHERE `id` = :id');
+        $query = self::$pdo->prepare('UPDATE `' . self::get_class_name() . '` SET ' . $prepared_string . ' WHERE `id` = :id');
 
         $this->__bind_params($query, $this->_fields);
 
@@ -197,7 +205,7 @@ class Model
     public function delete(): bool
     {
         self::$pdo = DB::getInstance();
-        $query = self::$pdo->prepare('DELETE FROM `' . static::class . '` WHERE `id` = :id');
+        $query = self::$pdo->prepare('DELETE FROM `' . self::get_class_name() . '` WHERE `id` = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->execute();
         $query->closeCursor();
@@ -214,5 +222,15 @@ class Model
         foreach ($this->_fields as $field)
             $data[$field] = $this->{$field};
         return $data;
+    }
+
+    /**
+     * Function for getting classname without namespace
+     * @return string
+     */
+    public static function get_class_name(): string
+    {
+        $path = explode('\\', static::class);
+        return array_pop($path);
     }
 }

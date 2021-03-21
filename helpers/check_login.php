@@ -1,5 +1,13 @@
 <?php
 
+use base\ORMException;
+use models\Confirmation;
+use models\User;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
+
 function check_existing_login(string $login): bool
 {
     try {
