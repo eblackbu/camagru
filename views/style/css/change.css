@@ -13,3 +13,6 @@
   border-radius: 5px; }
   .change__form:first-child {
     margin-bottom: 20px; }
+
+label[for^="old_password"] {
+  padding-top: 15px; }

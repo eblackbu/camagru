@@ -68,7 +68,7 @@ require_once __DIR__ . '/../template_blocks/header.php';
                 $images = Image::getMany(array('created_by' => $page_user->id));
                 foreach($images as $image)
                 {
-                    ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" alt=""></div><?php
+                    ?><div class="home__main-posts-item"><img src="<?= $image->getPath() ?>" id="image<?= $image->getId() ?>" alt=""></div><?php
                 }
                 ?>
             </div>
