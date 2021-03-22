@@ -2,15 +2,19 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../../models/User.php';
-require_once __DIR__ . '/../../models/Image.php';
-require_once __DIR__ . '/../../models/Comment.php';
 
-$page_user = unserialize(base64_decode($_SESSION['page_user']));
+use models\User;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
 
 ?>
 
 $(document).on('click','.home__main-posts-item', function(){
+    <?php if (isset($_SESSION['page_user'])): ?>
+    <?php $page_user = unserialize(base64_decode($_SESSION['page_user'])); ?>
+    $('.home__main-posts').css('opacity', '.5');
     $('.home__main-posts').css('opacity', '.2');
     $('.home__main-profile').css('opacity', '.2');
     $('.home__main-new').css('opacity', '.2');
@@ -18,7 +22,7 @@ $(document).on('click','.home__main-posts-item', function(){
     $('.modal').css('top', $(window).scrollTop());
     $(`<div class="modal__base-content"></div>`).appendTo(".modal__base");
     $(`<div class="modal__base-content-title">
-        <a href="<?= '/users/' . $page_user->login ?>">
+        <a href="/<?= $page_user->login ?>">
             <div class="modal__base-content-title-avatar">
                 <img src="<?= $_SESSION['page_avatar_path'] ?? '/views/image/none.png'?>" alt="">
             </div>
@@ -118,4 +122,5 @@ $(document).on('click','.home__main-posts-item', function(){
         success: (data) => $('.like-count').text(data),
         error: () => alert('bad!'),
     });*/
+    <?php endif; ?>
 });

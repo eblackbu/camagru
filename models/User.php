@@ -1,7 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../orm/Model.php';
-require_once __DIR__ . '/Subscription.php';
+
+namespace models;
+
+
+use base\Model;
+use base\ORMException;
+use DB;
+use models\Subscription;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
 
 class User extends Model
 {

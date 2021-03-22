@@ -1,6 +1,14 @@
 <?php
 
-require_once __DIR__ . '/../orm/Model.php';
+
+namespace models;
+
+
+use base\Model;
+
+spl_autoload_register(function($className) {
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
 
 class Confirmation extends Model
 {
