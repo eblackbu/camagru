@@ -1,9 +1,13 @@
 <?php
 
-require_once __DIR__ . '/DB.php';
-require_once __DIR__ . '/../models/User.php';
-require_once __DIR__ . '/../models/Subscription.php';
-require_once __DIR__ . '/../models/Image.php';
+use models\Image;
+use models\Subscription;
+use models\User;
+use setup\DB;
+
+spl_autoload_register(function($className) {
+    include_once __DIR__ . '/..' . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
+});
 
 function delTree($dir)
 {
@@ -33,9 +37,9 @@ $images_dir = __DIR__ . '/base_images';
 $admin_user = User::getOne(array('login' => 'admin'));
 $images = array_diff(scandir($images_dir), array('..', '.'));
 
-if (file_exists(__DIR__ . '/../images'))
-    delTree(__DIR__ . '/../images');
-mkdir(__DIR__ . '/../images', 0777, true);
+if (file_exists(__DIR__ . '/../images_database'))
+    delTree(__DIR__ . '/../images_database');
+mkdir(__DIR__ . '/../images_database', 0777, true);
 
 foreach ($images as $file) {
     $obj = new Image(

@@ -14,7 +14,7 @@ $(document).ready(() => {
 
     // подключение вебки
     let url = window.location.pathname;
-    if (url == "/new_photo") {
+    if (url == "/new_image") {
         let constraints = { audio: false, video: {} };
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function (mediaStream) {

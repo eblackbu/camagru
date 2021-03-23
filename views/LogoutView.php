@@ -7,13 +7,13 @@ namespace views;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/helpers/notification.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/helpers/redirect.php';
 
-use base\View;
+use base\AuthorizedView;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class LogoutView extends View
+class LogoutView extends AuthorizedView
 {
     public function get($kwargs)
     {

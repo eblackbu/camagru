@@ -4,13 +4,14 @@
 namespace views;
 
 
+use base\AuthorizedView;
 use models\Image;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class ImageView
+class ImageView extends AuthorizedView
 {
     public function get(array $kwargs)
     {
@@ -29,7 +30,7 @@ class ImageView
         if (!($file['size'] && in_array($file['type'], array('image/png', 'image/jpg')))) {
             http_response_code('400');
             $_SESSION['notification'] = 'Что то пошло не так при загрузке фото';
-            redirect_to('/new_image');
+            exit();
         }
         $img = new Image(array(
             'label' => $label,

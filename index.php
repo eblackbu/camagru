@@ -9,35 +9,34 @@ spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-$router = new Router();
+$router = Router::getInstance();
 
-if (isset($_SESSION['user']))
+if (!$router->getRoutes())
 {
-    $router->addRoute('/logout', 'views\LogoutView');
-    $router->addRoute('/new_image', 'views\ImageView');
-    $router->addRoute('/settings', 'views\SettingsView');
+    $router->addRoute('/logout', 'views\LogoutView', true);
+    $router->addRoute('/new_image', 'views\ImageView', true);
+    $router->addRoute('/settings', 'views\SettingsView', true);
+    $router->addRoute('/search', 'api\SearchUserAPIView', true);
 
-    $router->addRoute('/search', 'api\SearchUserAPIView');
-    $router->addRoute('/comments', 'api\CommentAPIView');
-    $router->addRoute('/likes', 'api\LikeAPIView');
-    $router->addRoute('/images', 'api\ImageAPIView');
-    $router->addRoute('/users', 'api\UserAPIView');
-    $router->addRoute('/comments/{id}', 'api\CommentAPIView');
-    $router->addRoute('/likes/{id}', 'api\LikeAPIView');
-    $router->addRoute('/images/{id}', 'api\ImageAPIView');
-    $router->addRoute('/users/{id}', 'api\UserAPIView');
+    $router->addRoute('/comments/{id}', 'api\CommentAPIView', true);
+    $router->addRoute('/likes/{id}', 'api\LikeAPIView', true);
+    $router->addRoute('/images/{id}', 'api\ImageAPIView', true);
+    $router->addRoute('/users/{id}', 'api\UserAPIView', true);
+    $router->addRoute('/comments', 'api\CommentAPIView', true);
+    $router->addRoute('/likes', 'api\LikeAPIView', true);
+    $router->addRoute('/images', 'api\ImageAPIView', true);
+    $router->addRoute('/users', 'api\UserAPIView', true);
+    $router->addRoute('/{login}', 'views\UserView', true);
+    $router->addRoute('/', 'views\MainView', true);
 
-    $router->addRoute('/{login}', 'views\UserView');
-    $router->addRoute('/', 'views\MainView');
-}
-else
-{
     $router->addRoute('/register', 'views\RegisterView');
     $router->addRoute('/submit_register', 'views\SubmitRegisterView');
     $router->addRoute('/change_password_request', 'views\ChangePasswordRequest');
     $router->addRoute('/', 'views\LoginView');
+
+    $router->setNotAuthorizedTemplate('views/templates/403.php');
+    $router->setNotFoundTemplate('views/templates/404.php');
 }
 
-$router->setBadURITemplate('views/templates/404.php');
 
 $router->callView($_SERVER['REQUEST_URI']);

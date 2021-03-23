@@ -4,12 +4,9 @@
 namespace base;
 
 
-use DB;
+use setup\DB;
 use PDO;
 use PDOStatement;
-
-require_once __DIR__ . '/../setup/DB.php';
-require_once __DIR__ . '/ORMException.php';
 
 /**
  * Class Model

@@ -47,7 +47,7 @@ $(document).on('click','.home__main-posts-item', function(){
                     <div class="modal__menu-edit">Изменить</div>
                     <div class="modal__menu-delete">Удалить</div>
                 </div>
-                <?php endif; // TODO ajax DELETE /images/{id} ?>
+                <?php endif; // TODO ajax DELETE /images_database/{id} ?>
             </div>
             <div class="modal__description-edit">
                 <form action="" method="post">
