@@ -1,0 +1,42 @@
+$color-major: #7FFFD4;
+$color-minor: #F4A460;
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body, html, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #666;
+    position: relative;
+    font-family: 'Comfortaa', cursive;
+    color: #fff;
+}
+
+button, input {
+    font-family: 'Comfortaa', cursive;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.content {
+    padding-top: 70px;
+}
+
+@import './header.scss';
+@import './footer.scss';    
+@import './sidebar.scss';
+@import './home.scss';
+@import './change.scss';
+@import './auth.scss';
+@import './modal.scss';
+@import './new_photo.scss';
