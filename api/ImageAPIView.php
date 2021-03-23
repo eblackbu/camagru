@@ -30,7 +30,6 @@ class ImageAPIView extends AuthorizedView
             http_response_code('400');
             exit();
         }
-        $a = 2;
         echo json_encode(array_map(function ($image) {
             return serialize($image);
         }, $images));

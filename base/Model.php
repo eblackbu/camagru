@@ -73,71 +73,6 @@ class Model
             $query->bindParam(':_offset', $offset, PDO::PARAM_INT);
     }
 
-    /**
-     * Function for getting one instance of some Model
-     * @param array $args - conditions for fields, e.g. array('id' => 1)
-     * @param string|null $extra - optional raw filter, passed as string
-     * @return Model
-     * @throws ORMException if there is no selected rows or count of selected rows > 1
-     */
-    public static function getOne(array $args, string $extra=null): Model
-    {
-        if (self::get_class_name() == 'Model')
-            throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args, $extra);
-        if ($extra)
-            $prepared_string .= $extra;
-
-        self::$pdo = DB::getInstance();
-        $query = self::$pdo->prepare($prepared_string);
-        if (!$query)
-            throw new ORMException('Error in preparation of query', 227);
-        self::__bind_params_for_get($query, $args);
-
-        $result = $query->execute();
-        if (!$result)
-            throw new ORMException('Error in execution prepared query', 228);
-        $model_data = $query->fetchall();
-        $query->closeCursor();
-        if (count($model_data) != 1)
-            throw new ORMException('Error in getOne function - there are no selected rows or more than 1!', 229);
-        $current_model = get_called_class();
-        return new $current_model($model_data[0]);
-    }
-
-    /**
-     * Function for array of instances of some Model. You can set limit and offset.
-     * @param array $args - conditions for fields, e.g. array('id' => 1)
-     * @param string|null $extra - optional raw filter, passed as string
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return array
-     * @throws ORMException
-     */
-    public static function getMany(array $args, string $extra=null, int $limit=null, int $offset=null): array
-    {
-        if (self::get_class_name() == 'Model')
-            throw new ORMException("Error: you can't call methods directly from class Model", 226);
-        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args, $extra, $limit, $offset);
-
-        self::$pdo = DB::getInstance();
-        $query = self::$pdo->prepare($prepared_string);
-
-        if (!$query)
-            throw new ORMException('Error in preparation query', 227);
-        self::__bind_params_for_get($query, $args, $limit, $offset);
-
-        $result = $query->execute();
-        $model_data = $query->fetchall();
-        $query->closeCursor();
-        if (!$result)
-            throw new ORMException('Error in execution prepared query', 228);
-        $current_model = get_called_class();
-        return array_map(function ($row) use ($current_model) {
-            return new $current_model($row);
-        }, $model_data);
-    }
-
     protected function __bind_params(PDOStatement &$query, array $fields_array)
     {
         foreach ($fields_array as $field)
@@ -195,6 +130,102 @@ class Model
         $query->execute();
         $query->closeCursor();
         return True;
+    }
+
+    /**
+     * Function for getting one instance of some Model
+     * @param array $args - conditions for fields, e.g. array('id' => 1)
+     * @param string|null $extra - optional raw filter, passed as string
+     * @return Model
+     * @throws ORMException if there is no selected rows or count of selected rows > 1
+     */
+    public static function getOne(array $args, string $extra=null): Model
+    {
+        if (self::get_class_name() == 'Model')
+            throw new ORMException("Error: you can't call methods directly from class Model", 226);
+        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args, $extra);
+        if ($extra)
+            $prepared_string .= $extra;
+
+        self::$pdo = DB::getInstance();
+        $query = self::$pdo->prepare($prepared_string);
+        if (!$query)
+            throw new ORMException('Error in preparation of query', 227);
+        self::__bind_params_for_get($query, $args);
+
+        $result = $query->execute();
+        if (!$result)
+            throw new ORMException('Error in execution prepared query', 228);
+        $model_data = $query->fetchall();
+        $query->closeCursor();
+        if (count($model_data) != 1)
+            throw new ORMException('Error in getOne function - there are no selected rows or more than 1!', 229);
+        $current_model = get_called_class();
+        return new $current_model($model_data[0]);
+    }
+
+    /**
+     * Function for getting array of instances of some Model from database. You can set limit and offset.
+     * @param array $args - conditions for fields, e.g. array('id' => 1)
+     * @param string|null $extra - optional raw filter, passed as string
+     * @param int|null $offset
+     * @param int|null $limit
+     * @return array
+     * @throws ORMException
+     */
+    public static function getMany(array $args, string $extra=null, int $limit=null, int $offset=null): array
+    {
+        if (self::get_class_name() == 'Model')
+            throw new ORMException("Error: you can't call methods directly from class Model", 226);
+        $prepared_string = 'SELECT * FROM `' . self::get_class_name() . '`' . self::__prepare_conditions($args, $extra, $limit, $offset);
+
+        self::$pdo = DB::getInstance();
+        $query = self::$pdo->prepare($prepared_string);
+
+        if (!$query)
+            throw new ORMException('Error in preparation query', 227);
+        self::__bind_params_for_get($query, $args, $limit, $offset);
+
+        $result = $query->execute();
+        $model_data = $query->fetchall();
+        $query->closeCursor();
+        if (!$result)
+            throw new ORMException('Error in execution prepared query', 228);
+        $current_model = get_called_class();
+        return array_map(function ($row) use ($current_model) {
+            return new $current_model($row);
+        }, $model_data);
+    }
+
+    /**
+     * Function for getting count of some Model instances from database. You can set limit and offset
+     * @param array $args - conditions for fields, e.g. array('id' => 1)
+     * @param string|null $extra - optional raw filter, passed as string
+     * @param int|null $offset
+     * @param int|null $limit
+     * @return array
+     * @throws ORMException
+     */
+    public static function getCount(array $args, string $extra=null, int $limit=null, int $offset=null): int
+    {
+        if (self::get_class_name() == 'Model')
+            throw new ORMException("Error: you can't call methods directly from class Model", 226);
+        $prepared_string = 'SELECT COUNT(' . '`' . self::get_class_name() . '`.`id`) count FROM `' .
+            self::get_class_name() . '`' . self::__prepare_conditions($args, $extra, $limit, $offset);
+
+        self::$pdo = DB::getInstance();
+        $query = self::$pdo->prepare($prepared_string);
+
+        if (!$query)
+            throw new ORMException('Error in preparation query', 227);
+        self::__bind_params_for_get($query, $args, $limit, $offset);
+
+        $result = $query->execute();
+        $qs = $query->fetchAll();
+        $query->closeCursor();
+        if (!$result)
+            throw new ORMException('Error in execution prepared query', 228);
+        return $qs[0]['count'];
     }
 
     /**
