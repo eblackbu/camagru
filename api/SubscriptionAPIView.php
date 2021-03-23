@@ -3,15 +3,15 @@
 
 namespace api;
 
+use base\AuthorizedView;
 use base\ORMException;
-use base\View;
 use models\Subscription;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class SubscriptionAPIView extends View
+class SubscriptionAPIView extends AuthorizedView
 {
     public function get($kwargs)
     {
@@ -22,9 +22,10 @@ class SubscriptionAPIView extends View
         } catch (ORMException $e) {
             http_response_code('404');
             echo json_encode(array('success' => False));
+            exit();
         }
         echo json_encode(array_map(function ($subscription) {
-            return $subscription->to_json();
+            return serialize($subscription);
         }, $subscriptions));
     }
 

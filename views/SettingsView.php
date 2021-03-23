@@ -8,15 +8,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/helpers/check_login.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/helpers/notification.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/helpers/redirect.php';
 
+use base\AuthorizedView;
 use base\ORMException;
-use base\View;
 use models\User;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class SettingsView extends View
+class SettingsView extends AuthorizedView
 {
     public function get($kwargs)
     {

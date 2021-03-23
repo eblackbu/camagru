@@ -3,16 +3,15 @@
 
 namespace api;
 
+use base\AuthorizedView;
 use base\ORMException;
-use base\View;
-use models\Image;
 use models\Like;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class LikeAPIView extends View
+class LikeAPIView extends AuthorizedView
 {
     public function get($kwargs)
     {
@@ -27,7 +26,7 @@ class LikeAPIView extends View
             exit();
         }
         echo json_encode(array_map(function ($like) {
-            return $like->to_json();
+            return serialize($like);
         }, $likes));
     }
 

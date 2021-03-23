@@ -3,15 +3,15 @@
 
 namespace api;
 
+use base\AuthorizedView;
 use base\ORMException;
-use base\View;
 use models\Comment;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
 });
 
-class CommentAPIView extends View
+class CommentAPIView extends AuthorizedView
 {
     public function get($kwargs)
     {
@@ -27,7 +27,7 @@ class CommentAPIView extends View
         }
         http_response_code('200');
         echo json_encode(array_map(function ($comment) {
-            return $comment->to_json();
+            return serialize($comment);
         }, $comments));
     }
 

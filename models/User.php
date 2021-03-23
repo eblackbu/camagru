@@ -6,8 +6,7 @@ namespace models;
 
 use base\Model;
 use base\ORMException;
-use DB;
-use models\Subscription;
+use setup\DB;
 
 spl_autoload_register(function($className) {
     include_once $_SERVER['DOCUMENT_ROOT'] . '/' . str_replace('\\', DIRECTORY_SEPARATOR, $className). '.php';
@@ -56,7 +55,7 @@ class User extends Model
     public static function getSubscribersCount(int $id): int
     {
         try {
-            $res = count(Subscription::getMany(array('user_where' => $id)));
+            $res = Subscription::getCount(array('user_where' => $id));
         } catch (ORMException $e) {
             session_start();
             $_SESSION['notification'] .= 'Что то пошло не так при вычислении количества ваших подписчиков :с</br>';
@@ -70,7 +69,7 @@ class User extends Model
         if (!$id)
             return 0;
         try {
-            $res = count(Subscription::getMany(array('user_from' => $id)));
+            $res = Subscription::getCount(array('user_from' => $id));
         } catch (ORMException $e) {
             session_start();
             $_SESSION['notification'] .= 'Что то пошло не так при вычислении количества ваших подписок :с</br>';

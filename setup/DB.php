@@ -1,7 +1,13 @@
 <?php
 
+
+namespace setup;
+
+use PDO;
+use PDOException;
+
 /**
- * Класс Singleton'а для подключения к бд. Возвращает обьект PDO
+ * Class for database connection. Store PDO object;
  */
 class DB
 {

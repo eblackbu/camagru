@@ -4,7 +4,7 @@ require_once __DIR__ . '/../template_blocks/header.php';
     <div class="home addPhoto">
         <div class="home__sidebar">
                 <?php
-                    require __DIR__ . '/../blocks/sidebar.php';
+                    require __DIR__ . '/../template_blocks/sidebar.php';
                 ?>
         </div>
         <div class="home__main">

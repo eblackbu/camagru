@@ -11,7 +11,7 @@ $(document).on('click', '.search_get', () => {
             $(`<div class="search__result"></div>`).appendTo(".search");
             for (let i = 0; i < data.length; i++) {
                 $(`<div class="search__result-item">
-                    <div class="search__result-item-nickname"><a href="/users/${data[i]['id']}">${data[i]['login']}</a></div>
+                    <div class="search__result-item-nickname"><a href="/${data[i]['login']}">${data[i]['login']}</a></div>
                 </div>`).appendTo(".search__result");
             }
         }

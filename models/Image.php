@@ -34,11 +34,11 @@ class Image extends Model
         if (!($this->filename))
         {
             $this->filename = uniqid('i', true);
-            while (count(Image::getMany(array('filename' => $this->filename))) != 0)
+            while (Image::getCount(array('filename' => $this->filename)) != 0)
                 $this->filename = uniqid('i', true);
 
-            if (!file_exists(__DIR__ . '/../images/' . $this->created_by)) {
-                mkdir(__DIR__ . '/../images/' . $this->created_by, 0777, true);
+            if (!file_exists(__DIR__ . '/../images_database/' . $this->created_by)) {
+                mkdir(__DIR__ . '/../images_database/' . $this->created_by, 0777, true);
             }
         }
     }
@@ -53,7 +53,7 @@ class Image extends Model
 
     public static function getLikesCount($id): int
     {
-        return count(Like::getMany(array('image' => $id)));
+        return Like::getCount(array('image' => $id));
     }
 
     public static function getComments($id): array
@@ -63,12 +63,12 @@ class Image extends Model
 
     public function getFullPath(): string
     {
-        return __DIR__ . '/../images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
+        return __DIR__ . '/../images_database/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
 
     public function getPath(): string
     {
-        return '/images/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
+        return '/images_database/' . $this->created_by . '/' . $this->filename . '.' . $this->extension;
     }
 
     public function getId(): string

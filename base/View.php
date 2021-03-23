@@ -4,6 +4,8 @@
 namespace base;
 
 
+use Exception;
+
 class View
 {
     const _methods = array(
@@ -12,11 +14,14 @@ class View
         'PUT' => 'put',
         'DELETE' => 'delete',
     );
-    protected string $_bad_template;
 
-    public function __construct(string $_bad_template)
+    /**
+     * Function that checks if user has rights for this view (and method, maybe!)
+     * @return bool
+     */
+    public function check_rights(): bool
     {
-        $this->_bad_template = $_bad_template;
+        return True;
     }
 
     public function __invoke(array $kwargs)
@@ -25,26 +30,31 @@ class View
         if (array_key_exists($_SERVER['REQUEST_METHOD'], self::_methods))
             call_user_func(array($this, self::_methods[$_SERVER['REQUEST_METHOD']]), $kwargs);
         else
-            require_once $this->_bad_template;
+            http_response_code(405);
+        exit();
     }
 
     public function get(array $kwargs)
     {
-        require_once $this->_bad_template;
+        http_response_code(405);
+        exit();
     }
 
     public function post(array $kwargs)
     {
-        require_once $this->_bad_template;
+        http_response_code(405);
+        exit();
     }
 
     public function put(array $kwargs)
     {
-        require_once $this->_bad_template;
+        http_response_code(405);
+        exit();
     }
 
     public function delete(array $kwargs)
     {
-        require_once $this->_bad_template;
+        http_response_code(405);
+        exit();
     }
 }
