@@ -21,7 +21,7 @@ class SearchUserAPIView extends AuthorizedView
             echo json_encode(array());
         $users = User::getUsersBySearch($search_string);
         echo json_encode(array_map(function ($user) {
-            return $user->to_json();
+            return serialize($user);
         }, $users));
     }
 }

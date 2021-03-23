@@ -27,7 +27,7 @@ class CommentAPIView extends AuthorizedView
         }
         http_response_code('200');
         echo json_encode(array_map(function ($comment) {
-            return $comment->to_json();
+            return serialize($comment);
         }, $comments));
     }
 

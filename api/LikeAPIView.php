@@ -26,7 +26,7 @@ class LikeAPIView extends AuthorizedView
             exit();
         }
         echo json_encode(array_map(function ($like) {
-            return $like->to_json();
+            return serialize($like);
         }, $likes));
     }
 

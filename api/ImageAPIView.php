@@ -13,6 +13,29 @@ spl_autoload_register(function($className) {
 
 class ImageAPIView extends AuthorizedView
 {
+    public function get($kwargs)
+    {
+        session_start();
+        if (!$_GET['user'])
+        {
+            http_response_code('400');
+            exit();
+        }
+        $user = $_GET['user'];
+        $limit = $_GET['limit'] ?? null;
+        $offset = $_GET['offset'] ?? null;
+        try {
+            $images = Image::getMany(array('created_by' => $user), '', $limit, $offset);
+        } catch (ORMException $e) {
+            http_response_code('400');
+            exit();
+        }
+        $a = 2;
+        echo json_encode(array_map(function ($image) {
+            return serialize($image);
+        }, $images));
+    }
+
     public function post($kwargs)
     {
         session_start();
@@ -22,7 +45,8 @@ class ImageAPIView extends AuthorizedView
 
         if ($label === null)
             $label = '';
-        if (!($file['size'] && in_array($file['type'], array('image/png', 'image/jpg')))) {
+        if (!($file['size'] && in_array($file['type'], array('image/png', 'image/jpg'))))
+        {
             http_response_code('400');
             exit();
         }

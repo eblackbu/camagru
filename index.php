@@ -22,10 +22,10 @@ if (!$router->getRoutes())
     $router->addRoute('/likes/{id}', 'api\LikeAPIView', true);
     $router->addRoute('/images/{id}', 'api\ImageAPIView', true);
     $router->addRoute('/users/{id}', 'api\UserAPIView', true);
-    $router->addRoute('/comments', 'api\CommentAPIView', true);
-    $router->addRoute('/likes', 'api\LikeAPIView', true);
-    $router->addRoute('/images', 'api\ImageAPIView', true);
-    $router->addRoute('/users', 'api\UserAPIView', true);
+    $router->addRoute('/comments/', 'api\CommentAPIView', true);
+    $router->addRoute('/likes/', 'api\LikeAPIView', true);
+    $router->addRoute('/images/', 'api\ImageAPIView', true);
+    $router->addRoute('/users/', 'api\UserAPIView', true);
     $router->addRoute('/{login}', 'views\UserView', true);
     $router->addRoute('/', 'views\MainView', true);
 

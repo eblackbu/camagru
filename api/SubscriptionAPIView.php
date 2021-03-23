@@ -22,9 +22,10 @@ class SubscriptionAPIView extends AuthorizedView
         } catch (ORMException $e) {
             http_response_code('404');
             echo json_encode(array('success' => False));
+            exit();
         }
         echo json_encode(array_map(function ($subscription) {
-            return $subscription->to_json();
+            return serialize($subscription);
         }, $subscriptions));
     }
 
