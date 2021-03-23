@@ -15,7 +15,7 @@ require_once __DIR__ . '/../template_blocks/header.php';
                     <div class="preview">
                         <video autoplay></video>
                     </div>
-                    <input type='button' id='snapshot' value="Щелк!" class="auth__form-btn">
+                    <input type='button' value="Щелк!" class="snapshot auth__form-btn">
                     <div class="preview">
                         <canvas id='canvasMake'></canvas>
                     </div>

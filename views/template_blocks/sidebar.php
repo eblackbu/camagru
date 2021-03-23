@@ -24,7 +24,7 @@ spl_autoload_register(function($className) {
         <div class="sidebar__statistics-subscribers"><a href="">Подписчики: <?= User::getSubscribersCount($_SESSION['user']['id']); ?></a></div>
     </div>
     <div class="sidebar__options group">
-        <div class="sidebar__options-search"><span id="search">Поиск</span></div>
+        <div class="sidebar__options-search"><span class="search-open">Поиск</span></div>
         <div class="sidebar__options-repassword"><a href="/settings">Настройки</a></div>
         <div class="sidebar__options-logout"><a href="/logout">Выйти</a></div>
     </div>

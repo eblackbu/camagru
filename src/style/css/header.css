@@ -1,0 +1,103 @@
+.header {
+  position: fixed;
+  z-index: 1;
+  background-color: #666;
+  display: block;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0; }
+  .header__content {
+    display: flex;
+    justify-content: space-between; }
+    .header__content-logo {
+      letter-spacing: 6px; }
+      .header__content-logo a {
+        color: #7FFFD4;
+        text-shadow: 2px 2px 2px #F4A460;
+        text-decoration: none; }
+    .header__content-menu {
+      display: none;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background-color: #777; }
+      .header__content-menu:hover {
+        background-color: #888; }
+      .header__content-menu::before {
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 60%;
+        background-color: #fff;
+        top: 25%;
+        left: 20%; }
+      .header__content-menu::after {
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 60%;
+        background-color: #fff;
+        bottom: 25%;
+        left: 20%; }
+    .header__content-menu.active::before {
+      transform-origin: 15% 35%;
+      transform: rotate(45deg);
+      width: 80%; }
+    .header__content-menu.active::after {
+      transform-origin: 15% 35%;
+      transform: rotate(-45deg);
+      width: 80%; }
+    .header__content-sidebar {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: #666;
+      box-shadow: -2px 3px 10px rgba(127, 255, 212, 0.5);
+      border-radius: 0 0 0 10px;
+      padding: 10px; }
+    .header__content .search {
+      display: none;
+      position: absolute;
+      left: -199px;
+      top: 0;
+      width: 199px;
+      padding: 15px 5px 5px;
+      background-color: #666;
+      box-shadow: -3px 2px 4px rgba(127, 255, 212, 0.5); }
+  .header__notifications {
+    padding: 10px;
+    background-color: #F4A460;
+    color: #7FFFD4;
+    position: absolute;
+    width: 280px;
+    border-radius: 0 0 10px 0;
+    left: 0;
+    top: 70px;
+    transition: .3s linear; }
+    .header__notifications p {
+      margin: 0; }
+    .header__notifications:hover {
+      background-color: #f58727; }
+    .header__notifications.active {
+      animation: pressed 1s;
+      animation-iteration-count: 1; }
+
+@keyframes pressed {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+  @media (max-width: 960px) {
+    .header__content-menu {
+      display: block; } }
+  @media (max-width: 540px) {
+    .header {
+      height: 50px;
+      padding: 10px 0; }
+      .header__content-logo {
+        font-size: 26px; }
+      .header__content-menu {
+        width: 30px;
+        height: 30px; } }
