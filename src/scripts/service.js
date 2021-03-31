@@ -23,7 +23,7 @@ $(document).on('click', "#uploadFile", () => {
     if (window.FormData === undefined) {
         alert('В вашем браузере FormData не поддерживается')
     } else {
-        let canvas = prepToServer();
+        console.log(canvas);
         canvas.toBlob(function(blob) {
             let formData = new FormData();
             formData.append('upload_image', blob);
