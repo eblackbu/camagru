@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="/views/style/css/main.css" rel="stylesheet">
+    <link href="/src/style/css/main.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="/src/scripts/service.js"></script>
     <script src="/src/scripts/main.js"></script>
-    <script src="/src/scripts/main.js.php"></script>
+    <script src="/views/scripts/main.js.php"></script>
 </head>
 
 <body>

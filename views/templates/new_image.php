@@ -16,9 +16,6 @@ require_once __DIR__ . '/../template_blocks/header.php';
                         <video autoplay></video>
                     </div>
                     <input type='button' value="Щелк!" class="snapshot auth__form-btn">
-                    <div class="preview">
-                        <canvas id='canvasMake'></canvas>
-                    </div>
                 </div>
                 <div class="uploadPhoto">
                     <div class="input__wrapper">
@@ -27,9 +24,18 @@ require_once __DIR__ . '/../template_blocks/header.php';
                             <span class="input__file-button-text">Выберите файл</span>
                         </label>
                     </div>
-                    <div class="preview">
-                        <canvas id='canvasUpload'></canvas>
-                    </div>
+                </div>
+                <div class="preview" id="previewResult">
+                    <canvas id='canvasMake'></canvas>
+                    <!-- <img id="shot" src="https://avatars.mds.yandex.net/get-banana/28825/x25DNBUr1VR8xaUkLGhXLsY5X_banana_20161021_logo.png/optimize" alt=""> -->
+                </div>
+                <div class="preview">
+                    <canvas id="canvasTmp"></canvas>
+                </div>
+                <div class="stickers">
+                    <img src="/views/image/1.png" id="sticker1" class="sticker">
+                    <img src="/views/image/2.png" id="sticker2" class="sticker">
+                    <img src="/views/image/3.png" id="sticker3" class="sticker">
                 </div>
                 <input type="button" value="Загрузить" id="uploadFile" class="auth__form-btn">
             </form>
