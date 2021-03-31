@@ -181,7 +181,7 @@ button, input {
   position: absolute;
   top: 0;
   width: 199px;
-  background-color: #fff; }
+  background-color: #999; }
   .search__close {
     color: #7FFFD4;
     position: absolute;
@@ -226,6 +226,8 @@ button, input {
     border: 2px solid #7FFFD4;
     right: -442%;
     z-index: 2; }
+    .home .search a {
+      color: #7FFFD4; }
   .home__main.main__main .home__main-posts-item:nth-child(-n+3) {
     margin-top: 0; }
   .home__main {
@@ -593,6 +595,12 @@ label[for^="old_password"] {
 .addPhoto span.tabs:hover {
   cursor: pointer;
   color: #F4A460; }
+
+.addPhoto__comment {
+  padding: 10px 0;
+  display: none; }
+  .addPhoto__comment.active {
+    display: block; }
 
 .image-form {
   padding: 5px; }

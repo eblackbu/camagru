@@ -9,11 +9,11 @@ $(document).on('click', '.search_get', () => {
         success: (data) => {
             $(".search__result").remove();
             $(`<div class="search__result"></div>`).appendTo(".search");
-            for (let i = 0; i < data.length; i++) {
+            data.forEach((el) => {
                 $(`<div class="search__result-item">
-                    <div class="search__result-item-nickname"><a href="/${data[i]['login']}">${data[i]['login']}</a></div>
+                    <div class="search__result-item-nickname"><a href="/${el['login']}">${el['login']}</a></div>
                 </div>`).appendTo(".search__result");
-            }
+            })
         }
     });
 });

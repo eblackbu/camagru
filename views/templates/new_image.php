@@ -37,6 +37,9 @@ require_once __DIR__ . '/../template_blocks/header.php';
                     <img src="/views/image/2.png" id="sticker2" class="sticker">
                     <img src="/views/image/3.png" id="sticker3" class="sticker">
                 </div>
+                <div class="addPhoto__comment">
+                    <textarea name="" id="" rows="3" class="modal__textarea"></textarea>
+                </div>
                 <input type="button" value="Загрузить" id="uploadFile" class="auth__form-btn">
             </form>
         </div>

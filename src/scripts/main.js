@@ -71,10 +71,11 @@ function handleFiles(event) {
         canvas.height = this.height;
         stickers = [];
         z = 0;
-        myPush(stickers, img, 0, 0, canvas.width, canvas.height, z++, false, true);
+        myPush(stickers, [img, canvas.width, canvas.height, true]);
         draw();
     }
     $('#previewResult').addClass('active');
+    $('.addPhoto__comment').addClass('active');
     $('.stickers').show();
     $('#canvasMake').show();
     $('#uploadFile').show();
@@ -134,8 +135,9 @@ $(document).on('click', (event) => {
         ctxTmp.drawImage(video, 0, 0, canvas.width, canvas.height);
         stickers = [];
         z = 0;
-        myPush(stickers, canvasTmp, 0, 0, canvas.width, canvas.height, z++, false, true);
+        myPush(stickers, [canvasTmp, canvas.width, canvas.height, true]);
         draw();
+        $('.addPhoto__comment').addClass('active');
         $('#previewResult').addClass('active');
         $('.stickers').show();
         $('#canvasMake').show();
@@ -179,28 +181,29 @@ $(document).on('click', '.stickers', (event) => {
     let id = event.target.id;
     switch (id) {
         case 'sticker1':
-            myPush(stickers, document.querySelector(`#${id}`), 0, 0, size, size, z++, false, false);
+            myPush(stickers, [document.querySelector(`#${id}`), size, size, false]);
             draw();
             break;
         case 'sticker2':
-            myPush(stickers, document.querySelector(`#${id}`), 0, 0, size, size, z++, false, false);
+            myPush(stickers, [document.querySelector(`#${id}`), size, size, false]);
             draw();
             break;
         case 'sticker3':
-            myPush(stickers, document.querySelector(`#${id}`), 0, 0, size, size, z++, false, false);
+            myPush(stickers, [document.querySelector(`#${id}`), size, size, false]);
             draw();
             break;
     }
 });
 
-function myPush(array, selector, x, y, width, height, z, isDragging, noMove) {
+function myPush(array, params) {
+    let [selector, width, height, noMove = false, x = 0, y = 0, isDragging = false] = params;
     array.push({
         selector,
         x,
         y,
         width,
         height,
-        z,
+        z: z++,
         isDragging,
         noMove
     })

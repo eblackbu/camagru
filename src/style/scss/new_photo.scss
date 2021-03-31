@@ -17,6 +17,16 @@ $color-minor: #F4A460;
         cursor: pointer;
         color: $color-minor;
     }
+
+    &__comment {
+        padding: 10px 0;
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+    }
 }
 
 .image-form {

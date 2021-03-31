@@ -10,6 +10,12 @@
   cursor: pointer;
   color: #F4A460; }
 
+.addPhoto__comment {
+  padding: 10px 0;
+  display: none; }
+  .addPhoto__comment.active {
+    display: block; }
+
 .image-form {
   padding: 5px; }
 

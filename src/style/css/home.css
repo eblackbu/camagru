@@ -24,6 +24,8 @@
     border: 2px solid #7FFFD4;
     right: -442%;
     z-index: 2; }
+    .home .search a {
+      color: #7FFFD4; }
   .home__main.main__main .home__main-posts-item:nth-child(-n+3) {
     margin-top: 0; }
   .home__main {
