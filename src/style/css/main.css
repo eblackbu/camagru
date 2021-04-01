@@ -601,6 +601,8 @@ label[for^="old_password"] {
   display: none; }
   .addPhoto__comment.active {
     display: block; }
+  .addPhoto__comment textarea {
+    font-family: 'Comfortaa', cursive; }
 
 .image-form {
   padding: 5px; }
