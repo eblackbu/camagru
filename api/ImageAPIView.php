@@ -16,14 +16,15 @@ class ImageAPIView extends AuthorizedView
     public function get($kwargs)
     {
         session_start();
-        if (!$_GET['user'])
+        $user = $_GET['user'];
+        $page = (int)$_GET['page'];
+        $limit = $_GET['limit'] ? (int)$_GET['limit'] : 5;
+        if (!$user || $page < 1 || $limit < 1)
         {
             http_response_code('400');
             exit();
         }
-        $user = $_GET['user'];
-        $limit = $_GET['limit'] ?? null;
-        $offset = $_GET['offset'] ?? null;
+        $offset = ($page - 1) * 5;
         try {
             $images = Image::getMany(array('created_by' => $user), '', $limit, $offset);
         } catch (ORMException $e) {
